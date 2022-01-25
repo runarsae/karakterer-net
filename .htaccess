@@ -1,7 +1,0 @@
-Options -Indexes
-
-RewriteEngine On
-
-RewriteRule ^hjem?$ index.php [QSA]
-RewriteRule ^emne/([0-9a-zA-ZæÆøØåÅ/_-]+) course.php?code=$1 [QSA]
-RewriteRule ^om?$ about.php [QSA]
