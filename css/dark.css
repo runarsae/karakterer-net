@@ -1,0 +1,101 @@
+/* ### COMMON ### */
+
+* {
+  color: white;
+}
+
+body {
+  background-color: #121212;
+}
+
+p {
+  color: #a0a0a0;
+}
+
+.navigation-item .underline {
+  background-color: #ffffff;
+}
+
+#search-underline {
+  background-color: #9f9f9f;
+}
+
+#search-menu-item:hover #search-underline {
+  background-color: #ffffff;
+}
+
+.navigation-link img,
+#close-button img {
+  opacity: 0.5;
+}
+
+.navigation-link:hover img,
+.navigation-item.focus img,
+#close-button:hover img,
+.navigation-link:focus img {
+  opacity: 1;
+}
+
+.card {
+  background-color: #1e1e1e;
+}
+
+.card.border {
+  border-color: #252525;
+}
+
+.card-undertitle {
+  color: #868686;
+}
+
+.autocomplete-suggestion-name {
+  color: #8a8989;
+}
+
+.autocomplete-selected {
+  background-color: #2e2e2e;
+}
+
+.autocomplete-no-suggestion {
+  color: #aa4141;
+}
+
+footer .container {
+  color: #696969;
+}
+
+/* ### HOME ### */
+
+.popular {
+  color: #272727;
+}
+
+.popular:hover,
+.popular:focus {
+  border-color: #2f2f2f;
+  background-color: #272727;
+}
+
+/* ### COURSE ### */
+
+#settings-pane {
+  background-color: #232323;
+}
+
+#subtitle {
+  color: #868686;
+}
+
+.statistics-label {
+  color: #868686;
+}
+
+/* ### ABOUT ### */
+
+#shortcut-container span {
+  color: #a0a0a0;
+}
+
+.key {
+  background-color: #383838;
+}

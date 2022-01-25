@@ -1,0 +1,84 @@
+.navigation {
+    grid-template-columns: 1fr 28px;
+}
+
+.landing-grid {
+    display: grid;
+    grid-gap: 40px;
+    grid-template-columns: 100%;
+    align-items: center;
+    padding: 30px 0 0 0;
+}
+
+.landing-title {
+    line-height: 32px;
+    font-size: 30px;
+    -webkit-hyphens: manual;
+    -ms-hyphens: manual;
+    hyphens: manual;
+}
+
+.landing-image {
+    justify-self: center;
+    max-width: 300px;
+    width: 100%;
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+}
+
+.popular-grid {
+    display: grid;
+    grid-gap: 20px 20px;
+    grid-template-columns: 100%;
+}
+
+.popular {
+    display: block;
+    height: 100%;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.15s, border-color 0.15s;
+    -webkit-transition: background-color 0.15s, border-color 0.15s;
+}
+
+.popular:focus {
+    outline: 0;
+}
+
+@media only screen and (min-width: 426px) {
+
+    .popular-grid {
+        grid-template-columns: repeat(2, calc(50% - 10px));
+    }
+
+}
+
+@media only screen and (min-width: 520px) {
+
+
+    .landing-title {
+        line-height: 48px;
+        font-size: 46px;
+    }
+
+}
+
+
+@media only screen and (min-width: 768px) {
+
+    .landing-grid {
+        grid-template-columns: 1fr 1fr;
+        padding: 30px 0;
+    }
+
+    .landing-image {
+        justify-self: right;
+        max-width: 380px;
+    }
+
+    .popular-grid {
+        grid-template-columns: repeat(4, calc(25% - 15px));
+    }
+
+
+}
