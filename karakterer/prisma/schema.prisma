@@ -1,0 +1,78 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Course {
+  course String   @id @db.VarChar(20)
+  name   String?  @db.Text
+  grades Grades[] @relation("coursesTogrades")
+
+  @@map("courses")
+}
+
+model Grades {
+  id                   Int     @id @default(autoincrement())
+  course               String  @db.VarChar(20)
+  year                 Int
+  semester             Int
+  isGraded             Boolean @default(false) @map("is_graded")
+  hasGenders           Boolean @default(false) @map("has_genders")
+  students             Int     @default(0)
+  males                Int?
+  females              Int?    @default(0)
+  a                    Int?    @default(0)
+  aMale                Int?    @default(0) @map("a_male")
+  aFemale              Int?    @default(0) @map("a_female")
+  b                    Int?    @default(0)
+  bMale                Int?    @default(0) @map("b_male")
+  bFemale              Int?    @default(0) @map("b_female")
+  c                    Int?    @default(0)
+  cMale                Int?    @default(0) @map("c_male")
+  cFemale              Int?    @default(0) @map("c_female")
+  d                    Int?    @default(0)
+  dMale                Int?    @default(0) @map("d_male")
+  dFemale              Int?    @default(0) @map("d_female")
+  e                    Int?    @default(0)
+  eMale                Int?    @default(0) @map("e_male")
+  eFemale              Int?    @default(0) @map("e_female")
+  f                    Int?    @default(0)
+  fMale                Int?    @default(0) @map("f_male")
+  fFemale              Int?    @default(0) @map("f_female")
+  g                    Int?    @default(0)
+  gMale                Int?    @default(0) @map("g_male")
+  gFemale              Int?    @default(0) @map("g_female")
+  h                    Int?    @default(0)
+  hMale                Int?    @default(0) @map("h_male")
+  hFemale              Int?    @default(0) @map("h_female")
+  averageGrade         Float?  @map("average_grade") @db.Float
+  averageGradeMale     Float?  @default(dbgenerated("((((((`a_male` * 5) + (`b_male` * 4)) + (`c_male` * 3)) + (`d_male` * 2)) + `e_male`) / `males`)")) @map("average_grade_male") @db.Float
+  averageGradeFemale   Float?  @default(dbgenerated("((((((`a_female` * 5) + (`b_female` * 4)) + (`c_female` * 3)) + (`d_female` * 2)) + `e_female`) / `females`)")) @map("average_grade_female") @db.Float
+  failPercentage       Float?  @default(dbgenerated("(case when (`is_graded` = 1) then ((`f` / `students`) * 100) when (`is_graded` = 0) then ((`h` / `students`) * 100) end)")) @map("fail_percentage") @db.Float
+  failPercentageMale   Float?  @default(dbgenerated("(case when (`is_graded` = 1) then ((`f_male` / `males`) * 100) when (`is_graded` = 0) then ((`h_male` / `males`) * 100) end)")) @map("fail_percentage_male") @db.Float
+  failPercentageFemale Float?  @default(dbgenerated("(case when (`is_graded` = 1) then ((`f_female` / `females`) * 100) when (`is_graded` = 0) then ((`h_female` / `females`) * 100) end)")) @map("fail_percentage_female") @db.Float
+  courses              Course  @relation("coursesTogrades", fields: [course], references: [course], onDelete: NoAction, onUpdate: NoAction, map: "grades_courses_course_fk")
+
+  @@unique([course, year, semester], map: "grades_course_year_semester_uindex")
+  @@map("grades")
+}
+
+model TopVisits {
+  course   String @id @db.VarChar(20)
+  countSum Int    @default(0) @map("count_sum")
+
+  @@map("top_visits")
+}
+
+model Visit {
+  course String   @db.VarChar(20)
+  date   DateTime @default(dbgenerated("(curdate())")) @db.Date
+  count  Int      @default(0)
+
+  @@id([course, date])
+  @@map("visits")
+}
