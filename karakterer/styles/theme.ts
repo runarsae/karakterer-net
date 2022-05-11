@@ -3,9 +3,9 @@ import { DefaultTheme } from 'styled-components';
 export const theme: DefaultTheme = {
     palette: {
         primary: {
-            main: '#AD8226',
-            dark: '#705211',
-            light: '#c79835'
+            main: '#3E95CD',
+            dark: '',
+            light: ''
         },
         secondary: {
             main: '',
@@ -24,7 +24,8 @@ export const theme: DefaultTheme = {
         overlay: 'rgba(0, 0, 0, 0.85)',
         horizontalLine: '#363636',
         inputBackground: '',
-        card: '#171717'
+        card: '#171717',
+        popup: '#252525'
     },
     breakpoints: {
         xs: 375,

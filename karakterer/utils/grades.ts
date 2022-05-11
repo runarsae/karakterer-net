@@ -1,4 +1,4 @@
-import { Grades } from '@prisma/client';
+import { Grades } from 'components/course/Dashboard';
 
 export const semesterLetter = (number: number) => {
     switch (number) {
@@ -30,7 +30,7 @@ export const gradeLetter = (number: number) => {
     }
 };
 
-export const computeTotalAverage = (grades: Partial<Grades>[]) => {
+export const computeTotalAverage = (grades: Grades[]) => {
     let gradeSum = 0;
     let students = 0;
 
@@ -56,15 +56,15 @@ export const computeTotalAverage = (grades: Partial<Grades>[]) => {
     }
 
     if (gradeSum == 0 && students == 0) {
-        return [null, null];
+        return null;
     }
 
     const totalAverage = gradeSum / students;
 
-    return [totalAverage.toFixed(2), gradeLetter(totalAverage)];
+    return +totalAverage.toFixed(2);
 };
 
-export const computeTotalFailPercentage = (grades: Partial<Grades>[]) => {
+export const computeTotalFailPercentage = (grades: Grades[]) => {
     let failedStudents = 0;
     let students = 0;
 
@@ -84,7 +84,5 @@ export const computeTotalFailPercentage = (grades: Partial<Grades>[]) => {
         }
     }
 
-    return failedStudents == 0 && students == 0
-        ? null
-        : ((failedStudents / students) * 100).toFixed(1);
+    return +((failedStudents / students) * 100).toFixed(1);
 };

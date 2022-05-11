@@ -26,18 +26,19 @@ const IconButton = styled.button<{ active: boolean }>((props) => ({
 interface Props {
     title: string;
     path?: string;
+    active?: boolean;
     onClick?: () => void;
     icon: ReactNode;
 }
 
-const NavigationItem = ({ title, icon, path, onClick }: Props) => {
+const NavigationItem = ({ title, icon, path, active, onClick }: Props) => {
     const router = useRouter();
 
     return (
         <IconButton
             title={title}
             onClick={() => (path ? router.push(path) : onClick ? onClick() : undefined)}
-            active={router.asPath === path}
+            active={active || router.asPath === path}
         >
             {icon}
         </IconButton>

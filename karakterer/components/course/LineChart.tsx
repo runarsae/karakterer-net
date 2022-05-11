@@ -20,7 +20,7 @@ export enum YLabels {
 }
 
 interface Props {
-    values: number[];
+    values: (number | null)[];
     dataLabelIndex: number;
     xLabels: string[];
     yLabels?: YLabels;

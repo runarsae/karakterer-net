@@ -24,6 +24,7 @@ declare module 'styled-components' {
             horizontalLine: string;
             inputBackground: string;
             card: string;
+            popup: string;
         };
         breakpoints: {
             xs: number;

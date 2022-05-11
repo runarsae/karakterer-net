@@ -37,29 +37,33 @@ function Title({ course, name }: Props) {
 
     const { width } = useWindowSize();
 
-    return (
-        <>
-            {width && width >= theme.breakpoints.md ? (
-                <Container>
-                    <CourseCode>
-                        <Typography variant="h1" color={theme.palette.heading}>
-                            {course}
-                        </Typography>
-                    </CourseCode>
-                    <Typography variant="h1">{name}</Typography>
-                </Container>
-            ) : (
-                <Card>
+    if (width) {
+        return (
+            <>
+                {width >= theme.breakpoints.md ? (
                     <Container>
-                        <Typography variant="body2" color={theme.palette.text}>
-                            {course}
-                        </Typography>
+                        <CourseCode>
+                            <Typography variant="h1" color={theme.palette.heading}>
+                                {course}
+                            </Typography>
+                        </CourseCode>
                         <Typography variant="h1">{name}</Typography>
                     </Container>
-                </Card>
-            )}
-        </>
-    );
+                ) : (
+                    <Card>
+                        <Container>
+                            <Typography variant="body2" color={theme.palette.text}>
+                                {course}
+                            </Typography>
+                            <Typography variant="h1">{name}</Typography>
+                        </Container>
+                    </Card>
+                )}
+            </>
+        );
+    }
+
+    return null;
 }
 
 export default Title;

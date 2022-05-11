@@ -1,5 +1,7 @@
 import { InfoIcon, SearchIcon, SettingsIcon } from 'components/common/icons';
-import styled, { useTheme } from 'styled-components';
+import { SettingsContext } from 'state/settings';
+import styled from 'styled-components';
+import { useContext } from 'utils/context';
 import NavigationItem from './NavigationItem';
 
 const NavigationBar = styled.div((props) => ({
@@ -15,11 +17,10 @@ const NavigationBar = styled.div((props) => ({
 }));
 
 const Navigation = () => {
-    const theme = useTheme();
+    const { settingsOpen, setSettingsOpen } = useContext(SettingsContext);
 
     return (
         <NavigationBar>
-            {/* <NavigationItem title="Hjem" path="/" icon={<HomeIcon width={24} height={24} />} /> */}
             <NavigationItem
                 title="Søk"
                 onClick={() => alert('search')}
@@ -32,7 +33,8 @@ const Navigation = () => {
             />
             <NavigationItem
                 title="Innstillinger"
-                onClick={() => alert('settings')}
+                active={settingsOpen}
+                onClick={() => setSettingsOpen(true)}
                 icon={<SettingsIcon width={24} height={24} />}
             />
         </NavigationBar>

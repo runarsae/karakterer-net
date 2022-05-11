@@ -1,52 +1,35 @@
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
-import { ParsedUrlQuery } from 'querystring';
 import { useRouter } from 'next/router';
+import {
+    Courses,
+    CourseWithGrades,
+    CourseWithGradesPromise,
+    getCourseData,
+    getMostPopularCourses
+} from 'api/course';
+import { ParsedUrlQuery } from 'querystring';
+import { SettingsContextProvider } from 'state/settings';
 import Dashboard from 'components/course/Dashboard';
-import { Courses, CourseWithGradesPromise, getCourseData, getMostPopularCourses } from 'api/course';
-import { transformCourseData } from 'utils/course';
 
-export type SemesterStats = {
-    isGraded: boolean;
-    students: number;
-    averageGrade: number;
-    failPercentage: number;
-    letterGrades: (number | null)[];
-    passFailGrades: (number | null)[];
-};
-
-export type AllSemesterStats = {
-    [key: string]: SemesterStats;
-};
-
-export interface CourseProps {
-    course: string;
-    name: string | null;
-    hasGrades: boolean;
-    hasPassFail: boolean;
-    semesters: string[];
-    grades: AllSemesterStats;
-    averageGrades: number[];
-    failPercentages: number[];
-    totalAverage: string | null;
-    totalAverageLetter: string | null;
-    totalFailPercentage: string | null;
-}
-
-const Course: NextPage<CourseProps> = (props) => {
+const Course: NextPage<CourseWithGrades> = (props) => {
     const router = useRouter();
 
     if (router.isFallback) {
         return <div>Loading...</div>;
     }
 
-    return <Dashboard {...props} />;
+    return (
+        <SettingsContextProvider>
+            <Dashboard {...props} />
+        </SettingsContextProvider>
+    );
 };
 
 interface Params extends ParsedUrlQuery {
     id: string[];
 }
 
-export const getStaticProps: GetStaticProps<CourseProps, Params> = async (context) => {
+export const getStaticProps: GetStaticProps<CourseWithGrades, Params> = async (context) => {
     let { id } = context.params!;
     const course = id.join('');
 
@@ -59,7 +42,7 @@ export const getStaticProps: GetStaticProps<CourseProps, Params> = async (contex
     }
 
     return {
-        props: transformCourseData(courseData),
+        props: courseData,
         revalidate: 60 * 60 * 24 // 24 hours
     };
 };

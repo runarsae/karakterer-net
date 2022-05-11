@@ -3,6 +3,7 @@ import { Chart } from 'react-chartjs-2';
 import { Chart as ChartType, ChartOptions } from 'chart.js';
 import { useEffect, useMemo, useRef } from 'react';
 import FontFaceObserver from 'fontfaceobserver';
+import { Grades } from './Dashboard';
 
 const Container = styled.div((props) => ({
     position: 'relative',
@@ -18,11 +19,10 @@ const Container = styled.div((props) => ({
 }));
 
 interface Props {
-    isGraded: boolean;
-    grades: (number | null)[];
+    grades: Grades;
 }
 
-const BarChart = ({ isGraded, grades }: Props) => {
+const BarChart = ({ grades }: Props) => {
     const theme = useTheme();
 
     const chartRef = useRef<ChartType<'bar'>>(null);
@@ -67,10 +67,10 @@ const BarChart = ({ isGraded, grades }: Props) => {
             datasets: {
                 bar: {
                     maxBarThickness: 56,
-                    backgroundColor: isGraded
+                    backgroundColor: grades.isGraded
                         ? ['#272d1d', '#272d1d', '#33301f', '#352c1e', '#35251c', '#35221f']
                         : ['#272d1d', '#35221f'],
-                    borderColor: isGraded
+                    borderColor: grades.isGraded
                         ? [
                               '#79b31199',
                               '#79b31199',
@@ -102,20 +102,24 @@ const BarChart = ({ isGraded, grades }: Props) => {
                         display: false,
                         drawBorder: false
                     },
-                    labels: isGraded ? ['A', 'B', 'C', 'D', 'E', 'F'] : ['Bestått', 'Ikke bestått']
+                    labels: grades.isGraded
+                        ? ['A', 'B', 'C', 'D', 'E', 'F']
+                        : ['Bestått', 'Ikke bestått']
                 }
             },
             responsive: true,
             maintainAspectRatio: false
         }),
-        [isGraded, theme.palette.heading, theme.palette.text]
+        [grades, theme.palette.heading, theme.palette.text]
     );
 
     const data = useMemo(
         () => ({
             datasets: [
                 {
-                    data: grades
+                    data: grades.isGraded
+                        ? [grades.a, grades.b, grades.c, grades.d, grades.e, grades.f]
+                        : [grades.g, grades.h]
                 }
             ]
         }),
