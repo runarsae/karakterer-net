@@ -3,10 +3,10 @@ import { useEffect, useRef, useState } from 'react';
 import { Range } from 'react-range';
 import styled, { useTheme } from 'styled-components';
 
-const Container = styled.div((props) => ({
+const Container = styled.div({
     position: 'relative',
     padding: '42px 31px 9px 31px'
-}));
+});
 
 const Track = styled.div((props) => ({
     ...props.style,
@@ -50,7 +50,7 @@ const ExtremeTickLabel = styled.div<{ align: 'left' | 'right'; visible: boolean 
     userSelect: 'none'
 }));
 
-const Label = styled.div((props) => ({
+const Label = styled.div({
     position: 'absolute',
     top: '-33px',
     left: '-19px',
@@ -58,7 +58,7 @@ const Label = styled.div((props) => ({
     padding: '5px 8px',
     borderRadius: '4px',
     backgroundColor: '#252525'
-}));
+});
 
 interface Props {
     max: number;
@@ -110,12 +110,12 @@ const Slider = ({ max, value, onChange, label, minLabel, maxLabel }: Props) => {
     return (
         <Container>
             <ExtremeTickLabel align="left" ref={minLabelDivRef} visible={showMinLabel}>
-                <Typography variant="body1" color={'#464645'} align="center">
+                <Typography variant="body1" style={{ color: '#464645', textAlign: 'center' }}>
                     {minLabel}
                 </Typography>
             </ExtremeTickLabel>
             <ExtremeTickLabel align="right" ref={maxLabelDivRef} visible={showMaxLabel}>
-                <Typography variant="body1" color={'#464645'} align="center">
+                <Typography variant="body1" style={{ color: '#464645', textAlign: 'center' }}>
                     {maxLabel}
                 </Typography>
             </ExtremeTickLabel>
@@ -129,8 +129,7 @@ const Slider = ({ max, value, onChange, label, minLabel, maxLabel }: Props) => {
                         <Label ref={labelDivRef}>
                             <Typography
                                 variant="body1"
-                                color={theme.palette.heading}
-                                align="center"
+                                style={{ color: theme.palette.heading, textAlign: 'center' }}
                             >
                                 {label}
                             </Typography>

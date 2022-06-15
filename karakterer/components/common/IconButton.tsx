@@ -1,8 +1,7 @@
-import { useRouter } from 'next/router';
 import { ReactNode } from 'react';
 import styled from 'styled-components';
 
-const IconButton = styled.button<{ active: boolean }>((props) => ({
+const Button = styled.button<{ active: boolean }>((props) => ({
     WebkitAppearance: 'none',
     display: 'block',
     width: '42px',
@@ -24,25 +23,19 @@ const IconButton = styled.button<{ active: boolean }>((props) => ({
 }));
 
 interface Props {
+    className?: string;
     title: string;
-    path?: string;
     active?: boolean;
     onClick?: () => void;
     icon: ReactNode;
 }
 
-const NavigationItem = ({ title, icon, path, active, onClick }: Props) => {
-    const router = useRouter();
-
+const IconButton = ({ className, title, icon, active, onClick }: Props) => {
     return (
-        <IconButton
-            title={title}
-            onClick={() => (path ? router.push(path) : onClick ? onClick() : undefined)}
-            active={active || router.asPath === path}
-        >
+        <Button title={title} onClick={onClick} active={active || false} className={className}>
             {icon}
-        </IconButton>
+        </Button>
     );
 };
 
-export default NavigationItem;
+export default IconButton;

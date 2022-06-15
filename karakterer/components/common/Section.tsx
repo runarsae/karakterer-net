@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 
-const Wrapper = styled.section((props) => ({
+const Wrapper = styled.section({
     width: '100%',
     margin: 'auto'
-}));
+});
 
 const Content = styled.div((props) => ({
     padding: '16px',

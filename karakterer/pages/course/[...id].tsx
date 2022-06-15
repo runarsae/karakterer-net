@@ -8,8 +8,9 @@ import {
     getMostPopularCourses
 } from 'api/course';
 import { ParsedUrlQuery } from 'querystring';
+import CoursePage from 'components/course';
+import { SidebarContextProvider } from 'state/sidebar';
 import { SettingsContextProvider } from 'state/settings';
-import Dashboard from 'components/course/Dashboard';
 
 const Course: NextPage<CourseWithGrades> = (props) => {
     const router = useRouter();
@@ -19,9 +20,11 @@ const Course: NextPage<CourseWithGrades> = (props) => {
     }
 
     return (
-        <SettingsContextProvider>
-            <Dashboard {...props} />
-        </SettingsContextProvider>
+        <SidebarContextProvider>
+            <SettingsContextProvider>
+                <CoursePage {...props} />
+            </SettingsContextProvider>
+        </SidebarContextProvider>
     );
 };
 

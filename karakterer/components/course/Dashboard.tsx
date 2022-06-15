@@ -13,22 +13,6 @@ import {
 } from 'utils/grades';
 import { Semester, SettingsContext } from 'state/settings';
 import { useContext } from 'utils/context';
-import { CourseWithGrades } from 'api/course';
-import Section from 'components/common/Section';
-import Header from './Header';
-
-const Wrapper = styled.div((props) => ({
-    width: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '16px',
-    marginTop: 'auto',
-    marginBottom: 'auto',
-
-    [`@media (min-width: ${props.theme.breakpoints.md}px)`]: {
-        gap: '24px'
-    }
-}));
 
 const Grid = styled.div<{ hasGrades: boolean }>((props) => ({
     display: 'grid',
@@ -198,10 +182,9 @@ export interface Grades {
 
 interface Props {
     grades: Grades[];
-    loaded: () => void;
 }
 
-const Dashboard = ({ course, name, grades }: CourseWithGrades) => {
+const Dashboard = ({ grades }: Props) => {
     const { semesterDisplay, setSemesterDisplay, setEnabledSemesterDisplays } =
         useContext(SettingsContext);
 
@@ -311,128 +294,137 @@ const Dashboard = ({ course, name, grades }: CourseWithGrades) => {
 
     if (state) {
         return (
-            <Section>
-                <Wrapper>
-                    <Header course={course} name={name} />
-                    <Grid hasGrades={hasGrades}>
-                        <Card style={{ gridArea: 'grades' }}>
-                            <CardContent gap>
-                                <Typography variant="h2">Karakterfordeling</Typography>
-                                <BarChart grades={state.grades[state.selectedSemesterIndex]} />
-                            </CardContent>
-                        </Card>
+            <Grid hasGrades={hasGrades}>
+                <Card style={{ gridArea: 'grades' }}>
+                    <CardContent gap>
+                        <Typography variant="h2">Karakterfordeling</Typography>
+                        <BarChart grades={state.grades[state.selectedSemesterIndex]} />
+                    </CardContent>
+                </Card>
 
-                        <Card
-                            style={{
-                                gridArea: 'slider'
-                            }}
-                        >
-                            {state.semesters.length > 1 ? (
-                                <Slider
-                                    max={state.semesters.length - 1}
-                                    value={state.selectedSemesterIndex}
+                <Card
+                    style={{
+                        gridArea: 'slider'
+                    }}
+                >
+                    {state.semesters.length > 1 ? (
+                        <Slider
+                            max={state.semesters.length - 1}
+                            value={state.selectedSemesterIndex}
+                            onChange={(value) =>
+                                dispatch({
+                                    type: 'set_semester',
+                                    payload: { index: value }
+                                })
+                            }
+                            label={state.semesters[state.selectedSemesterIndex]}
+                            minLabel={state.semesters.at(0)!}
+                            maxLabel={state.semesters.at(-1)!}
+                        />
+                    ) : state.semesters.length === 1 ? (
+                        <Typography variant="body1" style={{ textAlign: 'center' }}>
+                            Emnet har bare registrert karakterer for {state.semesters[0]}.
+                        </Typography>
+                    ) : (
+                        <Typography variant="body1" style={{ textAlign: 'center' }}>
+                            Ingen karakterer registrert for dette emnet.
+                        </Typography>
+                    )}
+                </Card>
+
+                <MeasurementsSubGrid hasGrades={hasGrades}>
+                    {hasGrades && (
+                        <Card style={{ gridArea: 'total_average' }}>
+                            <CenterBox>
+                                <MeasurementContainer>
+                                    <AverageContainer>
+                                        <Typography
+                                            variant="measurement"
+                                            style={{ display: 'inline' }}
+                                        >
+                                            {state.totalAverage && gradeLetter(state.totalAverage)}
+                                        </Typography>
+                                        <Line />
+                                        <Typography
+                                            variant="measurement"
+                                            style={{ display: 'inline' }}
+                                        >
+                                            {state.totalAverage}
+                                        </Typography>
+                                    </AverageContainer>
+                                    <Typography
+                                        variant="body1"
+                                        style={{ textAlign: 'center', whiteSpace: 'nowrap' }}
+                                    >
+                                        Totalt gjennomsnitt
+                                    </Typography>
+                                </MeasurementContainer>
+                            </CenterBox>
+                        </Card>
+                    )}
+
+                    <Card style={{ gridArea: 'total_fail_percentage' }}>
+                        <CenterBox>
+                            <MeasurementContainer>
+                                <Typography
+                                    variant="measurement"
+                                    style={{ textAlign: 'center', whiteSpace: 'nowrap' }}
+                                >
+                                    {state.totalFailPercentage}%
+                                </Typography>
+                                <Typography
+                                    variant="body1"
+                                    style={{ textAlign: 'center', whiteSpace: 'nowrap' }}
+                                >
+                                    Total strykprosent
+                                </Typography>
+                            </MeasurementContainer>
+                        </CenterBox>
+                    </Card>
+                </MeasurementsSubGrid>
+
+                <LineChartsSubGrid hasGrades={hasGrades}>
+                    {hasGrades && (
+                        <Card style={{ gridArea: 'averages' }}>
+                            <CardContent>
+                                <Typography variant="h2">Gjennomsnitt</Typography>
+                                <LineChart
+                                    values={state.averageGrades}
+                                    dataLabelIndex={state.selectedSemesterIndex}
+                                    xLabels={state.semesters}
+                                    yLabels={YLabels.Grades}
+                                    color="#3E95CD"
                                     onChange={(value) =>
                                         dispatch({
                                             type: 'set_semester',
                                             payload: { index: value }
                                         })
                                     }
-                                    label={state.semesters[state.selectedSemesterIndex]}
-                                    minLabel={state.semesters.at(0)!}
-                                    maxLabel={state.semesters.at(-1)!}
                                 />
-                            ) : state.semesters.length === 1 ? (
-                                <Typography variant="body1" align="center">
-                                    Emnet har bare registrert karakterer for {state.semesters[0]}.
-                                </Typography>
-                            ) : (
-                                <Typography variant="body1" align="center">
-                                    Ingen karakterer registrert for dette emnet.
-                                </Typography>
-                            )}
+                            </CardContent>
                         </Card>
-
-                        <MeasurementsSubGrid hasGrades={hasGrades}>
-                            {hasGrades && (
-                                <Card style={{ gridArea: 'total_average' }}>
-                                    <CenterBox>
-                                        <MeasurementContainer>
-                                            <AverageContainer>
-                                                <Typography variant="measurement" inline>
-                                                    {state.totalAverage &&
-                                                        gradeLetter(state.totalAverage)}
-                                                </Typography>
-                                                <Line />
-                                                <Typography variant="measurement" inline>
-                                                    {state.totalAverage}
-                                                </Typography>
-                                            </AverageContainer>
-                                            <Typography variant="body1" align="center" noWrap>
-                                                Totalt gjennomsnitt
-                                            </Typography>
-                                        </MeasurementContainer>
-                                    </CenterBox>
-                                </Card>
-                            )}
-
-                            <Card style={{ gridArea: 'total_fail_percentage' }}>
-                                <CenterBox>
-                                    <MeasurementContainer>
-                                        <Typography variant="measurement" align="center" noWrap>
-                                            {state.totalFailPercentage}%
-                                        </Typography>
-                                        <Typography variant="body1" align="center" noWrap>
-                                            Total strykprosent
-                                        </Typography>
-                                    </MeasurementContainer>
-                                </CenterBox>
-                            </Card>
-                        </MeasurementsSubGrid>
-
-                        <LineChartsSubGrid hasGrades={hasGrades}>
-                            {hasGrades && (
-                                <Card style={{ gridArea: 'averages' }}>
-                                    <CardContent>
-                                        <Typography variant="h2">Gjennomsnitt</Typography>
-                                        <LineChart
-                                            values={state.averageGrades}
-                                            dataLabelIndex={state.selectedSemesterIndex}
-                                            xLabels={state.semesters}
-                                            yLabels={YLabels.Grades}
-                                            color="#3E95CD"
-                                            onChange={(value) =>
-                                                dispatch({
-                                                    type: 'set_semester',
-                                                    payload: { index: value }
-                                                })
-                                            }
-                                        />
-                                    </CardContent>
-                                </Card>
-                            )}
-                            <Card style={{ gridArea: 'fail_percentages' }}>
-                                <CardContent>
-                                    <Typography variant="h2">Strykprosent</Typography>
-                                    <LineChart
-                                        values={state.failPercentages}
-                                        dataLabelIndex={state.selectedSemesterIndex}
-                                        xLabels={state.semesters}
-                                        yLabels={YLabels.Percentages}
-                                        color="#b13f3f"
-                                        valueSuffix="%"
-                                        onChange={(value) =>
-                                            dispatch({
-                                                type: 'set_semester',
-                                                payload: { index: value }
-                                            })
-                                        }
-                                    />
-                                </CardContent>
-                            </Card>
-                        </LineChartsSubGrid>
-                    </Grid>
-                </Wrapper>
-            </Section>
+                    )}
+                    <Card style={{ gridArea: 'fail_percentages' }}>
+                        <CardContent>
+                            <Typography variant="h2">Strykprosent</Typography>
+                            <LineChart
+                                values={state.failPercentages}
+                                dataLabelIndex={state.selectedSemesterIndex}
+                                xLabels={state.semesters}
+                                yLabels={YLabels.Percentages}
+                                color="#b13f3f"
+                                valueSuffix="%"
+                                onChange={(value) =>
+                                    dispatch({
+                                        type: 'set_semester',
+                                        payload: { index: value }
+                                    })
+                                }
+                            />
+                        </CardContent>
+                    </Card>
+                </LineChartsSubGrid>
+            </Grid>
         );
     }
 

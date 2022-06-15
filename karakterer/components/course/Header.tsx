@@ -1,4 +1,4 @@
-import Navigation from 'components/layout/navigation/Navigation';
+import Navigation from 'components/layout/Navigation';
 import styled from 'styled-components';
 import Settings from './Settings';
 import Title from './Title';

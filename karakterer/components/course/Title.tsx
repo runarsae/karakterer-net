@@ -43,18 +43,14 @@ function Title({ course, name }: Props) {
                 {width >= theme.breakpoints.md ? (
                     <Container>
                         <CourseCode>
-                            <Typography variant="h1" color={theme.palette.heading}>
-                                {course}
-                            </Typography>
+                            <Typography variant="h1">{course}</Typography>
                         </CourseCode>
                         <Typography variant="h1">{name}</Typography>
                     </Container>
                 ) : (
                     <Card>
                         <Container>
-                            <Typography variant="body2" color={theme.palette.text}>
-                                {course}
-                            </Typography>
+                            <Typography variant="body2">{course}</Typography>
                             <Typography variant="h1">{name}</Typography>
                         </Container>
                     </Card>
