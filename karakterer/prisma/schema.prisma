@@ -9,9 +9,10 @@ datasource db {
 
 model Course {
   course String   @id @db.VarChar(20)
-  name   String?  @db.Text
+  name   String?  @db.VarChar(255)
   grades Grades[] @relation("coursesTogrades")
 
+  @@index([name], map: "courses_name_index")
   @@map("courses")
 }
 
@@ -58,6 +59,7 @@ model Grades {
   courses              Course  @relation("coursesTogrades", fields: [course], references: [course], onDelete: NoAction, onUpdate: NoAction, map: "grades_courses_course_fk")
 
   @@unique([course, year, semester], map: "grades_course_year_semester_uindex")
+  @@index([course], map: "grades_course_index")
   @@map("grades")
 }
 
