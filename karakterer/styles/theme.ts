@@ -12,13 +12,14 @@ export const theme: DefaultTheme = {
             dark: '',
             light: ''
         },
-        error: '#DD1E1E',
+        error: '#ea5151',
         success: '#18A813',
         common: {
             black: '#0e0e0e',
             white: '#FFFFFF',
             gray: '#F5F5F5'
         },
+        background: '#1e1e1e',
         heading: '#CECECE',
         text: '#999999',
         overlay: 'rgba(0, 0, 0, 0.85)',

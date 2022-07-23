@@ -12,7 +12,7 @@ const Backdrop = styled.div((props) => ({
     height: '100%',
     backgroundColor: props.theme.palette.overlay,
     transition: 'opacity ' + props.theme.transitionDuration + 'ms ease-in-out',
-    zIndex: 10
+    zIndex: 1
 }));
 
 const overlayTransitionStyles: { [id: string]: React.CSSProperties } = {

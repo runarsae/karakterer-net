@@ -12,7 +12,7 @@ const Content = styled.div((props) => ({
     margin: 'auto',
 
     [`@media (min-width: ${props.theme.breakpoints.md}px)`]: {
-        padding: '40px'
+        padding: '32px'
     }
 }));
 

@@ -1,61 +1,81 @@
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, { CSSProperties, useCallback, useEffect, useMemo, useRef } from 'react';
 import styled, { useTheme } from 'styled-components';
 import { Transition } from 'react-transition-group';
 import Overlay from './Overlay';
 import { disableScroll, enableScroll } from '../../utils/scroll';
 import IconButton from './IconButton';
 import { CloseIcon } from './icons';
+import { useContext } from 'utils/context';
+import { SidebarContext, SidebarType } from 'state/sidebar';
+import Search from 'components/search/Search';
+import About from 'components/about/About';
+import Typography from './Typography';
 
 const Wrapper = styled.div((props) => ({
     position: 'fixed',
     top: 0,
     right: '-480px',
-    backgroundColor: props.theme.palette.card,
+    backgroundColor: props.theme.palette.background,
     height: '100%',
     width: '100%',
     maxWidth: '480px !important',
     transition: 'right ' + props.theme.transitionDuration + 'ms ease',
     overflowY: 'auto',
     overflowX: 'hidden',
-    zIndex: 11,
-
-    padding: '32px 32px',
-
-    [`@media (min-width: ${props.theme.breakpoints.xs}px)`]: {
-        padding: '32px 32px'
-    }
+    zIndex: 2,
+    padding: '0 0 32px 0'
 }));
 
-const CloseButton = styled(IconButton)`
-    ${(props) => ({
-        position: 'absolute',
-        top: 32,
-        right: 32,
+const Header = styled.div((props) => ({
+    display: 'flex',
+    position: 'sticky',
+    top: 0,
+    zIndex: 1,
+    padding: '32px',
+    backgroundColor: props.theme.palette.background
+}));
 
-        [`@media (min-width: ${props.theme.breakpoints.xs}px)`]: {
-            right: 32
-        }
-    })}
-`;
+const Title = styled(Typography)({
+    flex: 1,
+    lineHeight: '42px'
+});
 
-const sidebarTransitionStyles: { [id: string]: React.CSSProperties } = {
+const CloseButton = styled(IconButton)({
+    marginRight: -8
+});
+
+const sidebarTransitionStyles: { [id: string]: CSSProperties } = {
     entered: { right: 0 }
 };
 
-interface Props {
-    children: React.ReactNode;
-    open: boolean;
-    setOpen: (open: boolean) => void;
-}
+type SidebarContentMap = {
+    [key in SidebarType]: {
+        component: JSX.Element;
+        title: string;
+    };
+};
 
-export default function Sidebar(props: Props) {
+const sidebarContentMap: SidebarContentMap = {
+    [SidebarType.Search]: {
+        component: <Search />,
+        title: 'Søk'
+    },
+    [SidebarType.About]: {
+        component: <About />,
+        title: 'Om KARAKTERER.net'
+    }
+};
+
+export default function Sidebar() {
     const theme = useTheme();
+
+    const { sidebarOpen, setSidebarOpen, sidebarType } = useContext(SidebarContext);
 
     const sidebarRef = useRef(null);
 
     const close = useCallback(() => {
-        props.setOpen(false);
-    }, [props]);
+        setSidebarOpen(false);
+    }, [setSidebarOpen]);
 
     useEffect(() => {
         const closeOnEsc = (e: KeyboardEvent) => {
@@ -64,31 +84,36 @@ export default function Sidebar(props: Props) {
             }
         };
 
-        if (props.open) {
+        if (sidebarOpen) {
             document.addEventListener('keydown', closeOnEsc, false);
 
             return () => {
                 document.removeEventListener('keydown', closeOnEsc, false);
             };
         }
-    }, [close, props.open]);
+    }, [close, sidebarOpen]);
 
     useEffect(() => {
-        if (props.open) {
+        if (sidebarOpen) {
             disableScroll();
         } else {
             enableScroll();
         }
-    }, [props.open]);
+    }, [sidebarOpen]);
+
+    const sidebarContent = useMemo(
+        () => sidebarType !== undefined && sidebarContentMap[sidebarType],
+        [sidebarType]
+    );
 
     return (
         <>
-            <Overlay open={props.open} onClose={close} />
+            <Overlay open={sidebarOpen} onClose={close} />
             <Transition
                 nodeRef={sidebarRef}
                 mountOnEnter
                 unmountOnExit
-                in={props.open}
+                in={sidebarOpen}
                 timeout={theme.transitionDuration}
             >
                 {(state) => (
@@ -98,12 +123,20 @@ export default function Sidebar(props: Props) {
                                 ...sidebarTransitionStyles[state]
                             }}
                         >
-                            <CloseButton
-                                title="Lukk"
-                                onClick={close}
-                                icon={<CloseIcon width={24} height={24} />}
-                            />
-                            {props.children}
+                            {sidebarContent && (
+                                <>
+                                    <Header>
+                                        <Title variant="h1">{sidebarContent.title}</Title>
+                                        <CloseButton
+                                            title="Lukk"
+                                            onClick={close}
+                                            icon={<CloseIcon width={24} height={24} />}
+                                        />
+                                    </Header>
+
+                                    {sidebarContent.component}
+                                </>
+                            )}
                         </Wrapper>
                     </div>
                 )}

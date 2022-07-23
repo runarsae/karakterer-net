@@ -42,8 +42,12 @@ const Body1 = styled.p((props) => ({
 }));
 
 const Body2 = styled.p((props) => ({
-    fontSize: '14px',
-    color: props.theme.palette.text
+    fontSize: '10px',
+    color: props.theme.palette.text,
+
+    [`@media (min-width: ${props.theme.breakpoints.md}px)`]: {
+        fontSize: '12px'
+    }
 }));
 
 const Button = styled.p({
@@ -88,11 +92,16 @@ interface Props {
     children: React.ReactNode;
     variant?: Variants;
     style?: CSSProperties;
+    className?: string;
 }
 
 function Typography(props: Props) {
     return (
-        <Component as={props.variant ? variantsMapping[props.variant] : Body1} style={props.style}>
+        <Component
+            className={props.className}
+            as={props.variant ? variantsMapping[props.variant] : Body1}
+            style={props.style}
+        >
             {props.children}
         </Component>
     );
