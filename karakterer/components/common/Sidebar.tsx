@@ -23,10 +23,10 @@ const Wrapper = styled.div((props) => ({
     overflowY: 'auto',
     overflowX: 'hidden',
     zIndex: 2,
-    padding: '0 0 16px 0',
+    padding: '0 16px 16px 16px',
 
     [`@media (min-width: 480px)`]: {
-        padding: '0 0 32px 0'
+        padding: '0 32px 32px 32px'
     }
 }));
 
@@ -39,7 +39,7 @@ const Header = styled.div((props) => ({
     padding: '16px',
 
     [`@media (min-width: 480px)`]: {
-        padding: '32px 32px 16px 32px'
+        padding: '32px 0 16px 0'
     }
 }));
 

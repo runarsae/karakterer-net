@@ -19,11 +19,11 @@ const Header = styled.div((props) => ({
     position: 'sticky',
     backgroundColor: props.theme.palette.background,
     top: 74, // Height of sidebar header
-    padding: '0 16px 16px 16px',
+    padding: '0 0 16px 0',
 
     [`@media (min-width: 480px)`]: {
         top: 90, // Height of sidebar header
-        padding: '0 32px 16px 32px'
+        padding: '0 0 16px 0'
     }
 }));
 
@@ -62,16 +62,11 @@ const InputError = styled(Typography)((props) => ({
     color: props.theme.palette.error
 }));
 
-const SearchResults = styled.div((props) => ({
+const SearchResults = styled.div({
     display: 'flex',
     flexDirection: 'column',
-    gap: '8px',
-    padding: '0 16px',
-
-    [`@media (min-width: 480px)`]: {
-        padding: '0 32px'
-    }
-}));
+    gap: '8px'
+});
 
 const ResultCard = styled.button((props) => ({
     all: 'unset',
