@@ -50,7 +50,9 @@ function Title({ course, name }: Props) {
                 ) : (
                     <Card>
                         <Container>
-                            <Typography variant="body2">{course}</Typography>
+                            <Typography variant="h4" style={{ color: theme.palette.text }}>
+                                {course}
+                            </Typography>
                             <Typography variant="h1">{name}</Typography>
                         </Container>
                     </Card>
