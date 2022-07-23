@@ -23,7 +23,11 @@ const Wrapper = styled.div((props) => ({
     overflowY: 'auto',
     overflowX: 'hidden',
     zIndex: 2,
-    padding: '0 0 32px 0'
+    padding: '0 0 16px 0',
+
+    [`@media (min-width: 480px)`]: {
+        padding: '0 0 32px 0'
+    }
 }));
 
 const Header = styled.div((props) => ({
@@ -31,8 +35,12 @@ const Header = styled.div((props) => ({
     position: 'sticky',
     top: 0,
     zIndex: 1,
-    padding: '32px',
-    backgroundColor: props.theme.palette.background
+    backgroundColor: props.theme.palette.background,
+    padding: '16px',
+
+    [`@media (min-width: 480px)`]: {
+        padding: '32px 32px 16px 32px'
+    }
 }));
 
 const Title = styled(Typography)({

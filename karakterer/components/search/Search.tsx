@@ -17,9 +17,14 @@ const Container = styled.div({
 
 const Header = styled.div((props) => ({
     position: 'sticky',
-    top: 106, // Height of sidebar header
-    padding: '0 32px 32px 32px',
-    backgroundColor: props.theme.palette.background
+    backgroundColor: props.theme.palette.background,
+    top: 74, // Height of sidebar header
+    padding: '0 16px 16px 16px',
+
+    [`@media (min-width: 480px)`]: {
+        top: 90, // Height of sidebar header
+        padding: '0 32px 16px 32px'
+    }
 }));
 
 const InputContainer = styled.div({
@@ -57,12 +62,16 @@ const InputError = styled(Typography)((props) => ({
     color: props.theme.palette.error
 }));
 
-const SearchResults = styled.div({
+const SearchResults = styled.div((props) => ({
     display: 'flex',
     flexDirection: 'column',
     gap: '8px',
-    padding: '0 32px'
-});
+    padding: '0 16px',
+
+    [`@media (min-width: 480px)`]: {
+        padding: '0 32px'
+    }
+}));
 
 const ResultCard = styled.button((props) => ({
     all: 'unset',
