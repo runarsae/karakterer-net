@@ -9,7 +9,9 @@ import {
     LinearScale,
     BarElement,
     PointElement,
-    LineElement
+    LineElement,
+    BarController,
+    LineController
 } from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import Layout from 'components/layout/Layout';
@@ -20,7 +22,9 @@ ChartJS.register(
     BarElement,
     ChartDataLabels,
     PointElement,
-    LineElement
+    LineElement,
+    BarController,
+    LineController
 );
 
 function App({ Component, pageProps }: AppProps) {
