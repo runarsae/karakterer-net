@@ -30,13 +30,15 @@ const Wrapper = styled.div((props) => ({
     }
 }));
 
-const Header = styled.div((props) => ({
+const Header = styled.div<{ sticky: boolean }>((props) => ({
     display: 'flex',
-    position: 'sticky',
-    top: 0,
-    zIndex: 1,
+    ...(props.sticky && {
+        position: 'sticky',
+        top: 0,
+        zIndex: 1
+    }),
     backgroundColor: props.theme.palette.background,
-    padding: '16px',
+    padding: '16px 0 16px 0',
 
     [`@media (min-width: 480px)`]: {
         padding: '32px 0 16px 0'
@@ -60,17 +62,20 @@ type SidebarContentMap = {
     [key in SidebarType]: {
         component: JSX.Element;
         title: string;
+        stickyHeader: boolean;
     };
 };
 
 const sidebarContentMap: SidebarContentMap = {
     [SidebarType.Search]: {
         component: <Search />,
-        title: 'Søk'
+        title: 'Søk',
+        stickyHeader: true
     },
     [SidebarType.About]: {
         component: <About />,
-        title: 'Om KARAKTERER.net'
+        title: 'Om KARAKTERER.net',
+        stickyHeader: false
     }
 };
 
@@ -133,7 +138,7 @@ export default function Sidebar() {
                         >
                             {sidebarContent && (
                                 <>
-                                    <Header>
+                                    <Header sticky={sidebarContent.stickyHeader}>
                                         <Title variant="h1">{sidebarContent.title}</Title>
                                         <CloseButton
                                             title="Lukk"
