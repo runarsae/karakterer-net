@@ -18,6 +18,7 @@ declare module 'styled-components' {
                 white: string;
                 gray: string;
             };
+            background: string;
             heading: string;
             text: string;
             overlay: string;

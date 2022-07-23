@@ -1,3 +1,4 @@
+import { CSSProperties } from 'react';
 import styled, { DefaultTheme, StyledComponent } from 'styled-components';
 
 const Heading1 = styled.h1((props) => ({
@@ -33,15 +34,21 @@ const Heading4 = styled.h4((props) => ({
 
 const Body1 = styled.p((props) => ({
     fontSize: '12px',
+    color: props.theme.palette.text,
 
     [`@media (min-width: ${props.theme.breakpoints.md}px)`]: {
         fontSize: '14px'
     }
 }));
 
-const Body2 = styled.p({
-    fontSize: '14px'
-});
+const Body2 = styled.p((props) => ({
+    fontSize: '10px',
+    color: props.theme.palette.text,
+
+    [`@media (min-width: ${props.theme.breakpoints.md}px)`]: {
+        fontSize: '12px'
+    }
+}));
 
 const Button = styled.p({
     fontSize: '14px'
@@ -76,55 +83,24 @@ const variantsMapping: {
     measurement: Measurement
 };
 
-type Align = 'left' | 'center' | 'right';
-
-const Component = styled.span<{
-    color?: string;
-    fontSize?: string;
-    align?: Align;
-    marginBottom?: boolean;
-    noWrap?: boolean;
-    inline?: boolean;
-}>((props) => ({
-    textAlign: props.align ? props.align : 'left',
-    ...(props.color && { color: props.color }),
-    ...(props.fontSize && {
-        fontSize: props.fontSize
-    }),
-    ...(props.marginBottom && {
-        marginBottom: '16px'
-    }),
-    ...(props.noWrap && {
-        whiteSpace: 'nowrap'
-    }),
-    ...(props.inline && {
-        display: 'inline'
-    }),
-
-    transition: 'color ' + props.theme.transitionDuration + 'ms ease-in-out'
+const Component = styled.span((props) => ({
+    transition: 'color ' + props.theme.transitionDuration + 'ms ease-in-out',
+    ...props.style
 }));
 
 interface Props {
     children: React.ReactNode;
     variant?: Variants;
-    color?: string;
-    fontSize?: string;
-    align?: Align;
-    marginBottom?: boolean;
-    noWrap?: boolean;
-    inline?: boolean;
+    style?: CSSProperties;
+    className?: string;
 }
 
 function Typography(props: Props) {
     return (
         <Component
+            className={props.className}
             as={props.variant ? variantsMapping[props.variant] : Body1}
-            color={props.color}
-            fontSize={props.fontSize}
-            align={props.align}
-            marginBottom={props.marginBottom}
-            noWrap={props.noWrap}
-            inline={props.inline}
+            style={props.style}
         >
             {props.children}
         </Component>

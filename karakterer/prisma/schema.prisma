@@ -1,5 +1,5 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
 }
 
 datasource db {
@@ -9,10 +9,11 @@ datasource db {
 
 model Course {
   course String   @id @db.VarChar(20)
-  name   String?  @db.Text
+  name   String?  @db.VarChar(255)
   grades Grades[] @relation("coursesTogrades")
 
   @@map("courses")
+  @@index([course, name])
 }
 
 model Grades {

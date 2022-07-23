@@ -1,15 +1,11 @@
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import { useRouter } from 'next/router';
-import {
-    Courses,
-    CourseWithGrades,
-    CourseWithGradesPromise,
-    getCourseData,
-    getMostPopularCourses
-} from 'api/course';
 import { ParsedUrlQuery } from 'querystring';
+import CoursePage from 'components/course';
+import { SidebarContextProvider } from 'state/sidebar';
 import { SettingsContextProvider } from 'state/settings';
-import Dashboard from 'components/course/Dashboard';
+import { CourseWithGrades, CourseWithGradesPromise, getCourseData } from 'lib/getCourseData';
+import { Courses, getMostPopularCourses } from 'lib/getMostPopularCourses';
 
 const Course: NextPage<CourseWithGrades> = (props) => {
     const router = useRouter();
@@ -19,9 +15,11 @@ const Course: NextPage<CourseWithGrades> = (props) => {
     }
 
     return (
-        <SettingsContextProvider>
-            <Dashboard {...props} />
-        </SettingsContextProvider>
+        <SidebarContextProvider>
+            <SettingsContextProvider>
+                <CoursePage key={props.course} {...props} />
+            </SettingsContextProvider>
+        </SidebarContextProvider>
     );
 };
 
