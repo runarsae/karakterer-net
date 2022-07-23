@@ -1,4 +1,4 @@
-import { Grades } from 'components/course/Dashboard';
+import { Grades } from 'components/course';
 
 export const semesterLetter = (number: number) => {
     switch (number) {
