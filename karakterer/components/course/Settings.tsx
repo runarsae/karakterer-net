@@ -25,8 +25,7 @@ const Popup = styled(Card)<{ open: boolean }>`
         display: props.open ? 'flex' : 'none',
         flexDirection: 'column',
         zIndex: 2,
-        gap: 12,
-        boxShadow: '0 0 3px 0 rgb(0 0 0 / 30%)'
+        gap: 16
     })}
 `;
 

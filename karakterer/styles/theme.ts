@@ -22,7 +22,7 @@ export const theme: DefaultTheme = {
         background: '#1e1e1e',
         heading: '#CECECE',
         text: '#999999',
-        overlay: 'rgba(0, 0, 0, 0.85)',
+        overlay: 'rgba(0, 0, 0, 0.5)',
         horizontalLine: '#363636',
         inputBackground: '',
         card: '#171717',
