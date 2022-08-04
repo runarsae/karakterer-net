@@ -110,12 +110,12 @@ const Slider = ({ max, value, onChange, label, minLabel, maxLabel }: Props) => {
     return (
         <Container>
             <ExtremeTickLabel align="left" ref={minLabelDivRef} visible={showMinLabel}>
-                <Typography variant="body1" style={{ color: '#464645', textAlign: 'center' }}>
+                <Typography variant="body2" style={{ color: '#464645', textAlign: 'center' }}>
                     {minLabel}
                 </Typography>
             </ExtremeTickLabel>
             <ExtremeTickLabel align="right" ref={maxLabelDivRef} visible={showMaxLabel}>
-                <Typography variant="body1" style={{ color: '#464645', textAlign: 'center' }}>
+                <Typography variant="body2" style={{ color: '#464645', textAlign: 'center' }}>
                     {maxLabel}
                 </Typography>
             </ExtremeTickLabel>
@@ -128,7 +128,7 @@ const Slider = ({ max, value, onChange, label, minLabel, maxLabel }: Props) => {
                     <Thumb {...props} isDragged={isDragged} onKeyDown={undefined}>
                         <Label ref={labelDivRef}>
                             <Typography
-                                variant="body1"
+                                variant="body2"
                                 style={{ color: theme.palette.heading, textAlign: 'center' }}
                             >
                                 {label}
