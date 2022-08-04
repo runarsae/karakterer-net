@@ -4,8 +4,9 @@ import { ArrowRightIcon } from './icons';
 import Typography from './Typography';
 
 const AccordionContainer = styled.div({
-    borderRadius: '4px',
-    overflow: 'hidden'
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '4px'
 });
 
 interface AccordionItem {
@@ -39,6 +40,11 @@ function Accordion({ items }: AccordionProps) {
     );
 }
 
+const AccordionItemContainer = styled.div({
+    borderRadius: '4px',
+    overflow: 'hidden'
+});
+
 const AccordionItemButton = styled.button((props) => ({
     display: 'grid',
     gridTemplateColumns: '16px 1fr',
@@ -51,7 +57,8 @@ const AccordionItemButton = styled.button((props) => ({
     textAlign: 'left',
     color: 'inherit',
     border: 'none',
-    outline: 0
+    outline: 0,
+    margin: '0px'
 }));
 
 const IconContainer = styled.div<{ active: boolean }>((props) => ({
@@ -79,7 +86,7 @@ function AccordionItem({ title, content, active, handleClick }: AccordionItemPro
     const accordionItemPanelRef = useRef<HTMLDivElement>(null);
 
     return (
-        <div>
+        <AccordionItemContainer>
             <AccordionItemButton onClick={handleClick}>
                 <IconContainer active={active}>
                     <ArrowRightIcon width={16} height={16} />
@@ -93,7 +100,7 @@ function AccordionItem({ title, content, active, handleClick }: AccordionItemPro
             >
                 <AccordionItemPanelContent>{content}</AccordionItemPanelContent>
             </AccordionItemPanel>
-        </div>
+        </AccordionItemContainer>
     );
 }
 
