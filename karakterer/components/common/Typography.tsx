@@ -32,11 +32,11 @@ const Heading3 = styled.h3((props) => ({
 }));
 
 const Heading4 = styled.h4((props) => ({
-    fontSize: '12px',
+    fontSize: '14px',
     color: props.theme.palette.heading,
 
     [`@media (min-width: ${props.theme.breakpoints.md}px)`]: {
-        fontSize: '14px'
+        fontSize: '16px'
     }
 }));
 
