@@ -1,3 +1,4 @@
+import Accordion from 'components/common/Accordion';
 import Typography from 'components/common/Typography';
 import styled from 'styled-components';
 
@@ -17,12 +18,6 @@ const Line = styled.div((props) => ({
     width: '100%',
     borderTop: '1px solid ' + props.theme.palette.horizontalLine
 }));
-
-const QA = styled.div({
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '8px'
-});
 
 const Link = styled.a((props) => ({
     textDecoration: 'none',
@@ -61,86 +56,132 @@ export default function About() {
                     (DBH) , underlagt av direktoratet for høyere utdanning og kompetanse (HK-dir).
                 </Typography>
             </SubContainer>
-            <Line />
             <SubContainer>
                 <Typography variant="h2">FAQ</Typography>
-                <QA>
-                    <Typography variant="h3">
-                        Hvorfor kan jeg ikke filtrere på konte&shy;eksamen?
-                    </Typography>
-                    <Typography variant="body1" style={{ lineHeight: 1.5 }}>
-                        Data rapporteres inn to ganger årlig; etter høstsemesteret og etter
-                        vårsemesteret. Det er forskjellig fra emne til emne hvordan karakterer for
-                        konteeksamen rapporteres inn og om de blir aggregert med karakterer for
-                        ordinær eksamen eller ikke.
-                    </Typography>
-                </QA>
-                <QA>
-                    <Typography variant="h3">Når oppdateres statistikken?</Typography>
-                    <Typography variant="body1" style={{ lineHeight: 1.5 }}>
-                        NTNU har frist for innrapportering til HK-dir den 15. februar for
-                        høstsemesteret og 15. oktober for vårsemesteret. Statistikken på denne
-                        nettsiden vil oppdateres innen kort tid etter disse fristene, gitt at dataen
-                        er rapportert inn og tilgjengelig.
-                    </Typography>
-                </QA>
-                <QA>
-                    <Typography variant="h3">Hva betyr totalt gjennomsnitt?</Typography>
-                    <Typography variant="body1" style={{ lineHeight: 1.5 }}>
-                        Totalt gjennomsnitt tar utgangspunkt i følgende verdier for karakterer:{' '}
-                    </Typography>
-                    <ListContainer>
-                        <List>
-                            <li>
+                <Accordion
+                    items={[
+                        {
+                            title: <>Hvorfor kan jeg ikke filtrere på konte&shy;eksamen?</>,
+                            content: (
                                 <Typography variant="body1" style={{ lineHeight: 1.5 }}>
-                                    A = 5
+                                    Data rapporteres inn to ganger årlig; etter høstsemesteret og
+                                    etter vårsemesteret. Det er forskjellig fra emne til emne
+                                    hvordan karakterer for konteeksamen rapporteres inn og om de
+                                    blir aggregert med karakterer for ordinær eksamen eller ikke.
                                 </Typography>
-                            </li>
-                            <li>
+                            )
+                        },
+                        {
+                            title: <>Når oppdateres statistikken?</>,
+                            content: (
+                                <>
+                                    <Typography variant="body1" style={{ lineHeight: 1.5 }}>
+                                        NTNU har følgende frister for innrapportering til HK-dir:
+                                    </Typography>
+                                    <List>
+                                        <li>
+                                            <Typography variant="body1" style={{ lineHeight: 1.5 }}>
+                                                15. februar for høstsemester
+                                            </Typography>
+                                        </li>
+                                        <li>
+                                            <Typography variant="body1" style={{ lineHeight: 1.5 }}>
+                                                15. oktober for vårsemester
+                                            </Typography>
+                                        </li>
+                                    </List>
+                                    <Typography variant="body1" style={{ lineHeight: 1.5 }}>
+                                        Statistikken oppdateres innen kort tid etter disse fristene,
+                                        gitt at dataen er rapportert inn og tilgjengelig.
+                                    </Typography>
+                                </>
+                            )
+                        },
+                        {
+                            title: <>Hva betyr totalt gjennom&shy;snitt?</>,
+                            content: (
+                                <>
+                                    <Typography variant="body1" style={{ lineHeight: 1.5 }}>
+                                        Totalt gjennomsnitt tar utgangspunkt i følgende verdier for
+                                        karakterer:
+                                    </Typography>
+                                    <ListContainer>
+                                        <List>
+                                            <li>
+                                                <Typography
+                                                    variant="body1"
+                                                    style={{ lineHeight: 1.5 }}
+                                                >
+                                                    A = 5
+                                                </Typography>
+                                            </li>
+                                            <li>
+                                                <Typography
+                                                    variant="body1"
+                                                    style={{ lineHeight: 1.5 }}
+                                                >
+                                                    B = 4
+                                                </Typography>
+                                            </li>
+                                            <li>
+                                                <Typography
+                                                    variant="body1"
+                                                    style={{ lineHeight: 1.5 }}
+                                                >
+                                                    C = 3
+                                                </Typography>
+                                            </li>
+                                        </List>
+                                        <List>
+                                            <li>
+                                                <Typography
+                                                    variant="body1"
+                                                    style={{ lineHeight: 1.5 }}
+                                                >
+                                                    D = 2
+                                                </Typography>
+                                            </li>
+                                            <li>
+                                                <Typography
+                                                    variant="body1"
+                                                    style={{ lineHeight: 1.5 }}
+                                                >
+                                                    E = 1
+                                                </Typography>
+                                            </li>
+                                            <li>
+                                                <Typography
+                                                    variant="body1"
+                                                    style={{ lineHeight: 1.5 }}
+                                                >
+                                                    F = 0
+                                                </Typography>
+                                            </li>
+                                        </List>
+                                    </ListContainer>
+                                    <Typography variant="body1" style={{ lineHeight: 1.5 }}>
+                                        Utregningen summerer karakterene for alle semestrene og
+                                        deler på totalt antall studenter. Bokstav&shy;karakteren
+                                        regnes ut ved å runde av til nærmeste hele tall.
+                                    </Typography>
+                                </>
+                            )
+                        },
+                        {
+                            title: <>Hva betyr total stryk&shy;prosent?</>,
+                            content: (
                                 <Typography variant="body1" style={{ lineHeight: 1.5 }}>
-                                    B = 4
+                                    Totalt strykprosent regnes ut ved å summere antall studenter som
+                                    fikk stryk for alle semestrene, dele på totalt antall studenter
+                                    og gange med 100.
                                 </Typography>
-                            </li>
-                            <li>
-                                <Typography variant="body1" style={{ lineHeight: 1.5 }}>
-                                    C = 3
-                                </Typography>
-                            </li>
-                        </List>
-                        <List>
-                            <li>
-                                <Typography variant="body1" style={{ lineHeight: 1.5 }}>
-                                    D = 2
-                                </Typography>
-                            </li>
-                            <li>
-                                <Typography variant="body1" style={{ lineHeight: 1.5 }}>
-                                    E = 1
-                                </Typography>
-                            </li>
-                            <li>
-                                <Typography variant="body1" style={{ lineHeight: 1.5 }}>
-                                    F = 0
-                                </Typography>
-                            </li>
-                        </List>
-                    </ListContainer>
-                    <Typography variant="body1" style={{ lineHeight: 1.5 }}>
-                        Utregningen summerer karakterene for alle semestrene og deler på totalt
-                        antall studenter. Bokstav&shy;karakteren regnes ut ved å runde av til
-                        nærmeste hele tall.
-                    </Typography>
-                </QA>
-                <QA>
-                    <Typography variant="h3">Hva betyr total strykprosent?</Typography>
-                    <Typography variant="body1" style={{ lineHeight: 1.5 }}>
-                        Totalt strykprosent regnes ut ved å summere antall studenter som fikk stryk
-                        for alle semestrene, dele på totalt antall studenter og gange med 100.
-                    </Typography>
-                </QA>
+                            )
+                        }
+                    ]}
+                />
             </SubContainer>
             <Line />
-            <Typography variant="body2" style={{ textAlign: 'center' }}>
+            <Typography variant="body2">
                 Copyright © {new Date().getFullYear()}, KARAKTERER.net
             </Typography>
         </Container>

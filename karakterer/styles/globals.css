@@ -24,6 +24,7 @@
 
 * {
     box-sizing: border-box;
+    font-family: RalewayMedium, sans-serif;
 }
 
 html,
@@ -34,7 +35,6 @@ body {
     height: 100%;
     background-color: #1e1e1e;
     color: #999999;
-    font-family: RalewayMedium, sans-serif;
 
     -webkit-font-feature-settings: 'lnum';
     -moz-font-feature-settings: 'lnum';
