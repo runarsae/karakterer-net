@@ -48,14 +48,13 @@ export default function About() {
         <Container>
             <SubContainer>
                 <Typography variant="body1" style={{ lineHeight: 1.5 }}>
-                    Karakterstatistikken for et emne viser fordelingen av karakterene A til F for
-                    hvert semester i et søyle&shy;diagram. Denne fordelingen brukes til å beregne
-                    gjennomsnitts&shy;karakterer og stryk&shy;prosenter som fremstilles i
-                    linje&shy;diagrammer. Merk at antall studenter som avbrøt en eksamen ikke er
+                    Karakterstatistikken viser fordelingen av karakterene A til F for hvert
+                    semester. Denne fordelingen brukes til å beregne gjennomsnitts&shy;karakterer og
+                    stryk&shy;prosenter. Merk at antall studenter som avbrøt en eksamen ikke er
                     medberegnet.
                 </Typography>
                 <Typography variant="body1" style={{ lineHeight: 1.5 }}>
-                    Karakterstatistikken er hentet fra{' '}
+                    Tallene er hentet fra{' '}
                     <Link href="https://dbh.hkdir.no/" target="_blank">
                         database for statistikk om høyere utdanning
                     </Link>{' '}
@@ -82,7 +81,7 @@ export default function About() {
                         NTNU har frist for innrapportering til HK-dir den 15. februar for
                         høstsemesteret og 15. oktober for vårsemesteret. Statistikken på denne
                         nettsiden vil oppdateres innen kort tid etter disse fristene, gitt at dataen
-                        er rapportert inn.
+                        er rapportert inn og tilgjengelig.
                     </Typography>
                 </QA>
                 <QA>
@@ -127,17 +126,16 @@ export default function About() {
                         </List>
                     </ListContainer>
                     <Typography variant="body1" style={{ lineHeight: 1.5 }}>
-                        Utregningen summerer opp karakterene for alle semestrene som er valgt og
-                        deler på totalt antall studenter. Bokstav&shy;karakteren regnes ut ved å
-                        runde av til nærmeste hele tall.
+                        Utregningen summerer karakterene for alle semestrene og deler på totalt
+                        antall studenter. Bokstav&shy;karakteren regnes ut ved å runde av til
+                        nærmeste hele tall.
                     </Typography>
                 </QA>
                 <QA>
                     <Typography variant="h3">Hva betyr total strykprosent?</Typography>
                     <Typography variant="body1" style={{ lineHeight: 1.5 }}>
-                        Totalt strykprosent regnes ut ved å summere opp antall studenter som fikk
-                        stryk for alle semestrene som er valgt, dele på totalt antall studenter og
-                        gange med 100.
+                        Totalt strykprosent regnes ut ved å summere antall studenter som fikk stryk
+                        for alle semestrene, dele på totalt antall studenter og gange med 100.
                     </Typography>
                 </QA>
             </SubContainer>
