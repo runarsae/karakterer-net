@@ -24,6 +24,10 @@ const Header = styled.div((props) => ({
     [`@media (min-width: 480px)`]: {
         top: 90, // Height of sidebar header
         padding: '0 0 16px 0'
+    },
+
+    [`@media (min-width: ${props.theme.breakpoints.md}px)`]: {
+        padding: '0 0 32px 0'
     }
 }));
 

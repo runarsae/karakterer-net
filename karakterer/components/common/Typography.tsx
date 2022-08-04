@@ -18,35 +18,43 @@ const Heading2 = styled.h2((props) => ({
     color: props.theme.palette.heading,
 
     [`@media (min-width: ${props.theme.breakpoints.md}px)`]: {
-        fontSize: '18px'
+        fontSize: '20px'
     }
 }));
 
 const Heading3 = styled.h3((props) => ({
-    fontSize: '16px',
-    color: props.theme.palette.heading
+    fontSize: '14px',
+    color: props.theme.palette.heading,
+
+    [`@media (min-width: ${props.theme.breakpoints.md}px)`]: {
+        fontSize: '18px'
+    }
 }));
 
 const Heading4 = styled.h4((props) => ({
     fontSize: '14px',
-    color: props.theme.palette.heading
+    color: props.theme.palette.heading,
+
+    [`@media (min-width: ${props.theme.breakpoints.md}px)`]: {
+        fontSize: '16px'
+    }
 }));
 
 const Body1 = styled.p((props) => ({
+    fontSize: '14px',
+    color: props.theme.palette.text,
+
+    [`@media (min-width: ${props.theme.breakpoints.md}px)`]: {
+        fontSize: '16px'
+    }
+}));
+
+const Body2 = styled.p((props) => ({
     fontSize: '12px',
     color: props.theme.palette.text,
 
     [`@media (min-width: ${props.theme.breakpoints.md}px)`]: {
         fontSize: '14px'
-    }
-}));
-
-const Body2 = styled.p((props) => ({
-    fontSize: '10px',
-    color: props.theme.palette.text,
-
-    [`@media (min-width: ${props.theme.breakpoints.md}px)`]: {
-        fontSize: '12px'
     }
 }));
 
@@ -63,7 +71,7 @@ const Measurement = styled.p((props) => ({
     }
 }));
 
-type Variants = 'h1' | 'h2' | 'h3' | 'h4' | 'body1' | 'body2' | 'body3' | 'button' | 'measurement';
+type Variants = 'h1' | 'h2' | 'h3' | 'h4' | 'body1' | 'body2' | 'button' | 'measurement';
 
 const variantsMapping: {
     [index: string]: StyledComponent<
