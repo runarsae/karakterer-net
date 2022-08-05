@@ -1,6 +1,7 @@
 import sys
 from config.config import db, cursor
 from dbh_client import DBH_CLIENT, FilterType, Semester
+from refresh_courses_with_grades import refresh_courses_with_grades
 
 
 class Grades:
@@ -191,3 +192,4 @@ if __name__ == '__main__':
 
     result = grades.fetch_grades(year, semester)
     grades.insert_grade_data(result, year, semester)
+    refresh_courses_with_grades()

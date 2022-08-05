@@ -1,5 +1,6 @@
 from config.config import db, cursor
 from dbh_client import DBH_CLIENT, FilterType
+from refresh_courses_with_grades import refresh_courses_with_grades
 
 
 class Courses:
@@ -64,3 +65,4 @@ if __name__ == '__main__':
     courses = Courses()
     result = courses.fetch_courses()
     courses.insert_course_data(result)
+    refresh_courses_with_grades()

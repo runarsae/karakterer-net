@@ -1,7 +1,7 @@
 import client from 'prisma/client';
 
 export async function searchCourses(search: string) {
-    const data = await client.course.findMany({
+    const data = await client.coursesWithGrades.findMany({
         where: {
             OR: [
                 {
