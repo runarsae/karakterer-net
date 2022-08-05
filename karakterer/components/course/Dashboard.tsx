@@ -6,7 +6,7 @@ import { Dispatch, useCallback, useEffect } from 'react';
 import LineChart, { YLabels } from 'components/course/LineChart';
 import Slider from 'components/course/Slider';
 import { gradeLetter } from 'utils/grades';
-import { Action, State } from '.';
+import { Action, State } from 'state/dashboard';
 
 const Grid = styled.div<{ hasGrades: boolean }>((props) => ({
     display: 'grid',
@@ -141,11 +141,10 @@ const Line = styled.div((props) => ({
 
 interface Props {
     state: State;
-    hasGrades: boolean;
     dispatch: Dispatch<Action>;
 }
 
-const Dashboard = ({ state, hasGrades, dispatch }: Props) => {
+function Dashboard({ state, dispatch }: Props) {
     const handleKeyDown = useCallback(
         (e: KeyboardEvent) => {
             if (e.key === 'ArrowLeft') {
@@ -166,7 +165,7 @@ const Dashboard = ({ state, hasGrades, dispatch }: Props) => {
     }, [handleKeyDown]);
 
     return (
-        <Grid hasGrades={hasGrades}>
+        <Grid hasGrades={state.hasGrades}>
             <Card style={{ gridArea: 'grades' }}>
                 <CardContent gap>
                     <Typography variant="h2">Karakterfordeling</Typography>
@@ -204,8 +203,8 @@ const Dashboard = ({ state, hasGrades, dispatch }: Props) => {
                 )}
             </Card>
 
-            <MeasurementsSubGrid hasGrades={hasGrades}>
-                {hasGrades && (
+            <MeasurementsSubGrid hasGrades={state.hasGrades}>
+                {state.hasGrades && (
                     <Card style={{ gridArea: 'total_average' }}>
                         <CenterBox>
                             <MeasurementContainer>
@@ -249,8 +248,8 @@ const Dashboard = ({ state, hasGrades, dispatch }: Props) => {
                 </Card>
             </MeasurementsSubGrid>
 
-            <LineChartsSubGrid hasGrades={hasGrades}>
-                {hasGrades && (
+            <LineChartsSubGrid hasGrades={state.hasGrades}>
+                {state.hasGrades && (
                     <Card style={{ gridArea: 'averages' }}>
                         <CardContent>
                             <Typography variant="h2">Gjennomsnitt</Typography>
@@ -292,6 +291,6 @@ const Dashboard = ({ state, hasGrades, dispatch }: Props) => {
             </LineChartsSubGrid>
         </Grid>
     );
-};
+}
 
 export default Dashboard;

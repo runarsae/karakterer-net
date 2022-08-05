@@ -1,5 +1,6 @@
-import { ReactElement, useState } from 'react';
+import { ReactElement, ReactNode, useEffect, useMemo, useState } from 'react';
 import { createContext } from 'utils/context';
+import { Grades } from './dashboard';
 
 export enum Semester {
     All = 0,
@@ -16,10 +17,28 @@ export const SettingsContext = createContext<{
     setEnabledSemesterDisplays: (semesterDisplays: Semester[]) => void;
 }>();
 
-export const SettingsContextProvider = ({ children }: { children: ReactElement }) => {
+interface Props {
+    children: ReactNode;
+    grades: Grades[];
+}
+
+export const SettingsContextProvider = ({ children, grades }: Props) => {
+    // Check which semesters the course has grades for
+    const hasSpring = useMemo(() => grades.some((item) => item.semester === 1), [grades]);
+    const hasAutumn = useMemo(() => grades.some((item) => item.semester === 3), [grades]);
+
     const [settingsOpen, setSettingsOpen] = useState<boolean>(false);
-    const [semesterDisplay, setSemesterDisplay] = useState<Semester>(Semester.All);
-    const [enabledSemesterDisplays, setEnabledSemesterDisplays] = useState<Semester[]>([]);
+
+    // TODO: Set default to main semester
+    const [semesterDisplay, setSemesterDisplay] = useState<Semester>(
+        hasSpring && hasAutumn ? Semester.All : hasSpring ? Semester.Spring : Semester.Autumn
+    );
+
+    const [enabledSemesterDisplays, setEnabledSemesterDisplays] = useState<Semester[]>([
+        ...(hasSpring ? [Semester.Spring] : []),
+        ...(hasAutumn ? [Semester.Autumn] : []),
+        ...(hasSpring && hasAutumn ? [Semester.All] : [])
+    ]);
 
     return (
         <SettingsContext.Provider

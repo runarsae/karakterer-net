@@ -3,7 +3,7 @@ import { Chart } from 'react-chartjs-2';
 import { Chart as ChartType, ChartOptions } from 'chart.js';
 import { useEffect, useMemo, useRef } from 'react';
 import FontFaceObserver from 'fontfaceobserver';
-import { Grades } from '.';
+import { Grades } from 'state/dashboard';
 
 const Container = styled.div((props) => ({
     position: 'relative',
