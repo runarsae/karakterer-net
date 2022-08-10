@@ -33,7 +33,7 @@ export const getStaticProps: GetStaticProps<CourseWithGrades, Params> = async (c
 
     const courseData: CourseWithGradesPromise = await getCourseData(course);
 
-    if (!courseData) {
+    if (!courseData || courseData.grades.length === 0) {
         return {
             notFound: true
         };
