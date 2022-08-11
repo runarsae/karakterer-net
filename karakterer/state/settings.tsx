@@ -11,10 +11,9 @@ export enum Semester {
 export const SettingsContext = createContext<{
     settingsOpen: boolean;
     setSettingsOpen: (open: boolean) => void;
-    semesterDisplay: Semester;
+    semesterDisplay: Semester | undefined;
     setSemesterDisplay: (semesterDisplay: Semester) => void;
     enabledSemesterDisplays: Semester[];
-    setEnabledSemesterDisplays: (semesterDisplays: Semester[]) => void;
 }>();
 
 interface Props {
@@ -27,18 +26,25 @@ export const SettingsContextProvider = ({ children, grades }: Props) => {
     const hasSpring = useMemo(() => grades.some((item) => item.semester === 1), [grades]);
     const hasAutumn = useMemo(() => grades.some((item) => item.semester === 3), [grades]);
 
-    const [settingsOpen, setSettingsOpen] = useState<boolean>(false);
-
-    // TODO: Set default to main semester
-    const [semesterDisplay, setSemesterDisplay] = useState<Semester>(
-        hasSpring && hasAutumn ? Semester.All : hasSpring ? Semester.Spring : Semester.Autumn
+    const enabledSemesterDisplays = useMemo(
+        () => [
+            ...(hasSpring ? [Semester.Spring] : []),
+            ...(hasAutumn ? [Semester.Autumn] : []),
+            ...(hasSpring && hasAutumn ? [Semester.All] : [])
+        ],
+        [hasAutumn, hasSpring]
     );
 
-    const [enabledSemesterDisplays, setEnabledSemesterDisplays] = useState<Semester[]>([
-        ...(hasSpring ? [Semester.Spring] : []),
-        ...(hasAutumn ? [Semester.Autumn] : []),
-        ...(hasSpring && hasAutumn ? [Semester.All] : [])
-    ]);
+    const [settingsOpen, setSettingsOpen] = useState<boolean>(false);
+
+    const [semesterDisplay, setSemesterDisplay] = useState<Semester>();
+
+    useEffect(() => {
+        // TODO: Set default to main semester
+        setSemesterDisplay(
+            hasSpring && hasAutumn ? Semester.All : hasSpring ? Semester.Spring : Semester.Autumn
+        );
+    }, [hasAutumn, hasSpring]);
 
     return (
         <SettingsContext.Provider
@@ -47,8 +53,7 @@ export const SettingsContextProvider = ({ children, grades }: Props) => {
                 setSettingsOpen,
                 semesterDisplay,
                 setSemesterDisplay,
-                enabledSemesterDisplays,
-                setEnabledSemesterDisplays
+                enabledSemesterDisplays
             }}
         >
             {children}

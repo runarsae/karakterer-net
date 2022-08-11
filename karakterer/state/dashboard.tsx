@@ -107,7 +107,9 @@ export const useDashboardState = (grades: Grades[]): [State | undefined, Dispatc
 
     // Initialize dashboard state when semester display and grades are changed
     useEffect(() => {
-        dispatch({ type: 'initialize', payload: { semester: semesterDisplay } });
+        if (semesterDisplay !== undefined) {
+            dispatch({ type: 'initialize', payload: { semester: semesterDisplay } });
+        }
     }, [semesterDisplay, grades]);
 
     return [state, dispatch];
