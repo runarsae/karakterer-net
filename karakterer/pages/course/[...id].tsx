@@ -6,12 +6,13 @@ import { SidebarContextProvider } from 'state/sidebar';
 import { SettingsContextProvider } from 'state/settings';
 import { CourseWithGrades, CourseWithGradesPromise, getCourseData } from 'lib/getCourseData';
 import { Courses, getMostPopularCourses } from 'lib/getMostPopularCourses';
+import Loading from 'components/layout/Loading';
 
 const Course: NextPage<CourseWithGrades> = (props) => {
     const router = useRouter();
 
     if (router.isFallback) {
-        return <div>Loading...</div>;
+        return <Loading />;
     }
 
     return (

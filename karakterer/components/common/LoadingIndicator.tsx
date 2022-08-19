@@ -9,13 +9,13 @@ const rotate = keyframes({
     }
 });
 
-const LoadingIndicator = styled.div(
+const LoadingIndicator = styled.div<{ size?: 'large' | 'normal' }>(
     (props) => ({
         border: `2px solid ${props.theme.palette.popup}`,
         borderTop: `2px solid ${props.theme.palette.primary.main}`,
         borderRadius: '50%',
-        width: '22px',
-        height: '22px'
+        width: props.size === 'large' ? '40px' : '22px',
+        height: props.size === 'large' ? '40px' : '22px'
     }),
     css`
         animation: ${rotate} 1s linear infinite;
