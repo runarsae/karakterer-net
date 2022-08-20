@@ -62,26 +62,26 @@ model Grades {
   @@map("grades")
 }
 
-model TopVisits {
-  course   String @id @db.VarChar(20)
-  countSum Int    @default(0) @map("count_sum")
-
-  @@map("top_visits")
-}
-
-model Visit {
-  course String   @db.VarChar(20)
-  date   DateTime @default(dbgenerated("(curdate())")) @db.Date
-  count  Int      @default(0)
-
-  @@id([course, date])
-  @@map("visits")
-}
-
 model CoursesWithGrades {
   course String  @id @db.VarChar(20)
   name   String? @db.VarChar(255)
 
   @@index([course, name], map: "courses_with_grades_course_name_index")
   @@map("courses_with_grades")
+}
+
+model TopView {
+  course    String @id @db.VarChar(20)
+  countSum Int    @default(0) @map("count_sum")
+
+  @@map("top_views")
+}
+
+model View {
+  course String @db.VarChar(20)
+  date   String @db.VarChar(10)
+  count  Int    @default(0)
+
+  @@id([course, date])
+  @@map("views")
 }
