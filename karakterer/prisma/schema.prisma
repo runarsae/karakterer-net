@@ -8,9 +8,11 @@ datasource db {
 }
 
 model Course {
-  course String   @id @db.VarChar(20)
-  name   String?  @db.VarChar(255)
-  grades Grades[] @relation("coursesTogrades")
+  course    String   @id @db.VarChar(20)
+  name      String?  @db.VarChar(255)
+  grades    Grades[] @relation("coursesTogrades")
+  top_views TopView? @relation("coursesTotop_views")
+  views     View[]   @relation("coursesToviews")
 
   @@index([course, name])
   @@map("courses")
@@ -71,16 +73,18 @@ model CoursesWithGrades {
 }
 
 model TopView {
-  course    String @id @db.VarChar(20)
+  course   String @id @db.VarChar(20)
   countSum Int    @default(0) @map("count_sum")
+  courses  Course @relation("coursesTotop_views", fields: [course], references: [course], onDelete: NoAction, onUpdate: NoAction, map: "top_views_courses_course_fk")
 
   @@map("top_views")
 }
 
 model View {
-  course String @db.VarChar(20)
-  date   String @db.VarChar(10)
-  count  Int    @default(0)
+  course  String @db.VarChar(20)
+  date    String @db.VarChar(10)
+  count   Int    @default(0)
+  courses Course @relation("coursesToviews", fields: [course], references: [course], onDelete: NoAction, onUpdate: NoAction, map: "views_courses_course_fk")
 
   @@id([course, date])
   @@map("views")
