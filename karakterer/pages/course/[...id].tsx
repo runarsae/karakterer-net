@@ -8,6 +8,7 @@ import { CourseWithGrades, CourseWithGradesPromise, getCourseData } from 'lib/ge
 import { Courses, getMostPopularCourses } from 'lib/getMostPopularCourses';
 import Loading from 'components/layout/Loading';
 import { useEffect, useState } from 'react';
+import Head from 'next/head';
 
 const Course: NextPage<CourseWithGrades> = (props) => {
     const router = useRouter();
@@ -34,9 +35,18 @@ const Course: NextPage<CourseWithGrades> = (props) => {
     }
 
     return (
-        <SettingsContextProvider grades={props.grades}>
-            <CoursePage {...props} />
-        </SettingsContextProvider>
+        <>
+            <Head>
+                <title>{`${props.course} ${props.name} - KARAKTERER.net`}</title>
+                <meta
+                    name="description"
+                    content={`Karakterstatistikk for emnet ${props.course} ${props.name} på Norges teknisk-naturvitenskapelige universitet (NTNU).`}
+                />
+            </Head>
+            <SettingsContextProvider grades={props.grades}>
+                <CoursePage {...props} />
+            </SettingsContextProvider>
+        </>
     );
 };
 
