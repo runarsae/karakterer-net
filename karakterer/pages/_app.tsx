@@ -15,6 +15,8 @@ import {
 } from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import Layout from 'components/layout/Layout';
+import { SidebarContextProvider } from 'state/sidebar';
+import Sidebar from 'components/common/Sidebar';
 
 ChartJS.register(
     CategoryScale,
@@ -30,9 +32,12 @@ ChartJS.register(
 function App({ Component, pageProps }: AppProps) {
     return (
         <ThemeProvider theme={theme}>
-            <Layout>
-                <Component {...pageProps} />
-            </Layout>
+            <SidebarContextProvider>
+                <Layout>
+                    <Component {...pageProps} />
+                    <Sidebar />
+                </Layout>
+            </SidebarContextProvider>
         </ThemeProvider>
     );
 }

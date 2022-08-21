@@ -34,11 +34,9 @@ const Course: NextPage<CourseWithGrades> = (props) => {
     }
 
     return (
-        <SidebarContextProvider>
-            <SettingsContextProvider grades={props.grades}>
-                <CoursePage {...props} />
-            </SettingsContextProvider>
-        </SidebarContextProvider>
+        <SettingsContextProvider grades={props.grades}>
+            <CoursePage {...props} />
+        </SettingsContextProvider>
     );
 };
 
