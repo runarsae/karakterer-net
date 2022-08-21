@@ -3,14 +3,16 @@ import Head from 'next/head';
 
 const Index: NextPage = () => {
     return (
-        <div>
+        <>
             <Head>
-                <title>Hello world</title>
-                <meta name="description" content="Hello world" />
-                <link rel="icon" href="/favicon.ico" />
+                <title>KARAKTERER.net</title>
+                <meta
+                    name="description"
+                    content="Detaljert karakterstatistikk for alle emner på Norges teknisk-naturvitenskapelige universitet (NTNU) siden 2004."
+                />
             </Head>
             Hello world
-        </div>
+        </>
     );
 };
 
