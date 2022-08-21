@@ -21,7 +21,7 @@ const Popup = styled(Card)<{ open: boolean }>`
         position: 'absolute',
         right: 0,
         top: 45,
-        backgroundColor: props.theme.palette.popup,
+        backgroundColor: props.theme.palette.popup.main,
         display: props.open ? 'flex' : 'none',
         flexDirection: 'column',
         zIndex: 2,

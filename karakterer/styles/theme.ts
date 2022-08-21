@@ -19,14 +19,19 @@ export const theme: DefaultTheme = {
             white: '#FFFFFF',
             gray: '#F5F5F5'
         },
-        background: '#1e1e1e',
+        background: '#000000',
         heading: '#CECECE',
         text: '#999999',
         overlay: 'rgba(0, 0, 0, 0.5)',
         horizontalLine: '#363636',
         inputBackground: '',
-        card: '#171717',
-        popup: '#252525'
+        card: {
+            main: '#101010'
+        },
+        popup: {
+            main: '#1c1c1c',
+            hover: '#161616'
+        }
     },
     breakpoints: {
         xs: 375,

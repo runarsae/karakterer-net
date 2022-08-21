@@ -69,7 +69,7 @@ const LineChart = ({
                         size: 12,
                         family: 'RalewayMedium'
                     },
-                    backgroundColor: '#252525',
+                    backgroundColor: theme.palette.popup.main,
                     borderRadius: 4,
                     padding: {
                         top: 8,
@@ -203,16 +203,7 @@ const LineChart = ({
                 e.length > 0 ? setPointHover(true) : setPointHover(false);
             }
         }),
-        [
-            theme.palette.heading,
-            theme.palette.text,
-            color,
-            xLabels,
-            dataLabelIndex,
-            valueSuffix,
-            yLabels,
-            onChange
-        ]
+        [theme, color, xLabels, dataLabelIndex, valueSuffix, yLabels, onChange]
     );
 
     const data = useMemo(

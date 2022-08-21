@@ -4,6 +4,7 @@ interface IPalette {
     main: string;
     light?: string;
     dark?: string;
+    hover?: string;
 }
 
 declare module 'styled-components' {
@@ -24,8 +25,8 @@ declare module 'styled-components' {
             overlay: string;
             horizontalLine: string;
             inputBackground: string;
-            card: string;
-            popup: string;
+            card: IPalette;
+            popup: IPalette;
         };
         breakpoints: {
             xs: number;

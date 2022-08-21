@@ -46,19 +46,19 @@ const ExtremeTickLabel = styled.div<{ align: 'left' | 'right'; visible: boolean 
     width: '63px',
     padding: '5px 8px',
     borderRadius: '4px',
-    backgroundColor: '#141414',
+    backgroundColor: '#080808',
     userSelect: 'none'
 }));
 
-const Label = styled.div({
+const Label = styled.div((props) => ({
     position: 'absolute',
     top: '-33px',
     left: '-19px',
     width: '63px',
     padding: '5px 8px',
     borderRadius: '4px',
-    backgroundColor: '#252525'
-});
+    backgroundColor: props.theme.palette.popup.main
+}));
 
 interface Props {
     max: number;
