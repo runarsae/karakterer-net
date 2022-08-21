@@ -15,7 +15,7 @@ const Wrapper = styled.div((props) => ({
     position: 'fixed',
     top: 0,
     right: '-480px',
-    backgroundColor: props.theme.palette.background,
+    backgroundColor: props.theme.palette.card.main,
     height: '100%',
     width: '100%',
     maxWidth: '480px !important',
@@ -37,7 +37,7 @@ const Header = styled.div<{ sticky: boolean }>((props) => ({
         top: 0,
         zIndex: 1
     }),
-    backgroundColor: props.theme.palette.background,
+    backgroundColor: props.theme.palette.card.main,
     padding: '16px 0 16px 0',
 
     [`@media (min-width: 480px)`]: {

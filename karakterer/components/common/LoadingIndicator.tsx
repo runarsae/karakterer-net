@@ -11,7 +11,7 @@ const rotate = keyframes({
 
 const LoadingIndicator = styled.div<{ size?: 'large' | 'normal' }>(
     (props) => ({
-        border: `2px solid ${props.theme.palette.popup}`,
+        border: `2px solid ${props.theme.palette.popup.main}`,
         borderTop: `2px solid ${props.theme.palette.primary.main}`,
         borderRadius: '50%',
         width: props.size === 'large' ? '40px' : '22px',

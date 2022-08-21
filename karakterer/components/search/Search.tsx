@@ -17,7 +17,7 @@ const Container = styled.div({
 
 const Header = styled.div((props) => ({
     position: 'sticky',
-    backgroundColor: props.theme.palette.background,
+    backgroundColor: props.theme.palette.card.main,
     top: 74, // Height of sidebar header
     padding: '0 0 16px 0',
 
@@ -79,17 +79,17 @@ const ResultCard = styled.button((props) => ({
     flexDirection: 'column',
     gap: '8px',
     padding: '12px',
-    backgroundColor: props.theme.palette.card,
+    backgroundColor: props.theme.palette.popup.main,
     borderRadius: '4px',
     transition: `background-color 100ms ease-in-out`,
 
     ':focus': {
-        backgroundColor: props.theme.palette.popup
+        backgroundColor: props.theme.palette.popup.hover
     },
 
     '@media (hover: hover)': {
         ':hover': {
-            backgroundColor: props.theme.palette.popup
+            backgroundColor: props.theme.palette.popup.hover
         }
     }
 }));

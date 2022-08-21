@@ -51,7 +51,7 @@ const AccordionItemButton = styled.button((props) => ({
     alignItems: 'center',
     gap: '8px',
     padding: '16px',
-    backgroundColor: props.theme.palette.card,
+    backgroundColor: props.theme.palette.popup.main,
     cursor: 'pointer',
     width: '100%',
     textAlign: 'left',
@@ -70,7 +70,7 @@ const AccordionItemPanel = styled.div<{ active: boolean; scrollHeight?: number }
     maxHeight: props.active && props.scrollHeight ? props.scrollHeight : '0px',
     overflow: 'hidden',
     transition: `max-height ${props.theme.transitionDuration}ms ease-out`,
-    backgroundColor: props.theme.palette.popup
+    backgroundColor: props.theme.palette.popup.hover
 }));
 
 const AccordionItemPanelContent = styled.div({
