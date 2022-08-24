@@ -1,3 +1,4 @@
+import HomePage from 'components/home';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 
@@ -8,10 +9,10 @@ const Index: NextPage = () => {
                 <title>KARAKTERER.net</title>
                 <meta
                     name="description"
-                    content="Detaljert karakterstatistikk for alle emner på Norges teknisk-naturvitenskapelige universitet (NTNU) siden 2004."
+                    content="Detaljert og oppdatert karakterstatistikk for alle emner på Norges teknisk-naturvitenskapelige universitet (NTNU) siden 2004. Karakterfordeling og utvikling i gjennomsnittskarakter og strykprosent."
                 />
             </Head>
-            Hello world
+            <HomePage />
         </>
     );
 };
