@@ -1,5 +1,5 @@
 import Card from 'components/common/Card';
-import styled from 'styled-components';
+import styled, { useTheme } from 'styled-components';
 import Typography from 'components/common/Typography';
 import BarChart from 'components/course/BarChart';
 import { Dispatch, useCallback, useEffect } from 'react';
@@ -145,6 +145,8 @@ interface Props {
 }
 
 function Dashboard({ state, dispatch }: Props) {
+    const theme = useTheme();
+
     const handleKeyDown = useCallback(
         (e: KeyboardEvent) => {
             if (e.key === 'ArrowLeft') {
@@ -258,7 +260,7 @@ function Dashboard({ state, dispatch }: Props) {
                                 dataLabelIndex={state.selectedSemesterIndex}
                                 xLabels={state.semesters}
                                 yLabels={YLabels.Grades}
-                                color="#3E95CD"
+                                color={theme.palette.primary.main}
                                 onChange={(value) =>
                                     dispatch({
                                         type: 'set_semester',

@@ -3,9 +3,8 @@ import { DefaultTheme } from 'styled-components';
 export const theme: DefaultTheme = {
     palette: {
         primary: {
-            main: '#3E95CD',
-            dark: '',
-            light: ''
+            main: '#158ad5',
+            hover: '#1068A0'
         },
         secondary: {
             main: '',
@@ -20,13 +19,13 @@ export const theme: DefaultTheme = {
             gray: '#F5F5F5'
         },
         background: '#000000',
-        heading: '#CECECE',
+        heading: '#e7e7e7',
         text: '#999999',
         overlay: 'rgba(0, 0, 0, 0.5)',
         horizontalLine: '#363636',
         inputBackground: '',
         card: {
-            main: '#101010'
+            main: '#121212'
         },
         popup: {
             main: '#1c1c1c',
