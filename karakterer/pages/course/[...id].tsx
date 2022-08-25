@@ -1,13 +1,9 @@
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
-import { useRouter } from 'next/router';
 import { ParsedUrlQuery } from 'querystring';
 import CoursePage from 'components/course';
-import { SidebarContextProvider } from 'state/sidebar';
 import { SettingsContextProvider } from 'state/settings';
 import { CourseWithGrades, CourseWithGradesPromise, getCourseData } from 'lib/getCourseData';
 import { Courses, getMostPopularCourses } from 'lib/getMostPopularCourses';
-import Loading from 'components/layout/Loading';
-import { useEffect, useState } from 'react';
 import Head from 'next/head';
 
 const Course: NextPage<CourseWithGrades> = (props) => {
