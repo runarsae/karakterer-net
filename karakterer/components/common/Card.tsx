@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const Card = styled.div<{ containerFill?: boolean }>((props) => ({
+const Card = styled.div.attrs({ className: 'card' })<{ containerFill?: boolean }>((props) => ({
     display: 'block',
     padding: '16px',
     backgroundColor: props.theme.palette.card.main,

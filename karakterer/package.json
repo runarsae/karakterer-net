@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@prisma/client": "^4.2.1",
+    "@react-hook/resize-observer": "^1.2.6",
     "axios": "^0.27.2",
     "chart.js": "^3.7.0",
     "chartjs-plugin-datalabels": "^2.0.0",
