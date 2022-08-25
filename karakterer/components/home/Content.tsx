@@ -1,5 +1,7 @@
 import ActionButton from 'components/common/ActionButton';
+import { ModalContext, ModalType } from 'state/modal';
 import styled from 'styled-components';
+import { useContext } from 'utils/context';
 
 const Grid = styled.div({
     display: 'grid',
@@ -20,6 +22,8 @@ const LandingText = styled.p((props) => ({
 }));
 
 function Content() {
+    const { setModalOpen, setModalType } = useContext(ModalContext);
+
     return (
         <Grid>
             <div>
@@ -28,7 +32,14 @@ function Content() {
                     Karakterfordeling og utvikling i gjennomsnittskarakter og strykprosent i alle
                     emner på NTNU siden 2004.
                 </LandingText>
-                <ActionButton>Søk etter emne</ActionButton>
+                <ActionButton
+                    onClick={() => {
+                        setModalType(ModalType.Search);
+                        setModalOpen(true);
+                    }}
+                >
+                    Søk etter emne
+                </ActionButton>
             </div>
         </Grid>
     );

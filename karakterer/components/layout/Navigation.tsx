@@ -2,6 +2,7 @@ import IconButton from 'components/common/IconButton';
 import { InfoIcon, SearchIcon, SettingsIcon } from 'components/common/icons';
 import { SettingsContext } from 'state/settings';
 import { SidebarContext, SidebarType } from 'state/sidebar';
+import { ModalContext, ModalType } from 'state/modal';
 import styled from 'styled-components';
 import { useContext } from 'utils/context';
 
@@ -19,16 +20,19 @@ const NavigationBar = styled.div((props) => ({
 
 const Navigation = () => {
     const { settingsOpen, setSettingsOpen } = useContext(SettingsContext);
+
     const { sidebarOpen, setSidebarOpen, sidebarType, setSidebarType } = useContext(SidebarContext);
+
+    const { modalOpen, setModalOpen, modalType, setModalType } = useContext(ModalContext);
 
     return (
         <NavigationBar>
             <IconButton
                 title="Søk"
-                active={sidebarOpen && sidebarType == SidebarType.Search}
+                active={modalOpen && modalType == ModalType.Search}
                 onClick={() => {
-                    setSidebarType(SidebarType.Search);
-                    setSidebarOpen(true);
+                    setModalType(ModalType.Search);
+                    setModalOpen(true);
                 }}
                 icon={<SearchIcon width={24} height={24} />}
             />
