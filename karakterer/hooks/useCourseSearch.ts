@@ -1,8 +1,17 @@
+import { Course } from '@prisma/client';
 import CourseService from 'api/services/course';
 import { useEffect, useState } from 'react';
 import useDebounce from './useDebounce';
 
-function useCourseSearch() {
+export interface CourseSearch {
+    search: string;
+    setSearch: (search: string) => void;
+    courses?: Course[];
+    error?: string;
+    loading: boolean;
+}
+
+function useCourseSearch(): CourseSearch {
     const [search, _setSearch] = useState<string>('');
 
     const debouncedSearch = useDebounce(search, 200);
@@ -21,7 +30,7 @@ function useCourseSearch() {
 
     useEffect(() => {
         if (courses && courses.length === 0) {
-            setErrorMessage('Ingen emner med gitt kode/navn.');
+            setErrorMessage('Ingen emner med gitt kode eller navn.');
         } else {
             setErrorMessage(undefined);
         }
