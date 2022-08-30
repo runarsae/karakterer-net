@@ -1,11 +1,8 @@
-import React, { CSSProperties, MouseEvent, useCallback, useEffect, useMemo, useRef } from 'react';
+import React, { CSSProperties, MouseEvent, useEffect, useRef } from 'react';
 import styled, { useTheme } from 'styled-components';
 import { Transition } from 'react-transition-group';
 import Overlay from './Overlay';
 import { disableScroll, enableScroll } from '../../utils/scroll';
-import { useContext } from 'utils/context';
-import { ModalContext, ModalType } from 'state/modal';
-import Search from 'components/search/Search';
 import Section from './Section';
 
 const Wrapper = styled.div((props) => ({
@@ -18,103 +15,90 @@ const Wrapper = styled.div((props) => ({
     height: '100%',
     opacity: 0,
     transition: `opacity ${props.theme.transitionDuration}ms ease-in-out`,
-    padding: '16px',
-
-    [`@media (min-width: ${props.theme.breakpoints.md}px)`]: {
-        padding: '32px'
-    }
+    padding: 0,
+    backgroundColor: 'transparent',
+    pointerEvents: 'none'
 }));
 
-const ModalSection = styled(Section)({
+const ModalSection = styled(Section)((props) => ({
     display: 'flex',
+    flexDirection: 'column',
+    gap: 0,
+    height: '100%',
+    padding: '32px',
+    overflowY: 'hidden',
+    margin: 'auto',
+    maxWidth: '800px',
+    maxHeight: '664px',
     alignItems: 'center',
     justifyContent: 'center',
-    maxWidth: '800px',
-    maxHeight: '600px',
-    height: '100%',
-    padding: 0
-});
+    pointerEvents: 'none'
+}));
 
 const modalTransitionStyles: { [id: string]: CSSProperties } = {
     entered: { opacity: 1 }
 };
 
-type ModalContentMap = {
-    [key in ModalType]: JSX.Element;
-};
+interface Props {
+    children: JSX.Element;
+    open: boolean;
+    onClose: () => void;
+}
 
-const modalContentMap: ModalContentMap = {
-    [ModalType.Search]: <Search />
-};
-
-export default function Modal() {
+export default function Modal({ children, open, onClose }: Props) {
     const theme = useTheme();
-
-    const { modalOpen, setModalOpen, modalType } = useContext(ModalContext);
 
     const modalRef = useRef(null);
 
-    const close = useCallback(() => {
-        setModalOpen(false);
-    }, [setModalOpen]);
-
-    const handleWrapperClick = (e: MouseEvent<HTMLDivElement>) => {
+    const handleClick = (e: MouseEvent<HTMLDivElement>) => {
         if (e.target === e.currentTarget) {
-            close();
+            onClose();
         }
     };
 
     useEffect(() => {
         const closeOnEsc = (e: KeyboardEvent) => {
             if (e.key == 'Escape') {
-                close();
+                onClose();
             }
         };
 
-        if (modalOpen) {
+        if (open) {
             document.addEventListener('keydown', closeOnEsc, false);
 
             return () => {
                 document.removeEventListener('keydown', closeOnEsc, false);
             };
         }
-    }, [close, modalOpen]);
+    }, [onClose, open]);
 
     useEffect(() => {
-        if (modalOpen) {
+        if (open) {
             disableScroll();
         } else {
             enableScroll();
         }
-    }, [modalOpen]);
-
-    const modalContent = useMemo(
-        () => modalType !== undefined && modalContentMap[modalType],
-        [modalType]
-    );
+    }, [open]);
 
     return (
         <>
-            <Overlay open={modalOpen} />
+            <Overlay open={open} onClose={onClose} />
             <Transition
                 nodeRef={modalRef}
                 mountOnEnter
                 unmountOnExit
-                in={modalOpen}
+                in={open}
                 timeout={theme.transitionDuration}
             >
                 {(state) => (
                     <div ref={modalRef}>
-                        {modalContent && (
-                            <Wrapper
-                                style={{
-                                    ...modalTransitionStyles[state]
-                                }}
-                                onClick={handleWrapperClick}
-                            >
-                                <ModalSection>{modalContent}</ModalSection>
-                            </Wrapper>
-                        )}
+                        <Wrapper
+                            style={{
+                                ...modalTransitionStyles[state]
+                            }}
+                        >
+                            <ModalSection>{children}</ModalSection>
+                        </Wrapper>
                     </div>
                 )}
             </Transition>

@@ -1,8 +1,8 @@
 import IconButton from 'components/common/IconButton';
 import { InfoIcon, SearchIcon, SettingsIcon } from 'components/common/icons';
+import { useRouter } from 'next/router';
+import { SearchContext } from 'state/search';
 import { SettingsContext } from 'state/settings';
-import { SidebarContext, SidebarType } from 'state/sidebar';
-import { ModalContext, ModalType } from 'state/modal';
 import styled from 'styled-components';
 import { useContext } from 'utils/context';
 
@@ -19,30 +19,23 @@ const NavigationBar = styled.div((props) => ({
 }));
 
 const Navigation = () => {
+    const router = useRouter();
+
+    const { setSearchOpen } = useContext(SearchContext);
     const { settingsOpen, setSettingsOpen } = useContext(SettingsContext);
-
-    const { sidebarOpen, setSidebarOpen, sidebarType, setSidebarType } = useContext(SidebarContext);
-
-    const { modalOpen, setModalOpen, modalType, setModalType } = useContext(ModalContext);
 
     return (
         <NavigationBar>
             <IconButton
                 title="Søk"
-                active={modalOpen && modalType == ModalType.Search}
                 onClick={() => {
-                    setModalType(ModalType.Search);
-                    setModalOpen(true);
+                    setSearchOpen(true);
                 }}
                 icon={<SearchIcon width={24} height={24} />}
             />
             <IconButton
                 title="Informasjon"
-                active={sidebarOpen && sidebarType == SidebarType.About}
-                onClick={() => {
-                    setSidebarType(SidebarType.About);
-                    setSidebarOpen(true);
-                }}
+                onClick={() => router.push('/about')}
                 icon={<InfoIcon width={24} height={24} />}
             />
             <IconButton

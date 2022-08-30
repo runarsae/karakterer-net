@@ -15,13 +15,11 @@ import {
 } from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import Layout from 'components/layout/Layout';
-import { SidebarContextProvider } from 'state/sidebar';
-import Sidebar from 'components/common/Sidebar';
-import { ModalContextProvider } from 'state/modal';
-import Modal from 'components/common/Modal';
+import { SearchContextProvider } from 'state/search';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import Loading from 'components/layout/Loading';
+import Search from 'components/search';
 
 ChartJS.register(
     CategoryScale,
@@ -56,15 +54,12 @@ function App({ Component, pageProps }: AppProps) {
 
     return (
         <ThemeProvider theme={theme}>
-            <SidebarContextProvider>
-                <ModalContextProvider>
-                    <Layout>
-                        {router.isFallback || loading ? <Loading /> : <Component {...pageProps} />}
-                        <Sidebar />
-                        <Modal />
-                    </Layout>
-                </ModalContextProvider>
-            </SidebarContextProvider>
+            <SearchContextProvider>
+                <Layout>
+                    {router.isFallback || loading ? <Loading /> : <Component {...pageProps} />}
+                    <Search />
+                </Layout>
+            </SearchContextProvider>
         </ThemeProvider>
     );
 }
