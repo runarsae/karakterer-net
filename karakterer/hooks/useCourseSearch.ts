@@ -29,12 +29,12 @@ function useCourseSearch(): CourseSearch {
     const [errorMessage, setErrorMessage] = useState<string>();
 
     useEffect(() => {
-        if (courses && courses.length === 0) {
+        if (courses && courses.length === 0 && !isValidating && !isLagging) {
             setErrorMessage('Ingen emner med gitt kode eller navn.');
         } else {
             setErrorMessage(undefined);
         }
-    }, [courses]);
+    }, [courses, isLagging, isValidating]);
 
     useEffect(() => {
         if (error) {
