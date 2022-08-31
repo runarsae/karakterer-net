@@ -1,22 +1,13 @@
 import { Course } from '@prisma/client';
 import apiClient, { fetcher } from 'api/client';
 import useSWR from 'swr';
+import laggy, { SWRResponseWithLaggy } from 'utils/laggy';
 
-function useCourseSearch(search: string) {
-    const searchValid = search.length >= 3;
+const useCourseSearch = (search?: string) =>
+    useSWR<Course[]>(search ? ['/api/courses', { search: search }] : null, fetcher, {
+        use: [laggy]
+    }) as SWRResponseWithLaggy<Course[]>;
 
-    const { data, error, isValidating } = useSWR<Course[]>(
-        searchValid ? ['/api/courses', { search: search }] : null,
-        fetcher
-    );
-
-    return {
-        courses: data,
-        isValidating: isValidating,
-        isLoading: !error && !data,
-        isError: error
-    };
-}
 function getCourses(search: string) {
     return apiClient
         .get<Course[]>('/api/courses', {

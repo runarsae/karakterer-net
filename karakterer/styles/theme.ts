@@ -6,30 +6,27 @@ export const theme: DefaultTheme = {
             main: '#158ad5',
             hover: '#1068A0'
         },
-        secondary: {
-            main: '',
-            dark: '',
-            light: ''
-        },
-        error: '#ea5151',
-        success: '#18A813',
+        error: '#c14d4d',
         common: {
             black: '#0e0e0e',
             white: '#FFFFFF',
             gray: '#F5F5F5'
         },
-        background: '#000000',
         heading: '#e7e7e7',
         text: '#999999',
-        overlay: 'rgba(0, 0, 0, 0.5)',
+        overlay: 'rgba(0, 0, 0, 0.7)',
         horizontalLine: '#363636',
-        inputBackground: '',
+        background: '#000000',
         card: {
             main: '#121212'
         },
         popup: {
             main: '#1c1c1c',
             hover: '#161616'
+        },
+        popupCard: {
+            main: '#282828',
+            hover: '#202020'
         }
     },
     breakpoints: {

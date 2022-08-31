@@ -21,7 +21,7 @@ const overlayTransitionStyles: { [id: string]: React.CSSProperties } = {
 
 interface Props {
     open: boolean;
-    onClose: () => void;
+    onClose?: () => void;
 }
 
 export default function Overlay(props: Props) {
