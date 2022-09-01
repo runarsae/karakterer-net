@@ -1,7 +1,7 @@
 import Section from 'components/common/Section';
 import Header from 'components/layout/Header';
 import styled from 'styled-components';
-import Content from './Content';
+import Landing from './Landing';
 
 const Container = styled.div({
     display: 'grid',
@@ -16,7 +16,7 @@ const HomePage = () => {
             <Header />
 
             <Section>
-                <Content />
+                <Landing />
             </Section>
         </Container>
     );
