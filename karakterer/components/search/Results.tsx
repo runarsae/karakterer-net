@@ -32,21 +32,21 @@ const ResultCard = styled.button((props) => ({
         ':hover': {
             backgroundColor: props.theme.palette.popup.hover
         }
+    },
+
+    [`@media (min-width: ${props.theme.breakpoints.md}px)`]: {
+        backgroundColor: props.theme.palette.popupCard.main,
+
+        ':focus': {
+            backgroundColor: props.theme.palette.popupCard.hover
+        },
+
+        '@media (hover: hover)': {
+            ':hover': {
+                backgroundColor: props.theme.palette.popupCard.hover
+            }
+        }
     }
-
-    // [`@media (min-width: ${props.theme.breakpoints.md}px)`]: {
-    //     backgroundColor: props.theme.palette.popupCard.main,
-
-    //     ':focus': {
-    //         backgroundColor: props.theme.palette.popupCard.hover
-    //     },
-
-    //     '@media (hover: hover)': {
-    //         ':hover': {
-    //             backgroundColor: props.theme.palette.popupCard.hover
-    //         }
-    //     }
-    // }
 }));
 
 interface Props {
