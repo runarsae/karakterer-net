@@ -3,14 +3,14 @@ import { ParsedUrlQuery } from 'querystring';
 import CoursePage from 'components/course';
 import { SettingsContextProvider } from 'state/settings';
 import { CourseWithGrades, CourseWithGradesPromise, getCourseData } from 'lib/getCourseData';
-import { Courses, getMostPopularCourses } from 'lib/getMostPopularCourses';
+import { Courses, getMostPopularCoursesByStudents } from 'lib/getMostPopularCoursesByStudents';
 import Head from 'next/head';
 
 const Course: NextPage<CourseWithGrades> = (props) => {
     return (
         <>
             <Head>
-                <title>{`${props.course} ${props.name} - KARAKTERER.net`}</title>
+                <title>{`${props.course} ${props.name} - karakterer.net`}</title>
                 <meta
                     name="description"
                     content={`Karakterstatistikk for emnet ${props.course} ${props.name} på Norges teknisk-naturvitenskapelige universitet (NTNU).`}
@@ -46,7 +46,7 @@ export const getStaticProps: GetStaticProps<CourseWithGrades, Params> = async (c
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-    const courses: Courses = await getMostPopularCourses();
+    const courses: Courses = await getMostPopularCoursesByStudents();
 
     // Get the paths we want to prerender based on the top courses
     const paths = courses.map((course) => {
