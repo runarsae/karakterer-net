@@ -16,6 +16,7 @@ const Container = styled.div({
 });
 
 const PopupCard = styled(Card)<{ height: number; scrollbarVisible: boolean }>((props) => ({
+    backgroundColor: props.theme.palette.popup.main,
     pointerEvents: 'auto',
     position: 'relative',
     paddingTop: 0,
@@ -33,7 +34,7 @@ const HeaderWrapper = styled.div({
 });
 
 const Header = styled(Card)((props) => ({
-    backgroundColor: props.theme.palette.card.main,
+    backgroundColor: props.theme.palette.popup.main,
     borderRadius: 0,
     paddingLeft: 0,
     paddingRight: 0
