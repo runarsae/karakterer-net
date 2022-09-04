@@ -18,7 +18,8 @@ export const theme: DefaultTheme = {
         horizontalLine: '#363636',
         background: '#000000',
         card: {
-            main: '#121212'
+            main: '#121212',
+            hover: '#181818'
         },
         popup: {
             main: '#1c1c1c',

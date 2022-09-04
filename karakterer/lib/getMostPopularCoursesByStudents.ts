@@ -5,7 +5,7 @@ import client from 'prisma/client';
  * Get top 100 courses with most students for last three spring and autumn semesters
  * @returns List of objects with course code
  */
-export async function getMostPopularCourses() {
+export async function getMostPopularCoursesByStudents() {
     const data = await client.grades.findMany({
         where: {
             year: {
@@ -25,4 +25,4 @@ export async function getMostPopularCourses() {
     return data;
 }
 
-export type Courses = Prisma.PromiseReturnType<typeof getMostPopularCourses>;
+export type Courses = Prisma.PromiseReturnType<typeof getMostPopularCoursesByStudents>;
