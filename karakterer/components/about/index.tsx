@@ -1,12 +1,8 @@
 import Accordion from 'components/common/Accordion';
+import Section from 'components/common/Section';
 import Typography from 'components/common/Typography';
+import { Fade } from 'react-awesome-reveal';
 import styled from 'styled-components';
-
-const Container = styled.div({
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '32px'
-});
 
 const SubContainer = styled.div({
     display: 'flex',
@@ -14,17 +10,14 @@ const SubContainer = styled.div({
     gap: '16px'
 });
 
-const Line = styled.div((props) => ({
-    width: '100%',
-    borderTop: '1px solid ' + props.theme.palette.horizontalLine
-}));
-
 const Link = styled.a((props) => ({
     textDecoration: 'none',
     color: props.theme.palette.primary.main,
 
-    ':hover': {
-        textDecoration: 'underline'
+    '@media (hover: hover)': {
+        ':hover': {
+            textDecoration: 'underline'
+        }
     }
 }));
 
@@ -38,9 +31,10 @@ const List = styled.ul({
     margin: '8px 0'
 });
 
-export default function About() {
+export default function AboutPage() {
     return (
-        <Container>
+        <Section size="small">
+            <Typography variant="h1">Om karakterer.net</Typography>
             <SubContainer>
                 <Typography variant="body1" style={{ lineHeight: 1.5 }}>
                     Karakterstatistikken viser fordelingen av karakterene A til F for hvert
@@ -49,11 +43,16 @@ export default function About() {
                     medberegnet.
                 </Typography>
                 <Typography variant="body1" style={{ lineHeight: 1.5 }}>
-                    Tallene er hentet fra{' '}
+                    Siden inneholder data under{' '}
+                    <Link href="https://data.norge.no/nlod/no/2.0" target="_blank">
+                        Norsk lisens for offentlige data
+                    </Link>{' '}
+                    (NLOD), tilgjengeliggjort av direktoratet for høyere utdanning og kompetanse
+                    (HK-dir) i{' '}
                     <Link href="https://dbh.hkdir.no/" target="_blank">
                         database for statistikk om høyere utdanning
                     </Link>{' '}
-                    (DBH) , underlagt av direktoratet for høyere utdanning og kompetanse (HK-dir).
+                    (DBH).
                 </Typography>
             </SubContainer>
             <SubContainer>
@@ -180,10 +179,6 @@ export default function About() {
                     ]}
                 />
             </SubContainer>
-            <Line />
-            <Typography variant="body2">
-                Copyright © {new Date().getFullYear()}, KARAKTERER.net
-            </Typography>
-        </Container>
+        </Section>
     );
 }
