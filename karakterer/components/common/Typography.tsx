@@ -71,7 +71,7 @@ const Measurement = styled.p((props) => ({
     }
 }));
 
-type Variants = 'h1' | 'h2' | 'h3' | 'h4' | 'body1' | 'body2' | 'button' | 'measurement';
+type Variants = 'h1' | 'h2' | 'h3' | 'h4' | 'body1' | 'body2' | 'measurement';
 
 const variantsMapping: {
     [index: string]: StyledComponent<
@@ -87,7 +87,6 @@ const variantsMapping: {
     h4: Heading4,
     body1: Body1,
     body2: Body2,
-    button: Button,
     measurement: Measurement
 };
 

@@ -1,44 +1,25 @@
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
-import { useRouter } from 'next/router';
 import { ParsedUrlQuery } from 'querystring';
 import CoursePage from 'components/course';
-import { SidebarContextProvider } from 'state/sidebar';
 import { SettingsContextProvider } from 'state/settings';
 import { CourseWithGrades, CourseWithGradesPromise, getCourseData } from 'lib/getCourseData';
 import { Courses, getMostPopularCourses } from 'lib/getMostPopularCourses';
-import Loading from 'components/layout/Loading';
-import { useEffect, useState } from 'react';
+import Head from 'next/head';
 
 const Course: NextPage<CourseWithGrades> = (props) => {
-    const router = useRouter();
-
-    const [loading, setLoading] = useState(false);
-
-    useEffect(() => {
-        const handleStart = (url: string) => url !== router.asPath && setLoading(true);
-        const handleComplete = (url: string) => url === router.asPath && setLoading(false);
-
-        router.events.on('routeChangeStart', handleStart);
-        router.events.on('routeChangeComplete', handleComplete);
-        router.events.on('routeChangeError', handleComplete);
-
-        return () => {
-            router.events.off('routeChangeStart', handleStart);
-            router.events.off('routeChangeComplete', handleComplete);
-            router.events.off('routeChangeError', handleComplete);
-        };
-    });
-
-    if (router.isFallback || loading) {
-        return <Loading />;
-    }
-
     return (
-        <SidebarContextProvider>
+        <>
+            <Head>
+                <title>{`${props.course} ${props.name} - KARAKTERER.net`}</title>
+                <meta
+                    name="description"
+                    content={`Karakterstatistikk for emnet ${props.course} ${props.name} på Norges teknisk-naturvitenskapelige universitet (NTNU).`}
+                />
+            </Head>
             <SettingsContextProvider grades={props.grades}>
                 <CoursePage {...props} />
             </SettingsContextProvider>
-        </SidebarContextProvider>
+        </>
     );
 };
 

@@ -15,6 +15,11 @@ import {
 } from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import Layout from 'components/layout/Layout';
+import { SearchContextProvider } from 'state/search';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import Loading from 'components/layout/Loading';
+import Search from 'components/search';
 
 ChartJS.register(
     CategoryScale,
@@ -28,11 +33,33 @@ ChartJS.register(
 );
 
 function App({ Component, pageProps }: AppProps) {
+    const router = useRouter();
+
+    const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        const handleStart = (url: string) => url !== router.asPath && setLoading(true);
+        const handleComplete = (url: string) => url === router.asPath && setLoading(false);
+
+        router.events.on('routeChangeStart', handleStart);
+        router.events.on('routeChangeComplete', handleComplete);
+        router.events.on('routeChangeError', handleComplete);
+
+        return () => {
+            router.events.off('routeChangeStart', handleStart);
+            router.events.off('routeChangeComplete', handleComplete);
+            router.events.off('routeChangeError', handleComplete);
+        };
+    });
+
     return (
         <ThemeProvider theme={theme}>
-            <Layout>
-                <Component {...pageProps} />
-            </Layout>
+            <SearchContextProvider>
+                <Layout>
+                    {router.isFallback || loading ? <Loading /> : <Component {...pageProps} />}
+                    <Search />
+                </Layout>
+            </SearchContextProvider>
         </ThemeProvider>
     );
 }
