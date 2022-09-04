@@ -22,7 +22,7 @@ export const theme: DefaultTheme = {
         },
         popup: {
             main: '#1c1c1c',
-            hover: '#161616'
+            hover: '#181818'
         },
         popupCard: {
             main: '#282828',
