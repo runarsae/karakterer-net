@@ -1,10 +1,10 @@
 import ActionButton from 'components/common/ActionButton';
 import Image from 'next/image';
+import { Fade } from 'react-awesome-reveal';
 import { SearchContext } from 'state/search';
 import styled from 'styled-components';
 import { useContext } from 'utils/context';
 import landingImage from '../../public/landing.png';
-import Fade from 'react-reveal/Fade';
 
 const Grid = styled.div((props) => ({
     display: 'grid',
@@ -55,18 +55,12 @@ function LandingSection() {
     return (
         <Grid>
             <div>
-                <Fade bottom>
-                    <LandingTitle>Karakter&shy;statistikk for alle emner på NTNU</LandingTitle>{' '}
-                </Fade>
-
-                <Fade bottom delay={300}>
+                <Fade direction="up" triggerOnce cascade damping={0.3}>
+                    <LandingTitle>Karakter&shy;statistikk for alle emner på NTNU</LandingTitle>
                     <LandingText>
                         Karakterfordeling og utvikling i gjennomsnittskarakter og strykprosent i
                         alle emner på NTNU siden 2004.
                     </LandingText>
-                </Fade>
-
-                <Fade bottom delay={600} ssrReveal>
                     <ActionButton
                         onClick={() => {
                             setSearchOpen(true);
@@ -77,7 +71,9 @@ function LandingSection() {
                 </Fade>
             </div>
             <LandingImage>
-                <Image src={landingImage} alt="Statistikk" priority quality={100} />{' '}
+                <Fade triggerOnce>
+                    <Image src={landingImage} alt="Statistikk" priority quality={100} />
+                </Fade>
             </LandingImage>
         </Grid>
     );
