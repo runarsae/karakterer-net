@@ -63,6 +63,7 @@ const AccordionItemButton = styled.button((props) => ({
 }));
 
 const IconContainer = styled.div<{ active: boolean }>((props) => ({
+    display: 'flex',
     transition: `transform ${props.theme.transitionDuration}ms ease-out`,
     ...(props.active && { transform: 'rotate(90deg)' })
 }));
