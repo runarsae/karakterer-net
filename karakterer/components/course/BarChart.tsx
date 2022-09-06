@@ -25,18 +25,6 @@ interface Props {
 const BarChart = ({ grades }: Props) => {
     const theme = useTheme();
 
-    const chartRef = useRef<ChartType<'bar'>>(null);
-
-    useEffect(() => {
-        const font = new FontFaceObserver('RaleWayMedium');
-
-        font.load().then(() => {
-            if (chartRef.current) {
-                chartRef.current.update();
-            }
-        });
-    }, []);
-
     const options: ChartOptions<'bar'> = useMemo(
         () => ({
             plugins: {
@@ -49,8 +37,7 @@ const BarChart = ({ grades }: Props) => {
                 datalabels: {
                     color: theme.palette.heading,
                     font: {
-                        size: 12,
-                        family: 'RalewayMedium'
+                        size: 12
                     },
                     anchor: 'end',
                     align: function (context) {
@@ -94,8 +81,7 @@ const BarChart = ({ grades }: Props) => {
                         padding: 8,
                         color: theme.palette.text,
                         font: {
-                            size: 12,
-                            family: 'RalewayMedium'
+                            size: 12
                         }
                     },
                     grid: {
@@ -128,7 +114,7 @@ const BarChart = ({ grades }: Props) => {
 
     return (
         <Container>
-            <Chart ref={chartRef} type="bar" options={options} data={data} />
+            <Chart type="bar" options={options} data={data} />
         </Container>
     );
 };

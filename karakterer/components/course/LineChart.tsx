@@ -42,18 +42,6 @@ const LineChart = ({
 
     const [pointHover, setPointHover] = useState<boolean>(false);
 
-    const chartRef = useRef<ChartType<'line'>>(null);
-
-    useEffect(() => {
-        const font = new FontFaceObserver('RaleWayMedium');
-
-        font.load().then(() => {
-            if (chartRef.current) {
-                chartRef.current.update();
-            }
-        });
-    }, []);
-
     const options: ChartOptions<'line'> = useMemo(
         () => ({
             plugins: {
@@ -66,8 +54,7 @@ const LineChart = ({
                 datalabels: {
                     color: theme.palette.heading,
                     font: {
-                        size: 12,
-                        family: 'RalewayMedium'
+                        size: 12
                     },
                     backgroundColor: theme.palette.popup.main,
                     borderRadius: 4,
@@ -155,8 +142,7 @@ const LineChart = ({
                         padding: 20,
                         color: theme.palette.text,
                         font: {
-                            size: 12,
-                            family: 'RalewayMedium'
+                            size: 12
                         }
                     }
                 },
@@ -166,8 +152,7 @@ const LineChart = ({
                         padding: 20,
                         color: theme.palette.text,
                         font: {
-                            size: 12,
-                            family: 'RalewayMedium'
+                            size: 12
                         },
                         callback: (_, index, ticks) => {
                             if (ticks.length >= 10) {
@@ -221,7 +206,6 @@ const LineChart = ({
         <Container>
             <Chart
                 style={{ cursor: pointHover ? 'pointer' : 'auto' }}
-                ref={chartRef}
                 type="line"
                 options={options}
                 data={data}
