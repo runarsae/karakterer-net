@@ -32,6 +32,8 @@ ChartJS.register(
     LineController
 );
 
+ChartJS.defaults.font.family = 'Raleway';
+
 function App({ Component, pageProps }: AppProps) {
     const router = useRouter();
 
