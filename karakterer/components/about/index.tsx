@@ -42,11 +42,11 @@ export default function AboutPage() {
     return (
         <>
             <Section size="small">
-                <Fade>
+                <Fade triggerOnce>
                     <Typography variant="h1">Om karakterer.net</Typography>
                 </Fade>
                 <SubContainer>
-                    <Fade direction="up" triggerOnce cascade damping={0.3}>
+                    <Fade triggerOnce cascade damping={0.05} delay={100}>
                         <Typography variant="body1" style={{ lineHeight: 1.5 }}>
                             Karakterstatistikken viser fordelingen av karakterene A til F for hvert
                             semester. Denne fordelingen brukes til å beregne
@@ -71,11 +71,11 @@ export default function AboutPage() {
 
             <Section size="small">
                 <SubContainer>
-                    <Fade>
+                    <Fade triggerOnce delay={300}>
                         <Typography variant="h2">FAQ</Typography>
                     </Fade>
                     <AccordionGroup>
-                        <Fade triggerOnce cascade damping={0.05}>
+                        <Fade triggerOnce cascade damping={0.05} delay={300}>
                             <Accordion
                                 title={<>Hvorfor kan jeg ikke filtrere på konte&shy;eksamen?</>}
                                 active={activeAccordion === 0}
@@ -86,6 +86,8 @@ export default function AboutPage() {
                                     etter vårsemesteret. Det er forskjellig fra emne til emne
                                     hvordan karakterer for konteeksamen rapporteres inn og om de
                                     blir aggregert med karakterer for ordinær eksamen eller ikke.
+                                    Dette er grunnen til at noen våremner har statistikk for
+                                    høstsemesteret også.
                                 </Typography>
                             </Accordion>
                             <Accordion

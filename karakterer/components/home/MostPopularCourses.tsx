@@ -63,9 +63,11 @@ function MostPopularCourses({ courses }: Props) {
 
     return (
         <Section>
-            <Typography variant="h1">Mest populære emner</Typography>
+            <Fade triggerOnce>
+                <Typography variant="h1">Mest populære emner</Typography>
+            </Fade>
             <Grid>
-                <Fade triggerOnce cascade damping={0.05} duration={1000}>
+                <Fade triggerOnce cascade damping={0.05}>
                     {courses.map((course) => (
                         <Card
                             key={course.course}
