@@ -5,6 +5,13 @@ import { SettingsContextProvider } from 'state/settings';
 import { CourseWithGrades, CourseWithGradesPromise, getCourseData } from 'lib/getCourseData';
 import { Courses, getMostPopularCoursesByStudents } from 'lib/getMostPopularCoursesByStudents';
 import Head from 'next/head';
+import Header from 'components/layout/Header';
+import {
+    Navigation,
+    NavigationItemInformation,
+    NavigationItemSearch,
+    NavigationItemSettings
+} from 'components/layout/Navigation';
 
 const Course: NextPage<CourseWithGrades> = (props) => {
     return (
@@ -16,7 +23,19 @@ const Course: NextPage<CourseWithGrades> = (props) => {
                     content={`Karakterstatistikk for emnet ${props.course} ${props.name} på Norges teknisk-naturvitenskapelige universitet (NTNU).`}
                 />
             </Head>
+
             <SettingsContextProvider grades={props.grades}>
+                <Header
+                    title={`${props.course} ${props.name}`}
+                    navigation={
+                        <Navigation>
+                            <NavigationItemSearch />
+                            <NavigationItemInformation />
+                            <NavigationItemSettings />
+                        </Navigation>
+                    }
+                />
+
                 <CoursePage {...props} />
             </SettingsContextProvider>
         </>

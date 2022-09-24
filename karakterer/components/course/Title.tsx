@@ -1,7 +1,12 @@
 import Card from 'components/common/Card';
 import Typography from 'components/common/Typography';
 import styled, { useTheme } from 'styled-components';
-import useWindowSize from 'utils/windowSize';
+
+const TitleCard = styled(Card)((props) => ({
+    [`@media (min-width: ${props.theme.breakpoints.md}px)`]: {
+        display: 'none'
+    }
+}));
 
 const Container = styled.div((props) => ({
     gridArea: 'title',
@@ -17,16 +22,6 @@ const Container = styled.div((props) => ({
     }
 }));
 
-const CourseCode = styled(Card)`
-    ${(props) => ({
-        width: 'fit-content',
-
-        [`@media (min-width: ${props.theme.breakpoints.md}px)`]: {
-            padding: '8px 16px'
-        }
-    })}
-`;
-
 interface Props {
     course: string;
     name: string | null;
@@ -35,33 +30,16 @@ interface Props {
 function Title({ course, name }: Props) {
     const theme = useTheme();
 
-    const { width } = useWindowSize();
-
-    if (width) {
-        return (
-            <>
-                {width >= theme.breakpoints.md ? (
-                    <Container>
-                        <CourseCode>
-                            <Typography variant="h1">{course}</Typography>
-                        </CourseCode>
-                        <Typography variant="h1">{name}</Typography>
-                    </Container>
-                ) : (
-                    <Card>
-                        <Container>
-                            <Typography variant="h4" style={{ color: theme.palette.text }}>
-                                {course}
-                            </Typography>
-                            <Typography variant="h1">{name}</Typography>
-                        </Container>
-                    </Card>
-                )}
-            </>
-        );
-    }
-
-    return null;
+    return (
+        <TitleCard>
+            <Container>
+                <Typography variant="h4" style={{ color: theme.palette.text }}>
+                    {course}
+                </Typography>
+                <Typography variant="h2">{name}</Typography>
+            </Container>
+        </TitleCard>
+    );
 }
 
 export default Title;

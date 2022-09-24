@@ -12,6 +12,7 @@ export const theme: DefaultTheme = {
             white: '#FFFFFF',
             gray: '#F5F5F5'
         },
+        logo: '#b9b9b9',
         heading: '#e7e7e7',
         text: '#999999',
         overlay: 'rgba(0, 0, 0, 0.7)',

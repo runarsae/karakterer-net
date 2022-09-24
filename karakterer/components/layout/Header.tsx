@@ -1,56 +1,78 @@
-import Typography from 'components/common/Typography';
-import styled, { useTheme } from 'styled-components';
+import Section from 'components/common/Section';
+import Link from 'next/link';
+import { ReactNode } from 'react';
+import styled from 'styled-components';
 
-const Wrapper = styled.div({
-    width: '100%'
-});
-
-const Content = styled.div((props) => ({
-    padding: '16px',
+const Container = styled(Section)<{ hasTitle: boolean }>((props) => ({
     maxWidth: '1440px',
     width: '100%',
     margin: '0 auto',
     display: 'grid',
     gridTemplateColumns: '1fr auto',
     alignItems: 'center',
-    gap: '16px',
+    gap: 0,
+    rowGap: '16px',
 
     [`@media (min-width: ${props.theme.breakpoints.md}px)`]: {
-        padding: '64px 32px 0 32px',
-        gap: '16px'
+        gridTemplateColumns: props.hasTitle ? 'auto auto 1fr auto' : '1fr auto'
     }
 }));
 
-const Logo = styled.div({
-    display: 'flex',
-    gap: '3px',
-    alignItems: 'end'
-});
+const LogoText = styled.span((props) => ({
+    cursor: 'pointer',
+    userSelect: 'none',
+    fontFamily: 'Poppins',
+    fontSize: '16px',
+    color: props.theme.palette.heading,
 
-const Dot = styled.div((props) => ({
-    width: '6px',
-    height: '6px',
-    borderRadius: '50%',
-    background: props.theme.palette.primary.main,
-    marginBottom: '5px'
+    [`@media (min-width: ${props.theme.breakpoints.md}px)`]: {
+        fontSize: '20px'
+    }
 }));
 
-function Header() {
-    const theme = useTheme();
+const Line = styled.div((props) => ({
+    display: 'none',
+    width: '0px',
+    height: '24px',
+    borderRight: '1px solid ' + props.theme.palette.horizontalLine,
+    margin: '0 16px',
+
+    [`@media (min-width: ${props.theme.breakpoints.md}px)`]: {
+        display: 'block'
+    }
+}));
+
+const Title = styled.div((props) => ({
+    display: 'none',
+    whiteSpace: 'nowrap',
+    textOverflow: 'ellipsis',
+    overflow: 'hidden',
+
+    [`@media (min-width: ${props.theme.breakpoints.md}px)`]: {
+        display: 'block',
+        fontSize: '18px'
+    }
+}));
+
+interface Props {
+    title?: string;
+    navigation: ReactNode;
+}
+
+function Header({ title, navigation }: Props) {
     return (
-        <Wrapper>
-            <Content>
-                <Logo>
-                    <Typography variant="h1" style={{ fontSize: '22px' }}>
-                        karakterer
-                    </Typography>
-                    <Dot />
-                    <Typography variant="h1" style={{ fontSize: '22px' }}>
-                        net
-                    </Typography>
-                </Logo>
-            </Content>
-        </Wrapper>
+        <Container hasTitle={Boolean(title)}>
+            <Link href="/">
+                <LogoText>karakterer.net</LogoText>
+            </Link>
+            {title && (
+                <>
+                    <Line />
+                    <Title>{title}</Title>
+                </>
+            )}
+            {navigation}
+        </Container>
     );
 }
 

@@ -1,18 +1,27 @@
 import LoadingIndicator from 'components/common/LoadingIndicator';
-import Section from 'components/common/Section';
-import styled from 'styled-components';
+import Head from 'next/head';
+import { Fade } from 'react-awesome-reveal';
+import styled, { useTheme } from 'styled-components';
 
 const LoadingContainer = styled.div({
     margin: 'auto'
 });
 
 function Loading() {
+    const theme = useTheme();
+
     return (
-        <Section>
+        <>
+            <Head>
+                <title>karakterer.net</title>
+            </Head>
+
             <LoadingContainer>
-                <LoadingIndicator size="large" />
+                <Fade triggerOnce delay={500} duration={theme.transitionDuration}>
+                    <LoadingIndicator size="large" />
+                </Fade>
             </LoadingContainer>
-        </Section>
+        </>
     );
 }
 

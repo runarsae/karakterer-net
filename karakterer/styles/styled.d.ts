@@ -15,6 +15,7 @@ declare module 'styled-components' {
                 white: string;
                 gray: string;
             };
+            logo: string;
             heading: string;
             text: string;
             overlay: string;
