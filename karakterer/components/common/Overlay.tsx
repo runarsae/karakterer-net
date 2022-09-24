@@ -16,6 +16,7 @@ const Backdrop = styled.div((props) => ({
 }));
 
 const overlayTransitionStyles: { [id: string]: React.CSSProperties } = {
+    entering: { opacity: 1 },
     entered: { opacity: 1 }
 };
 
