@@ -18,7 +18,6 @@ import Layout from 'components/layout/Layout';
 import { SearchContextProvider } from 'state/search';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import Loading from 'components/layout/Loading';
 import Search from 'components/search';
 
 ChartJS.register(
@@ -41,7 +40,7 @@ function App({ Component, pageProps }: AppProps) {
 
     useEffect(() => {
         const handleStart = (url: string) => url !== router.asPath && setLoading(true);
-        const handleComplete = (url: string) => url === router.asPath && setLoading(false);
+        const handleComplete = () => setLoading(false);
 
         router.events.on('routeChangeStart', handleStart);
         router.events.on('routeChangeComplete', handleComplete);
@@ -57,8 +56,8 @@ function App({ Component, pageProps }: AppProps) {
     return (
         <ThemeProvider theme={theme}>
             <SearchContextProvider>
-                <Layout>
-                    {router.isFallback || loading ? <Loading /> : <Component {...pageProps} />}
+                <Layout loading={router.isFallback || loading}>
+                    <Component {...pageProps} />
                     <Search />
                 </Layout>
             </SearchContextProvider>

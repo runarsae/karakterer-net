@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 import styled from 'styled-components';
 
 const Button = styled.button<{ active: boolean }>((props) => ({
-    WebkitAppearance: 'none',
+    appearance: 'none',
     display: 'block',
     width: '42px',
     height: '42px',
@@ -11,7 +11,7 @@ const Button = styled.button<{ active: boolean }>((props) => ({
     border: 'none',
     padding: '8px',
     margin: 0,
-    cursor: 'pointer',
+    cursor: props.active ? 'default' : 'pointer',
     outline: '0',
     transition: `color ${props.theme.transitionDuration}ms ease-in-out`,
 

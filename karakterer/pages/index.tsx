@@ -1,16 +1,19 @@
-import Wrapper from 'components/common/Wrapper';
-import Landing from 'components/home/Landing';
-import MostPopularCourses from 'components/home/MostPopularCourses';
+import HomePage from 'components/home';
 import Header from 'components/layout/Header';
+import {
+    Navigation,
+    NavigationItemInformation,
+    NavigationItemSearch
+} from 'components/layout/Navigation';
 import { CoursesWithNames, getMostPopularCoursesByViews } from 'lib/getMostPopularCoursesByViews';
 import type { GetStaticProps, NextPage } from 'next';
 import Head from 'next/head';
 
-interface Props {
+export interface HomePageProps {
     mostPopularCourses: CoursesWithNames;
 }
 
-const Index: NextPage<Props> = ({ mostPopularCourses }) => {
+const Index: NextPage<HomePageProps> = (props) => {
     return (
         <>
             <Head>
@@ -20,14 +23,17 @@ const Index: NextPage<Props> = ({ mostPopularCourses }) => {
                     content="Detaljert og oppdatert karakterstatistikk for alle emner på Norges teknisk-naturvitenskapelige universitet (NTNU) siden 2004. Karakterfordeling og utvikling i gjennomsnittskarakter og strykprosent."
                 />
             </Head>
-            <Wrapper>
-                <Header />
-                <Landing />
 
-                {mostPopularCourses.length > 0 && (
-                    <MostPopularCourses courses={mostPopularCourses} />
-                )}
-            </Wrapper>
+            <Header
+                navigation={
+                    <Navigation>
+                        <NavigationItemSearch />
+                        <NavigationItemInformation />
+                    </Navigation>
+                }
+            />
+
+            <HomePage {...props} />
         </>
     );
 };

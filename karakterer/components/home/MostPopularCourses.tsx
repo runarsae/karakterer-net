@@ -8,10 +8,11 @@ import styled from 'styled-components';
 const Grid = styled.div((props) => ({
     display: 'grid',
     gridTemplateColumns: '1fr',
-    gap: '16px',
+    gap: '8px',
 
     [`@media (min-width: ${props.theme.breakpoints.sm}px)`]: {
-        gridTemplateColumns: 'repeat(2, calc(50% - 8px))'
+        gridTemplateColumns: 'repeat(2, calc(50% - 8px))',
+        gap: '16px'
     },
 
     [`@media (min-width: ${props.theme.breakpoints.lg}px)`]: {
@@ -31,6 +32,7 @@ const Card = styled.button((props) => ({
     backgroundColor: props.theme.palette.card.main,
     borderRadius: '4px',
     transition: `background-color 100ms ease-in-out`,
+    overflow: 'hidden',
 
     ':focus': {
         backgroundColor: props.theme.palette.card.hover
@@ -66,8 +68,8 @@ function MostPopularCourses({ courses }: Props) {
             <Fade triggerOnce>
                 <Typography variant="h1">Mest populære emner</Typography>
             </Fade>
-            <Grid>
-                <Fade triggerOnce cascade damping={0.05}>
+            <Fade triggerOnce>
+                <Grid>
                     {courses.map((course) => (
                         <Card
                             key={course.course}
@@ -77,8 +79,8 @@ function MostPopularCourses({ courses }: Props) {
                             <CourseName variant="body1">{course.courses.name}</CourseName>
                         </Card>
                     ))}
-                </Fade>
-            </Grid>
+                </Grid>
+            </Fade>
         </Section>
     );
 }
