@@ -14,9 +14,10 @@ const Wrapper = styled.div((props) => ({
     backgroundColor: props.theme.palette.card.main,
     height: '100%',
     width: '100%',
-    transition: 'right ' + props.theme.transitionDuration + 'ms ease',
+    transition: `right ${props.theme.transitionDuration}ms ease`,
     overflowY: 'auto',
     overflowX: 'hidden',
+    scrollbarGutter: 'stable',
     zIndex: 2,
     padding: '0 16px 16px 16px'
 }));
@@ -42,6 +43,7 @@ const CloseButton = styled(IconButton)({
 });
 
 const sidebarTransitionStyles: { [id: string]: CSSProperties } = {
+    entering: { right: 0 },
     entered: { right: 0 }
 };
 

@@ -36,6 +36,7 @@ const ModalSection = styled(Section)((props) => ({
 }));
 
 const modalTransitionStyles: { [id: string]: CSSProperties } = {
+    entering: { opacity: 1 },
     entered: { opacity: 1 }
 };
 
