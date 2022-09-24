@@ -1,7 +1,7 @@
 import useResizeObserver from '@react-hook/resize-observer';
 import Card from 'components/common/Card';
 import { CourseSearch } from 'hooks/useCourseSearch';
-import { useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import styled from 'styled-components';
 import Error from './Error';
 import Input from './Input';
@@ -22,7 +22,7 @@ const PopupCard = styled(Card)<{ height: number; scrollbarVisible: boolean }>((p
     paddingTop: 0,
     paddingBottom: 0,
     overflowY: props.scrollbarVisible ? 'auto' : 'hidden',
-    height: props.height,
+    height: props.height || 'auto',
     transition: `height ${props.theme.transitionDuration}ms ease-out`
 }));
 
