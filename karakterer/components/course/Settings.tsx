@@ -1,8 +1,9 @@
 import Card from 'components/common/Card';
 import RadioButton from 'components/common/RadioButton';
-import { ChangeEvent, useEffect, useRef } from 'react';
+import { ChangeEvent, CSSProperties, useEffect, useRef } from 'react';
+import { Transition } from 'react-transition-group';
 import { Semester, SettingsContext } from 'state/settings';
-import styled from 'styled-components';
+import styled, { useTheme } from 'styled-components';
 import { useContext } from 'utils/context';
 
 const ButtonCover = styled.div<{ enabled: boolean }>((props) => ({
@@ -16,20 +17,28 @@ const ButtonCover = styled.div<{ enabled: boolean }>((props) => ({
     zIndex: 2
 }));
 
-const Popup = styled(Card)<{ open: boolean }>`
-    ${(props) => ({
-        position: 'absolute',
-        right: 0,
-        top: 45,
-        backgroundColor: props.theme.palette.popup.main,
-        display: props.open ? 'flex' : 'none',
-        flexDirection: 'column',
-        zIndex: 2,
-        gap: 16
-    })}
-`;
+const Popup = styled(Card)((props) => ({
+    position: 'absolute',
+    right: 0,
+    top: 45,
+    width: 'max-content',
+    backgroundColor: props.theme.palette.popup.main,
+    display: 'flex',
+    flexDirection: 'column',
+    zIndex: 2,
+    gap: 16,
+    opacity: 0,
+    transition: `opacity ${props.theme.transitionDuration}ms ease`
+}));
+
+const popupTransitionStyles: { [id: string]: CSSProperties } = {
+    entering: { opacity: 1 },
+    entered: { opacity: 1 }
+};
 
 function Settings() {
+    const theme = useTheme();
+
     const popupRef = useRef<HTMLDivElement>(null);
 
     const {
@@ -69,32 +78,41 @@ function Settings() {
     return (
         <>
             <ButtonCover enabled={settingsOpen} />
-            <Popup open={settingsOpen} ref={popupRef}>
-                <RadioButton
-                    disabled={!enabledSemesterDisplays.includes(Semester.All)}
-                    group="semester"
-                    label="Høst og vår"
-                    value={Semester.All.toString()}
-                    checked={semesterDisplay == Semester.All}
-                    onChange={onRadioButtonChange}
-                />
-                <RadioButton
-                    disabled={!enabledSemesterDisplays.includes(Semester.Autumn)}
-                    group="semester"
-                    label="Kun høst"
-                    value={Semester.Autumn.toString()}
-                    checked={semesterDisplay == Semester.Autumn}
-                    onChange={onRadioButtonChange}
-                />
-                <RadioButton
-                    disabled={!enabledSemesterDisplays.includes(Semester.Spring)}
-                    group="semester"
-                    label="Kun vår"
-                    value={Semester.Spring.toString()}
-                    checked={semesterDisplay == Semester.Spring}
-                    onChange={onRadioButtonChange}
-                />
-            </Popup>
+            <Transition nodeRef={popupRef} in={settingsOpen} timeout={theme.transitionDuration}>
+                {(state) => (
+                    <Popup
+                        ref={popupRef}
+                        style={{
+                            ...popupTransitionStyles[state]
+                        }}
+                    >
+                        <RadioButton
+                            disabled={!enabledSemesterDisplays.includes(Semester.All)}
+                            group="semester"
+                            label="Høst og vår"
+                            value={Semester.All.toString()}
+                            checked={semesterDisplay == Semester.All}
+                            onChange={onRadioButtonChange}
+                        />
+                        <RadioButton
+                            disabled={!enabledSemesterDisplays.includes(Semester.Autumn)}
+                            group="semester"
+                            label="Kun høst"
+                            value={Semester.Autumn.toString()}
+                            checked={semesterDisplay == Semester.Autumn}
+                            onChange={onRadioButtonChange}
+                        />
+                        <RadioButton
+                            disabled={!enabledSemesterDisplays.includes(Semester.Spring)}
+                            group="semester"
+                            label="Kun vår"
+                            value={Semester.Spring.toString()}
+                            checked={semesterDisplay == Semester.Spring}
+                            onChange={onRadioButtonChange}
+                        />
+                    </Popup>
+                )}
+            </Transition>
         </>
     );
 }
