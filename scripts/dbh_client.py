@@ -16,11 +16,11 @@ class FilterType(Enum):
     LESSTHAN = "lessthan"
 
 
-class DBH_CLIENT:
+class DBHClient:
 
     session = None
 
-    url = "https://api.nsd.no/dbhapitjener/Tabeller/hentJSONTabellData"
+    url = "https://dbh.hkdir.no/api/Tabeller//hentJSONTabellData"
     api_version = 1
     status_line = False
     code_text = False
@@ -36,7 +36,11 @@ class DBH_CLIENT:
     def create_filter(name: str, filter_type: FilterType, values):
         return {
             "variabel": name,
-            "selection": {"filter": filter_type.value, "values": values, "exclude": [""]},
+            "selection": {
+                "filter": filter_type.value,
+                "values": values,
+                "exclude": [""]
+            },
         }
 
     def query(self, table_id: int, group_by, sort_by, variables, filters):
