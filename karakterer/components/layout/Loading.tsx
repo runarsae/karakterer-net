@@ -1,23 +1,26 @@
 import LoadingIndicator from 'components/common/LoadingIndicator';
-import Section from 'components/common/Section';
 import { Fade } from 'react-awesome-reveal';
 import styled, { useTheme } from 'styled-components';
 
 const LoadingContainer = styled.div({
-    margin: '64px auto'
+    width: '100%',
+    height: '100%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'column',
+    gap: '16px'
 });
 
 function Loading() {
     const theme = useTheme();
 
     return (
-        <Section>
-            <LoadingContainer>
-                <Fade triggerOnce duration={theme.transitionDuration}>
-                    <LoadingIndicator size="large" />
-                </Fade>
-            </LoadingContainer>
-        </Section>
+        <LoadingContainer>
+            <Fade triggerOnce duration={theme.transitionDuration}>
+                <LoadingIndicator size="large" />
+            </Fade>
+        </LoadingContainer>
     );
 }
 

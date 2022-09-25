@@ -15,7 +15,7 @@ import Search from 'components/search';
 import { NextPage } from 'next';
 import type { AppProps } from 'next/app';
 import { useRouter } from 'next/router';
-import { ReactElement, ReactNode, useEffect, useState } from 'react';
+import { ReactElement, ReactNode } from 'react';
 import { SearchContextProvider } from 'state/search';
 import { ThemeProvider } from 'styled-components';
 import 'styles/globals.css';
@@ -34,7 +34,7 @@ ChartJS.register(
 
 ChartJS.defaults.font.family = 'Raleway';
 
-export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
+export type NextPageWithLayout<P = Record<string, unknown>, IP = P> = NextPage<P, IP> & {
     getLayout?: (page: ReactElement, props: P) => ReactNode;
 };
 
@@ -45,37 +45,18 @@ type AppPropsWithLayout = AppProps & {
 function App({ Component, pageProps }: AppPropsWithLayout) {
     const router = useRouter();
 
-    const [loading, setLoading] = useState(false);
-
-    useEffect(() => {
-        const handleStart = (url: string) => url !== router.asPath && setLoading(true);
-        const handleComplete = () => setLoading(false);
-
-        router.events.on('routeChangeStart', handleStart);
-        router.events.on('routeChangeComplete', handleComplete);
-        router.events.on('routeChangeError', handleComplete);
-
-        return () => {
-            router.events.off('routeChangeStart', handleStart);
-            router.events.off('routeChangeComplete', handleComplete);
-            router.events.off('routeChangeError', handleComplete);
-        };
-    });
-
     const getLayout = Component.getLayout ?? ((page) => page);
 
     return (
         <ThemeProvider theme={theme}>
-            <SearchContextProvider>
-                <Layout>
-                    {router.isFallback || loading ? (
-                        <Loading />
-                    ) : (
-                        getLayout(<Component {...pageProps} />, pageProps)
-                    )}
+            {router.isFallback ? (
+                <Loading />
+            ) : (
+                <SearchContextProvider>
+                    <Layout>{getLayout(<Component {...pageProps} />, pageProps)}</Layout>
                     <Search />
-                </Layout>
-            </SearchContextProvider>
+                </SearchContextProvider>
+            )}
         </ThemeProvider>
     );
 }
