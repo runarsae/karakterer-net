@@ -62,9 +62,11 @@ interface Props {
 function Header({ title, navigation }: Props) {
     return (
         <Container hasTitle={Boolean(title)}>
-            <Link href="/">
-                <LogoText>karakterer.net</LogoText>
-            </Link>
+            <div>
+                <Link href="/">
+                    <LogoText>karakterer.net</LogoText>
+                </Link>
+            </div>
             {title && (
                 <>
                     <Line />
