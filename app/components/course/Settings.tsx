@@ -78,7 +78,13 @@ function Settings() {
     return (
         <>
             <ButtonCover enabled={settingsOpen} />
-            <Transition nodeRef={popupRef} in={settingsOpen} timeout={theme.transitionDuration}>
+            <Transition
+                nodeRef={popupRef}
+                mountOnEnter
+                unmountOnExit
+                in={settingsOpen}
+                timeout={theme.transitionDuration}
+            >
                 {(state) => (
                     <Popup
                         ref={popupRef}
