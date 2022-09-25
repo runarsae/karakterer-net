@@ -1,32 +1,37 @@
-from config.config import db, cursor
-from dbh_client import DBH_CLIENT, FilterType
-from refresh_courses_with_grades import refresh_courses_with_grades
+from dbh_client import DBHClient, FilterType
+from db_connector import DbConnector
 
 
 class Courses:
-    client = None
 
     institution_id = 1150  # NTNU
     table_id = 208  # Courses
     group_by = []
     sort_by = ["Emnekode", "Årstall", "Semester", "Emnenavn"]
-    variabler = ["Årstall", "Semester", "Emnekode", "Emnenavn"]
+    variables = ["Årstall", "Semester", "Emnekode", "Emnenavn"]
     filters = [
-        DBH_CLIENT.create_filter(
+        DBHClient.create_filter(
             "Institusjonskode", FilterType.ITEM, [institution_id]),
-        DBH_CLIENT.create_filter("Årstall", FilterType.ITEM, ["*"]),
-        DBH_CLIENT.create_filter(
+        DBHClient.create_filter(
+            "Årstall", FilterType.ITEM, ["*"]),
+        DBHClient.create_filter(
             "Semester", FilterType.ITEM, ["*"])
     ]
 
     def __init__(self):
-        self.client = DBH_CLIENT()
+        self.db_connector = DbConnector()
+        self.db_connection = self.db_connector.db_connection
+        self.db_cursor = self.db_connector.cursor
+
+        self.dbh_client = DBHClient()
 
     def fetch_courses(self):
         print(f"FETCHING COURSE DATA")
 
-        return self.client.query(
-            self.table_id, self.group_by, self.sort_by, self.variabler, self.filters)
+        return self.dbh_client.query(
+            self.table_id, self.group_by, self.sort_by,
+            self.variables, self.filters
+        )
 
     def insert_course_data(self, results):
         courses = {}
@@ -54,15 +59,32 @@ class Courses:
 
             val = (code, name, name)
 
-            cursor.execute(sql, val)
+            self.db_cursor.execute(sql, val)
 
-        db.commit()
+        self.db_connection.commit()
 
         print(f"\nINSERTED/UPDATED COURSE NAMES")
+
+    def refresh_courses_with_grades(self):
+        sql = "TRUNCATE TABLE courses_with_grades"
+        self.db_cursor.execute(sql)
+
+        sql = """
+            INSERT INTO courses_with_grades
+                (SELECT DISTINCT course, name FROM courses NATURAL JOIN grades)
+            """
+        self.db_cursor.execute(sql)
+        self.db_connection.commit()
+
+        print(f"\nREFRESHED COURSES WITH GRADES")
 
 
 if __name__ == '__main__':
     courses = Courses()
+
     result = courses.fetch_courses()
     courses.insert_course_data(result)
-    refresh_courses_with_grades()
+
+    courses.refresh_courses_with_grades()
+
+    courses.db_connector.close_connection()
