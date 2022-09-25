@@ -1,4 +1,4 @@
-import Typography from 'components/common/Typography';
+import { Body2 } from 'components/common/Typography';
 import { useEffect, useRef, useState } from 'react';
 import { Range } from 'react-range';
 import styled, { useTheme } from 'styled-components';
@@ -65,8 +65,8 @@ interface Props {
     value: number;
     onChange: (value: number) => void;
     label: string;
-    minLabel: string;
-    maxLabel: string;
+    minLabel: string | undefined;
+    maxLabel: string | undefined;
 }
 
 const Slider = ({ max, value, onChange, label, minLabel, maxLabel }: Props) => {
@@ -94,30 +94,30 @@ const Slider = ({ max, value, onChange, label, minLabel, maxLabel }: Props) => {
 
     // Toggle visibility to min/max labels according to if they are colliding with the value label or not
     useEffect(() => {
-        if (isColliding(minLabelDivRef.current!, labelDivRef.current!)) {
-            setShowMinLabel(false);
-        } else {
-            setShowMinLabel(true);
+        if (minLabelDivRef.current && labelDivRef.current) {
+            if (isColliding(minLabelDivRef.current, labelDivRef.current)) {
+                setShowMinLabel(false);
+            } else {
+                setShowMinLabel(true);
+            }
         }
 
-        if (isColliding(maxLabelDivRef.current!, labelDivRef.current!)) {
-            setShowMaxLabel(false);
-        } else {
-            setShowMaxLabel(true);
+        if (maxLabelDivRef.current && labelDivRef.current) {
+            if (isColliding(maxLabelDivRef.current, labelDivRef.current)) {
+                setShowMaxLabel(false);
+            } else {
+                setShowMaxLabel(true);
+            }
         }
     }, [value]);
 
     return (
         <Container>
             <ExtremeTickLabel align="left" ref={minLabelDivRef} visible={showMinLabel}>
-                <Typography variant="body2" style={{ color: '#464645', textAlign: 'center' }}>
-                    {minLabel}
-                </Typography>
+                <Body2 style={{ color: '#464645', textAlign: 'center' }}>{minLabel}</Body2>
             </ExtremeTickLabel>
             <ExtremeTickLabel align="right" ref={maxLabelDivRef} visible={showMaxLabel}>
-                <Typography variant="body2" style={{ color: '#464645', textAlign: 'center' }}>
-                    {maxLabel}
-                </Typography>
+                <Body2 style={{ color: '#464645', textAlign: 'center' }}>{maxLabel}</Body2>
             </ExtremeTickLabel>
             <Range
                 max={max}
@@ -127,12 +127,9 @@ const Slider = ({ max, value, onChange, label, minLabel, maxLabel }: Props) => {
                 renderThumb={({ props, isDragged }) => (
                     <Thumb {...props} isDragged={isDragged} onKeyDown={undefined}>
                         <Label ref={labelDivRef}>
-                            <Typography
-                                variant="body2"
-                                style={{ color: theme.palette.heading, textAlign: 'center' }}
-                            >
+                            <Body2 style={{ color: theme.palette.heading, textAlign: 'center' }}>
                                 {label}
-                            </Typography>
+                            </Body2>
                         </Label>
                     </Thumb>
                 )}

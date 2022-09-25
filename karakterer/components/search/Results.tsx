@@ -1,5 +1,5 @@
 import { Course } from '@prisma/client';
-import Typography from 'components/common/Typography';
+import { Body1, Body2 } from 'components/common/Typography';
 import { useRouter } from 'next/router';
 import styled, { useTheme } from 'styled-components';
 
@@ -61,10 +61,8 @@ function Results({ courses }: Props) {
         <Container>
             {courses.map((course, index) => (
                 <ResultCard key={index} onClick={() => router.push(`/course/${course.course}`)}>
-                    <Typography variant="body2">{course.course}</Typography>
-                    <Typography variant="body1" style={{ color: theme.palette.heading }}>
-                        {course.name}
-                    </Typography>
+                    <Body2>{course.course}</Body2>
+                    <Body1 style={{ color: theme.palette.heading }}>{course.name}</Body1>
                 </ResultCard>
             ))}
         </Container>

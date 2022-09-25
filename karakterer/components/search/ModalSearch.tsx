@@ -1,7 +1,7 @@
 import useResizeObserver from '@react-hook/resize-observer';
 import Card from 'components/common/Card';
 import { CourseSearch } from 'hooks/useCourseSearch';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import styled from 'styled-components';
 import Error from './Error';
 import Input from './Input';

@@ -1,4 +1,4 @@
-import { ReactElement, useState } from 'react';
+import { ReactNode, useState } from 'react';
 import { createContext } from 'utils/context';
 
 export const SearchContext = createContext<{
@@ -6,7 +6,7 @@ export const SearchContext = createContext<{
     setSearchOpen: (open: boolean) => void;
 }>();
 
-export const SearchContextProvider = ({ children }: { children: ReactElement }) => {
+export const SearchContextProvider = ({ children }: { children: ReactNode }) => {
     const [searchOpen, setSearchOpen] = useState<boolean>(false);
 
     return (

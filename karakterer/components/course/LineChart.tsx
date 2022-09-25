@@ -1,8 +1,7 @@
 import styled, { useTheme } from 'styled-components';
 import { Chart } from 'react-chartjs-2';
-import { Chart as ChartType, ChartOptions } from 'chart.js';
-import { useEffect, useMemo, useRef, useState } from 'react';
-import FontFaceObserver from 'fontfaceobserver';
+import { ChartOptions } from 'chart.js';
+import { useMemo, useState } from 'react';
 
 const Container = styled.div((props) => ({
     position: 'relative',
@@ -123,7 +122,7 @@ const LineChart = ({
                                         return null;
                                 }
                             } else if (yLabels === YLabels.Percentages) {
-                                let max = Math.max(...labels.map((l) => l.value));
+                                const max = Math.max(...labels.map((l) => l.value));
 
                                 if (
                                     (max > 40 && label % 20 === 0) ||

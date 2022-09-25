@@ -1,11 +1,11 @@
 import Section from 'components/common/Section';
-import Typography from 'components/common/Typography';
+import { Body1, Heading1 } from 'components/common/Typography';
 
 function Custom404() {
     return (
         <Section>
-            <Typography variant="h1">Error: 404</Typography>
-            <Typography variant="body1">Den forespurte siden ble ikke funnet.</Typography>
+            <Heading1>Error: 404</Heading1>
+            <Body1>Den forespurte siden ble ikke funnet.</Body1>
         </Section>
     );
 }

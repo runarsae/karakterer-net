@@ -1,5 +1,5 @@
 import Section from 'components/common/Section';
-import Typography from 'components/common/Typography';
+import { Body1, Body2, Heading1 } from 'components/common/Typography';
 import { CoursesWithNames } from 'lib/getMostPopularCoursesByViews';
 import { useRouter } from 'next/router';
 import { Fade } from 'react-awesome-reveal';
@@ -49,7 +49,7 @@ const Card = styled.button((props) => ({
     }
 }));
 
-const CourseName = styled(Typography)((props) => ({
+const CourseName = styled(Body1)((props) => ({
     color: props.theme.palette.heading,
     overflow: 'hidden',
     whiteSpace: 'nowrap',
@@ -66,7 +66,7 @@ function MostPopularCourses({ courses }: Props) {
     return (
         <Section>
             <Fade triggerOnce>
-                <Typography variant="h1">Mest populære emner</Typography>
+                <Heading1>Mest populære emner</Heading1>
             </Fade>
             <Fade triggerOnce>
                 <Grid>
@@ -75,8 +75,8 @@ function MostPopularCourses({ courses }: Props) {
                             key={course.course}
                             onClick={() => router.push(`/course/${course.course}`)}
                         >
-                            <Typography variant="body2">{course.course}</Typography>
-                            <CourseName variant="body1">{course.courses.name}</CourseName>
+                            <Body2>{course.course}</Body2>
+                            <CourseName>{course.courses.name}</CourseName>
                         </Card>
                     ))}
                 </Grid>
