@@ -1,6 +1,6 @@
 import { ChangeEventHandler } from 'react';
 import styled from 'styled-components';
-import Typography from './Typography';
+import { Body1 } from './Typography';
 
 const RadioInput = styled.input.attrs({ type: 'radio' })`
     ${{
@@ -75,7 +75,7 @@ function RadioButton({ group, label, value, checked, onChange, disabled }: Props
                 }}
             />
             <Label htmlFor={label} checked={checked} disabled={disabled}>
-                <Typography variant="body1">{label}</Typography>
+                <Body1>{label}</Body1>
             </Label>
         </>
     );

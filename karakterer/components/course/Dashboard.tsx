@@ -1,6 +1,6 @@
 import Card from 'components/common/Card';
 import styled, { useTheme } from 'styled-components';
-import Typography from 'components/common/Typography';
+import { Body1, Heading2, Measurement } from 'components/common/Typography';
 import BarChart from 'components/course/BarChart';
 import { Dispatch, useCallback, useEffect } from 'react';
 import LineChart, { YLabels } from 'components/course/LineChart';
@@ -170,7 +170,7 @@ function Dashboard({ state, dispatch }: Props) {
         <Grid hasGrades={state.hasGrades}>
             <Card style={{ gridArea: 'grades' }}>
                 <CardContent gap>
-                    <Typography variant="h2">Karakterfordeling</Typography>
+                    <Heading2>Karakterfordeling</Heading2>
                     <BarChart grades={state.grades[state.selectedSemesterIndex]} />
                 </CardContent>
             </Card>
@@ -195,13 +195,13 @@ function Dashboard({ state, dispatch }: Props) {
                         maxLabel={state.semesters.at(-1)}
                     />
                 ) : state.semesters.length === 1 ? (
-                    <Typography variant="body1" style={{ textAlign: 'center' }}>
+                    <Body1 style={{ textAlign: 'center' }}>
                         Emnet har bare registrert karakterer for {state.semesters[0]}.
-                    </Typography>
+                    </Body1>
                 ) : (
-                    <Typography variant="body1" style={{ textAlign: 'center' }}>
+                    <Body1 style={{ textAlign: 'center' }}>
                         Ingen karakterer registrert for dette emnet.
-                    </Typography>
+                    </Body1>
                 )}
             </Card>
 
@@ -211,20 +211,17 @@ function Dashboard({ state, dispatch }: Props) {
                         <CenterBox>
                             <MeasurementContainer>
                                 <AverageContainer>
-                                    <Typography variant="measurement" style={{ display: 'inline' }}>
+                                    <Measurement style={{ display: 'inline' }}>
                                         {state.totalAverage && gradeLetter(state.totalAverage)}
-                                    </Typography>
+                                    </Measurement>
                                     <Line />
-                                    <Typography variant="measurement" style={{ display: 'inline' }}>
+                                    <Measurement style={{ display: 'inline' }}>
                                         {state.totalAverage}
-                                    </Typography>
+                                    </Measurement>
                                 </AverageContainer>
-                                <Typography
-                                    variant="body1"
-                                    style={{ textAlign: 'center', whiteSpace: 'nowrap' }}
-                                >
+                                <Body1 style={{ textAlign: 'center', whiteSpace: 'nowrap' }}>
                                     Totalt gjennomsnitt
-                                </Typography>
+                                </Body1>
                             </MeasurementContainer>
                         </CenterBox>
                     </Card>
@@ -233,18 +230,12 @@ function Dashboard({ state, dispatch }: Props) {
                 <Card style={{ gridArea: 'total_fail_percentage' }}>
                     <CenterBox>
                         <MeasurementContainer>
-                            <Typography
-                                variant="measurement"
-                                style={{ textAlign: 'center', whiteSpace: 'nowrap' }}
-                            >
+                            <Measurement style={{ textAlign: 'center', whiteSpace: 'nowrap' }}>
                                 {state.totalFailPercentage}%
-                            </Typography>
-                            <Typography
-                                variant="body1"
-                                style={{ textAlign: 'center', whiteSpace: 'nowrap' }}
-                            >
+                            </Measurement>
+                            <Measurement style={{ textAlign: 'center', whiteSpace: 'nowrap' }}>
                                 Total strykprosent
-                            </Typography>
+                            </Measurement>
                         </MeasurementContainer>
                     </CenterBox>
                 </Card>
@@ -254,7 +245,7 @@ function Dashboard({ state, dispatch }: Props) {
                 {state.hasGrades && (
                     <Card style={{ gridArea: 'averages' }}>
                         <CardContent>
-                            <Typography variant="h2">Gjennomsnitt</Typography>
+                            <Heading2>Gjennomsnitt</Heading2>
                             <LineChart
                                 values={state.averageGrades}
                                 dataLabelIndex={state.selectedSemesterIndex}
@@ -273,7 +264,7 @@ function Dashboard({ state, dispatch }: Props) {
                 )}
                 <Card style={{ gridArea: 'fail_percentages' }}>
                     <CardContent>
-                        <Typography variant="h2">Strykprosent</Typography>
+                        <Heading2>Strykprosent</Heading2>
                         <LineChart
                             values={state.failPercentages}
                             dataLabelIndex={state.selectedSemesterIndex}
