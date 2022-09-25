@@ -1,24 +1,25 @@
-import 'styles/globals.css';
-import type { AppProps } from 'next/app';
-import { ThemeProvider } from 'styled-components';
-import { theme } from 'styles/theme';
-
 import {
-    Chart as ChartJS,
-    CategoryScale,
-    LinearScale,
-    BarElement,
-    PointElement,
-    LineElement,
     BarController,
-    LineController
+    BarElement,
+    CategoryScale,
+    Chart as ChartJS,
+    LinearScale,
+    LineController,
+    LineElement,
+    PointElement
 } from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import Layout from 'components/layout/Layout';
-import { SearchContextProvider } from 'state/search';
-import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import Loading from 'components/layout/Loading';
 import Search from 'components/search';
+import { NextPage } from 'next';
+import type { AppProps } from 'next/app';
+import { useRouter } from 'next/router';
+import { ReactElement, ReactNode, useEffect, useState } from 'react';
+import { SearchContextProvider } from 'state/search';
+import { ThemeProvider } from 'styled-components';
+import 'styles/globals.css';
+import { theme } from 'styles/theme';
 
 ChartJS.register(
     CategoryScale,
@@ -33,7 +34,15 @@ ChartJS.register(
 
 ChartJS.defaults.font.family = 'Raleway';
 
-function App({ Component, pageProps }: AppProps) {
+export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
+    getLayout?: (page: ReactElement, props: P) => ReactNode;
+};
+
+type AppPropsWithLayout = AppProps & {
+    Component: NextPageWithLayout;
+};
+
+function App({ Component, pageProps }: AppPropsWithLayout) {
     const router = useRouter();
 
     const [loading, setLoading] = useState(false);
@@ -53,11 +62,17 @@ function App({ Component, pageProps }: AppProps) {
         };
     });
 
+    const getLayout = Component.getLayout ?? ((page) => page);
+
     return (
         <ThemeProvider theme={theme}>
             <SearchContextProvider>
-                <Layout loading={router.isFallback || loading}>
-                    <Component {...pageProps} />
+                <Layout>
+                    {router.isFallback || loading ? (
+                        <Loading />
+                    ) : (
+                        getLayout(<Component {...pageProps} />, pageProps)
+                    )}
                     <Search />
                 </Layout>
             </SearchContextProvider>
