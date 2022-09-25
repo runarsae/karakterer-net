@@ -12,23 +12,23 @@ export const theme: DefaultTheme = {
             white: '#FFFFFF',
             gray: '#F5F5F5'
         },
-        logo: '#b9b9b9',
-        heading: '#e7e7e7',
+        logo: '#c9c9c9',
+        heading: '#c9c9c9',
         text: '#999999',
         overlay: 'rgba(0, 0, 0, 0.7)',
         horizontalLine: '#363636',
         background: '#000000',
         card: {
-            main: '#121212',
-            hover: '#181818'
+            main: '#101010',
+            hover: '#161616'
         },
         popup: {
-            main: '#1c1c1c',
-            hover: '#181818'
+            main: '#181818',
+            hover: '#131313'
         },
         popupCard: {
-            main: '#282828',
-            hover: '#202020'
+            main: '#202020',
+            hover: '#1c1c1c'
         }
     },
     breakpoints: {
