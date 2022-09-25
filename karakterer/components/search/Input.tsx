@@ -1,5 +1,4 @@
 import { Course } from '@prisma/client';
-import Card from 'components/common/Card';
 import DelayWrapper from 'components/common/DelayWrapper';
 import { SearchIcon } from 'components/common/icons';
 import LoadingIndicator from 'components/common/LoadingIndicator';

@@ -65,8 +65,8 @@ interface Props {
     value: number;
     onChange: (value: number) => void;
     label: string;
-    minLabel: string;
-    maxLabel: string;
+    minLabel: string | undefined;
+    maxLabel: string | undefined;
 }
 
 const Slider = ({ max, value, onChange, label, minLabel, maxLabel }: Props) => {
@@ -94,16 +94,20 @@ const Slider = ({ max, value, onChange, label, minLabel, maxLabel }: Props) => {
 
     // Toggle visibility to min/max labels according to if they are colliding with the value label or not
     useEffect(() => {
-        if (isColliding(minLabelDivRef.current!, labelDivRef.current!)) {
-            setShowMinLabel(false);
-        } else {
-            setShowMinLabel(true);
+        if (minLabelDivRef.current && labelDivRef.current) {
+            if (isColliding(minLabelDivRef.current, labelDivRef.current)) {
+                setShowMinLabel(false);
+            } else {
+                setShowMinLabel(true);
+            }
         }
 
-        if (isColliding(maxLabelDivRef.current!, labelDivRef.current!)) {
-            setShowMaxLabel(false);
-        } else {
-            setShowMaxLabel(true);
+        if (maxLabelDivRef.current && labelDivRef.current) {
+            if (isColliding(maxLabelDivRef.current, labelDivRef.current)) {
+                setShowMaxLabel(false);
+            } else {
+                setShowMaxLabel(true);
+            }
         }
     }, [value]);
 

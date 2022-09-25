@@ -1,4 +1,4 @@
-import React, { CSSProperties, MouseEvent, useEffect, useRef } from 'react';
+import React, { CSSProperties, useEffect, useRef } from 'react';
 import styled, { useTheme } from 'styled-components';
 import { Transition } from 'react-transition-group';
 import Overlay from './Overlay';
@@ -20,7 +20,7 @@ const Wrapper = styled.div((props) => ({
     pointerEvents: 'none'
 }));
 
-const ModalSection = styled(Section)((props) => ({
+const ModalSection = styled(Section)({
     display: 'flex',
     flexDirection: 'column',
     gap: 0,
@@ -33,7 +33,7 @@ const ModalSection = styled(Section)((props) => ({
     alignItems: 'center',
     justifyContent: 'center',
     pointerEvents: 'none'
-}));
+});
 
 const modalTransitionStyles: { [id: string]: CSSProperties } = {
     entering: { opacity: 1 },
@@ -50,12 +50,6 @@ export default function Modal({ children, open, onClose }: Props) {
     const theme = useTheme();
 
     const modalRef = useRef(null);
-
-    const handleClick = (e: MouseEvent<HTMLDivElement>) => {
-        if (e.target === e.currentTarget) {
-            onClose();
-        }
-    };
 
     useEffect(() => {
         const closeOnEsc = (e: KeyboardEvent) => {

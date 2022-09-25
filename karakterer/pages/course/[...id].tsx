@@ -47,7 +47,7 @@ interface Params extends ParsedUrlQuery {
 }
 
 export const getStaticProps: GetStaticProps<CourseWithGrades, Params> = async (context) => {
-    let { id } = context.params!;
+    const { id } = context.params as Params;
     const course = id.join('');
 
     const courseData: CourseWithGradesPromise = await getCourseData(course);

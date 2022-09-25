@@ -4,7 +4,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse<Course[]>) => {
     if (req.method === 'PUT' && req.query) {
-        let { id } = req.query;
+        const { id } = req.query;
 
         if (id && Array.isArray(id)) {
             const course = id.join('');

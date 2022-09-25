@@ -191,8 +191,8 @@ function Dashboard({ state, dispatch }: Props) {
                             })
                         }
                         label={state.semesters[state.selectedSemesterIndex]}
-                        minLabel={state.semesters.at(0)!}
-                        maxLabel={state.semesters.at(-1)!}
+                        minLabel={state.semesters.at(0)}
+                        maxLabel={state.semesters.at(-1)}
                     />
                 ) : state.semesters.length === 1 ? (
                     <Typography variant="body1" style={{ textAlign: 'center' }}>

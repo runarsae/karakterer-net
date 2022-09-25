@@ -1,8 +1,7 @@
 import styled, { useTheme } from 'styled-components';
 import { Chart } from 'react-chartjs-2';
-import { Chart as ChartType, ChartOptions } from 'chart.js';
-import { useEffect, useMemo, useRef } from 'react';
-import FontFaceObserver from 'fontfaceobserver';
+import { ChartOptions } from 'chart.js';
+import { useMemo } from 'react';
 import { Grades } from 'state/dashboard';
 
 const Container = styled.div((props) => ({

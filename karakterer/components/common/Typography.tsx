@@ -58,10 +58,6 @@ const Body2 = styled.p((props) => ({
     }
 }));
 
-const Button = styled.p({
-    fontSize: '14px'
-});
-
 const Measurement = styled.p((props) => ({
     fontSize: '20px',
     color: props.theme.palette.heading,
