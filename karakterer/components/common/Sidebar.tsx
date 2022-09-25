@@ -5,7 +5,7 @@ import Overlay from './Overlay';
 import { disableScroll, enableScroll } from '../../utils/scroll';
 import IconButton from './IconButton';
 import { CloseIcon } from './icons';
-import Typography from './Typography';
+import { Heading1 } from './Typography';
 
 const Wrapper = styled.div((props) => ({
     position: 'fixed',
@@ -33,7 +33,7 @@ const Header = styled.div<{ sticky: boolean }>((props) => ({
     padding: '16px 0 16px 0'
 }));
 
-const Title = styled(Typography)({
+const Title = styled(Heading1)({
     flex: 1,
     lineHeight: '42px'
 });
@@ -102,7 +102,7 @@ export default function Sidebar({ children, open, onClose, stickyHeader, title }
                             }}
                         >
                             <Header sticky={Boolean(stickyHeader)}>
-                                <Title variant="h1">{title}</Title>
+                                <Title>{title}</Title>
                                 <CloseButton
                                     title="Lukk"
                                     onClick={onClose}
