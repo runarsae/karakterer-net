@@ -8,7 +8,7 @@ import Head from 'next/head';
 import Header from 'components/layout/Header';
 import {
     Navigation,
-    NavigationItemInformation,
+    NavigationItemAbout,
     NavigationItemSearch,
     NavigationItemSettings
 } from 'components/layout/Navigation';
@@ -33,7 +33,7 @@ Course.getLayout = (page, props) => (
                 navigation={
                     <Navigation>
                         <NavigationItemSearch />
-                        <NavigationItemInformation />
+                        <NavigationItemAbout />
                         <NavigationItemSettings />
                     </Navigation>
                 }

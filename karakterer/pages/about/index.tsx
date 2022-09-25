@@ -3,7 +3,7 @@ import AboutPage from 'components/about';
 import Header from 'components/layout/Header';
 import {
     Navigation,
-    NavigationItemInformation,
+    NavigationItemAbout,
     NavigationItemSearch
 } from 'components/layout/Navigation';
 import { NextPageWithLayout } from 'pages/_app';
@@ -15,15 +15,14 @@ const About: NextPageWithLayout = () => {
 About.getLayout = (page) => (
     <>
         <Head>
-            <title>{`Informasjon - karakterer.net`}</title>
+            <title>{`Om -  karakterer.net`}</title>
         </Head>
 
         <Header
-            title="Informasjon"
             navigation={
                 <Navigation>
                     <NavigationItemSearch />
-                    <NavigationItemInformation />
+                    <NavigationItemAbout />
                 </Navigation>
             }
         />
