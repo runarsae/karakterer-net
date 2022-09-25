@@ -1,7 +1,7 @@
-import Typography from 'components/common/Typography';
+import { Body2 } from 'components/common/Typography';
 import styled from 'styled-components';
 
-const ErrorMessage = styled(Typography)((props) => ({
+const ErrorMessage = styled(Body2)((props) => ({
     color: props.theme.palette.error,
     padding: '0 0 16px 0',
 
@@ -15,7 +15,7 @@ interface Props {
 }
 
 function Error({ error }: Props) {
-    return <ErrorMessage variant="body2">{error}</ErrorMessage>;
+    return <ErrorMessage>{error}</ErrorMessage>;
 }
 
 export default Error;

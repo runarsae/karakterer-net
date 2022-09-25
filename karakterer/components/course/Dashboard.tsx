@@ -233,9 +233,9 @@ function Dashboard({ state, dispatch }: Props) {
                             <Measurement style={{ textAlign: 'center', whiteSpace: 'nowrap' }}>
                                 {state.totalFailPercentage}%
                             </Measurement>
-                            <Measurement style={{ textAlign: 'center', whiteSpace: 'nowrap' }}>
+                            <Body1 style={{ textAlign: 'center', whiteSpace: 'nowrap' }}>
                                 Total strykprosent
-                            </Measurement>
+                            </Body1>
                         </MeasurementContainer>
                     </CenterBox>
                 </Card>
