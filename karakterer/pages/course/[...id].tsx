@@ -1,4 +1,4 @@
-import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
+import { GetStaticPaths, GetStaticProps } from 'next';
 import { ParsedUrlQuery } from 'querystring';
 import CoursePage from 'components/course';
 import { SettingsContextProvider } from 'state/settings';
@@ -12,35 +12,36 @@ import {
     NavigationItemSearch,
     NavigationItemSettings
 } from 'components/layout/Navigation';
+import { NextPageWithLayout } from 'pages/_app';
 
-const Course: NextPage<CourseWithGrades> = (props) => {
-    return (
-        <>
-            <Head>
-                <title>{`${props.course} ${props.name} - karakterer.net`}</title>
-                <meta
-                    name="description"
-                    content={`Karakterstatistikk for emnet ${props.course} ${props.name} på Norges teknisk-naturvitenskapelige universitet (NTNU).`}
-                />
-            </Head>
-
-            <SettingsContextProvider grades={props.grades}>
-                <Header
-                    title={`${props.course} ${props.name}`}
-                    navigation={
-                        <Navigation>
-                            <NavigationItemSearch />
-                            <NavigationItemInformation />
-                            <NavigationItemSettings />
-                        </Navigation>
-                    }
-                />
-
-                <CoursePage {...props} />
-            </SettingsContextProvider>
-        </>
-    );
+const Course: NextPageWithLayout<CourseWithGrades> = (props) => {
+    return <CoursePage {...props} />;
 };
+
+Course.getLayout = (page, props) => (
+    <>
+        <Head>
+            <title>{`${props.course} ${props.name} - karakterer.net`}</title>
+            <meta
+                name="description"
+                content={`Karakterstatistikk for emnet ${props.course} ${props.name} på Norges teknisk-naturvitenskapelige universitet (NTNU).`}
+            />
+        </Head>
+        <SettingsContextProvider grades={props.grades}>
+            <Header
+                title={`${props.course} ${props.name}`}
+                navigation={
+                    <Navigation>
+                        <NavigationItemSearch />
+                        <NavigationItemInformation />
+                        <NavigationItemSettings />
+                    </Navigation>
+                }
+            />
+            {page}
+        </SettingsContextProvider>
+    </>
+);
 
 interface Params extends ParsedUrlQuery {
     id: string[];

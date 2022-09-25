@@ -1,4 +1,3 @@
-import { NextPage } from 'next';
 import Head from 'next/head';
 import AboutPage from 'components/about';
 import Header from 'components/layout/Header';
@@ -7,27 +6,30 @@ import {
     NavigationItemInformation,
     NavigationItemSearch
 } from 'components/layout/Navigation';
+import { NextPageWithLayout } from 'pages/_app';
 
-const About: NextPage = () => {
-    return (
-        <>
-            <Head>
-                <title>{`Informasjon - karakterer.net`}</title>
-            </Head>
-
-            <Header
-                title="Informasjon"
-                navigation={
-                    <Navigation>
-                        <NavigationItemSearch />
-                        <NavigationItemInformation />
-                    </Navigation>
-                }
-            />
-
-            <AboutPage />
-        </>
-    );
+const About: NextPageWithLayout = () => {
+    return <AboutPage />;
 };
+
+About.getLayout = (page) => (
+    <>
+        <Head>
+            <title>{`Informasjon - karakterer.net`}</title>
+        </Head>
+
+        <Header
+            title="Informasjon"
+            navigation={
+                <Navigation>
+                    <NavigationItemSearch />
+                    <NavigationItemInformation />
+                </Navigation>
+            }
+        />
+
+        {page}
+    </>
+);
 
 export default About;

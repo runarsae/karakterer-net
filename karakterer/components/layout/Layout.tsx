@@ -1,6 +1,5 @@
 import { ReactNode } from 'react';
 import styled from 'styled-components';
-import Loading from './Loading';
 
 const Wrapper = styled.div({
     display: 'flex',
@@ -19,10 +18,13 @@ const Content = styled.div((props) => ({
 }));
 
 interface Props {
-    loading: boolean;
     children: ReactNode;
 }
 
-export default function Layout({ loading, children }: Props) {
-    return <Wrapper>{loading ? <Loading /> : <Content>{children}</Content>}</Wrapper>;
+export default function Layout({ children }: Props) {
+    return (
+        <Wrapper>
+            <Content>{children}</Content>
+        </Wrapper>
+    );
 }
