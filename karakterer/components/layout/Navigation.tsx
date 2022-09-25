@@ -30,12 +30,12 @@ const NavigationItemSearch = () => {
     );
 };
 
-const NavigationItemInformation = () => {
+const NavigationItemAbout = () => {
     const router = useRouter();
 
     return (
         <IconButton
-            title="Informasjon"
+            title="Om karakterer.net"
             onClick={() => router.push('/about')}
             icon={<InfoIcon width={24} height={24} />}
         />
@@ -58,4 +58,4 @@ const NavigationItemSettings = () => {
     );
 };
 
-export { Navigation, NavigationItemSearch, NavigationItemInformation, NavigationItemSettings };
+export { Navigation, NavigationItemSearch, NavigationItemAbout, NavigationItemSettings };

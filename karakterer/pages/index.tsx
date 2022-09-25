@@ -2,7 +2,7 @@ import HomePage from 'components/home';
 import Header from 'components/layout/Header';
 import {
     Navigation,
-    NavigationItemInformation,
+    NavigationItemAbout,
     NavigationItemSearch
 } from 'components/layout/Navigation';
 import { CoursesWithNames, getMostPopularCoursesByViews } from 'lib/getMostPopularCoursesByViews';
@@ -32,7 +32,7 @@ Index.getLayout = (page) => (
             navigation={
                 <Navigation>
                     <NavigationItemSearch />
-                    <NavigationItemInformation />
+                    <NavigationItemAbout />
                 </Navigation>
             }
         />
