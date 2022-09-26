@@ -4,6 +4,7 @@ import { useDashboardState } from 'state/dashboard';
 import styled from 'styled-components';
 import { CourseWithGrades } from 'lib/getCourseData';
 import Title from './Title';
+import { Fade } from 'react-awesome-reveal';
 
 const Container = styled(Section)({
     paddingTop: 0
@@ -14,10 +15,12 @@ const CoursePage = ({ grades, course, name }: CourseWithGrades) => {
 
     if (state) {
         return (
-            <Container>
-                <Title course={course} name={name} />
-                <Dashboard state={state} dispatch={dispatch} />
-            </Container>
+            <Fade triggerOnce duration={300}>
+                <Container>
+                    <Title course={course} name={name} />
+                    <Dashboard state={state} dispatch={dispatch} />
+                </Container>
+            </Fade>
         );
     }
 

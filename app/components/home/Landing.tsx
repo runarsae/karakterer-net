@@ -3,12 +3,13 @@ import Section from 'components/common/Section';
 import Image from 'next/image';
 import { Fade } from 'react-awesome-reveal';
 import { SearchContext } from 'state/search';
-import styled from 'styled-components';
+import styled, { useTheme } from 'styled-components';
 import { useContext } from 'utils/context';
+import useWindowSize from 'utils/windowSize';
 import landingImage from '../../public/landing.png';
 
 const LandingSection = styled(Section)((props) => ({
-    padding: '64px 16px',
+    padding: '64px 32px',
 
     [`@media (min-width: ${props.theme.breakpoints.sm}px)`]: {
         padding: '96px 32px'
@@ -47,7 +48,7 @@ const LandingText = styled.p((props) => ({
     fontSize: '18px',
     color: props.theme.palette.text,
     lineHeight: '1.5',
-    margin: '32px 0',
+    margin: '27px 0 40px 0',
 
     [`@media (min-width: ${props.theme.breakpoints.md}px)`]: {
         fontSize: '20px'
@@ -67,35 +68,52 @@ const LandingImage = styled.div((props) => ({
 }));
 
 function Landing() {
+    const theme = useTheme();
+    const { width } = useWindowSize();
+
     const { setSearchOpen } = useContext(SearchContext);
 
-    return (
-        <LandingSection>
-            <Grid>
-                <div>
-                    <Fade direction="up" triggerOnce cascade damping={0.3}>
-                        <LandingTitle>Karakter&shy;statistikk for alle emner på NTNU</LandingTitle>
-                        <LandingText>
-                            Karakterfordeling og utvikling i gjennomsnitts&shy;karakter og
-                            stryk&shy;prosent i alle emner på NTNU siden 2004.
-                        </LandingText>
-                        <ActionButton
-                            onClick={() => {
-                                setSearchOpen(true);
-                            }}
+    if (width) {
+        const isMd = width >= theme.breakpoints.md;
+
+        return (
+            <LandingSection>
+                <Grid>
+                    <div>
+                        <Fade
+                            direction={isMd ? 'up' : undefined}
+                            triggerOnce
+                            cascade={isMd}
+                            duration={500}
+                            damping={0.3}
                         >
-                            Søk etter emne
-                        </ActionButton>
-                    </Fade>
-                </div>
-                <LandingImage>
-                    <Fade triggerOnce>
-                        <Image src={landingImage} alt="Statistikk" priority quality={100} />
-                    </Fade>
-                </LandingImage>
-            </Grid>
-        </LandingSection>
-    );
+                            <LandingTitle>
+                                Karakter&shy;statistikk for alle emner på NTNU
+                            </LandingTitle>
+                            <LandingText>
+                                Karakterfordeling og utvikling i gjennomsnitts&shy;karakter og
+                                stryk&shy;prosent i alle emner på NTNU siden 2004.
+                            </LandingText>
+                            <ActionButton
+                                onClick={() => {
+                                    setSearchOpen(true);
+                                }}
+                            >
+                                Søk etter emne
+                            </ActionButton>
+                        </Fade>
+                    </div>
+                    <LandingImage>
+                        <Fade triggerOnce duration={300}>
+                            <Image src={landingImage} alt="Statistikk" priority quality={100} />
+                        </Fade>
+                    </LandingImage>
+                </Grid>
+            </LandingSection>
+        );
+    }
+
+    return null;
 }
 
 export default Landing;
