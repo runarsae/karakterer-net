@@ -57,7 +57,7 @@ const LogoWrapper = styled.div({
 const LogoTextWrapper = styled.div((props) => ({
     display: 'none',
 
-    [`@media (min-width: ${props.theme.breakpoints.xs}px)`]: {
+    [`@media (min-width: ${props.theme.breakpoints.md}px)`]: {
         display: 'block'
     }
 }));

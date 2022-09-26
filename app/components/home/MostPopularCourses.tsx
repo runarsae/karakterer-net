@@ -65,10 +65,8 @@ function MostPopularCourses({ courses }: Props) {
 
     return (
         <Section>
-            <Fade triggerOnce>
+            <Fade triggerOnce duration={300}>
                 <Heading1>Mest populære emner</Heading1>
-            </Fade>
-            <Fade triggerOnce>
                 <Grid>
                     {courses.map((course) => (
                         <Card

@@ -7,8 +7,8 @@ import styled from 'styled-components';
 
 const Wrapper = styled.div((props) => ({
     [`@media (min-width: ${props.theme.breakpoints.md}px)`]: {
-        paddingTop: '64px',
-        paddingBottom: '64px'
+        paddingTop: '32px',
+        paddingBottom: '32px'
     }
 }));
 
@@ -42,11 +42,9 @@ export default function AboutPage() {
 
     return (
         <Wrapper>
-            <Section size="small">
-                <Fade triggerOnce>
+            <Fade triggerOnce duration={300}>
+                <Section size="small">
                     <Heading1>Om karakterer.net</Heading1>
-                </Fade>
-                <Fade triggerOnce cascade damping={0.05}>
                     <Body1 style={{ lineHeight: 1.5 }}>
                         Karakterstatistikken viser fordelingen av karakterene A til F for hvert
                         semester. Denne fordelingen brukes til å beregne
@@ -65,14 +63,10 @@ export default function AboutPage() {
                         </Link>{' '}
                         (DBH).
                     </Body1>
-                </Fade>
-            </Section>
-            <Section size="small">
-                <Fade triggerOnce delay={200}>
+                </Section>
+                <Section size="small">
                     <Heading2>FAQ</Heading2>
-                </Fade>
-                <AccordionGroup>
-                    <Fade triggerOnce cascade damping={0.05} delay={200}>
+                    <AccordionGroup>
                         <Accordion
                             title={<>Hvorfor kan jeg ikke filtrere på konte&shy;eksamen?</>}
                             active={activeAccordionIndex === 0}
@@ -161,14 +155,12 @@ export default function AboutPage() {
                                 med 100.
                             </Body1>
                         </Accordion>
-                    </Fade>
-                </AccordionGroup>
-            </Section>
-            <Section size="small">
-                <Fade triggerOnce delay={400}>
+                    </AccordionGroup>
+                </Section>
+                <Section size="small">
                     <Body2>Copyright © {new Date().getFullYear()}, karakterer.net</Body2>
-                </Fade>
-            </Section>
+                </Section>
+            </Fade>
         </Wrapper>
     );
 }
