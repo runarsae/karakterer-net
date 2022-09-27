@@ -35,11 +35,12 @@ jobs:
           DATABASE_URL: ${{ secrets.REMOTE_DATABASE_URL }}
 
       - name: Sync files
-        uses: SamKirkland/FTP-Deploy-Action@3.1.1
+        uses: SamKirkland/FTP-Deploy-Action@4.3.2
         with:
-          ftp-server: ${{ secrets.REMOTE_SERVER }}
-          ftp-username: ${{ secrets.REMOTE_USERNAME }}
-          ftp-password: ${{ secrets.REMOTE_PASSWORD }}
+          server: ${{ secrets.REMOTE_SERVER }}
+          username: ${{ secrets.REMOTE_USERNAME }}
+          password: ${{ secrets.REMOTE_PASSWORD }}
+          port: ${{ secrets.REMOTE_PORT }}
           local-dir: ./app/.next/standalone/
           server-dir: ${{ secrets.REMOTE_DIR }}
           exclude: |
