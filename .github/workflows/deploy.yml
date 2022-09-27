@@ -46,6 +46,7 @@ jobs:
           username: ${{ secrets.REMOTE_USERNAME }}
           password: ${{ secrets.REMOTE_PASSWORD }}
           port: ${{ secrets.REMOTE_PORT }}
+          protocol: ftps
           local-dir: ./app/.next/standalone/
           server-dir: ${{ secrets.REMOTE_DIR }}
           dry-run: true
