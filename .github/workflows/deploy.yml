@@ -1,9 +1,6 @@
 name: deploy
 
 on:
-  push:
-    branches:
-      - 90-deployment
   workflow_dispatch:
   release:
     types: [published]
@@ -34,28 +31,28 @@ jobs:
         env:
           DATABASE_URL: ${{ secrets.REMOTE_DATABASE_URL }}
 
-      # - name: Sync files
-      #   uses: SamKirkland/FTP-Deploy-Action@3.1.1
-      #   with:
-      #     ftp-server: ${{ secrets.REMOTE_SERVER }}
-      #     ftp-username: ${{ secrets.REMOTE_USERNAME }}
-      #     ftp-password: ${{ secrets.REMOTE_PASSWORD }}
-      #     local-dir: ./app/.next/standalone/
-      #     exclude: |
-      #       **/.git*
-      #       **/.git*/**
-      #       **/node_modules/**
-      #       .env
-      #       server.js
-      #     git-ftp-args: --insecure¨
-      #     dry-run: true
-
-      - name: Rebuild production
-        uses: appleboy/ssh-action@master
+      - name: Sync files
+        uses: SamKirkland/FTP-Deploy-Action@3.1.1
         with:
-          host: ${{ secrets.REMOTE_SERVER }}
-          username: ${{ secrets.REMOTE_USERNAME }}
-          password: ${{ secrets.REMOTE_PASSWORD }}
-          port: ${{ secrets.REMOTE_PORT }}
-          script: |
-            rsync -anv ~/app/.next/standalone/ ~/app/.next/standalone2
+          ftp-server: ${{ secrets.REMOTE_SERVER }}
+          ftp-username: ${{ secrets.REMOTE_USERNAME }}
+          ftp-password: ${{ secrets.REMOTE_PASSWORD }}
+          local-dir: ./app/.next/standalone/
+          server-dir: ${{ secrets.REMOTE_DIR }}
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
+            server.js
+          git-ftp-args: --insecure¨
+          dry-run: true
+
+      # - name: Rebuild production
+      #   uses: appleboy/ssh-action@master
+      #   with:
+      #     host: ${{ secrets.REMOTE_SERVER }}
+      #     username: ${{ secrets.REMOTE_USERNAME }}
+      #     password: ${{ secrets.REMOTE_PASSWORD }}
+      #     port: ${{ secrets.REMOTE_PORT }}
+      #     script: |
+      #       rsync -anv ~/app/.next/standalone/ ~/app/.next/standalone2
