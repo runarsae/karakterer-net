@@ -31,29 +31,24 @@ jobs:
         env:
           DATABASE_URL: ${{ secrets.REMOTE_DATABASE_URL }}
 
-      - name: Zip artifact for deployment
-        run: zip release.zip . -r -x "**/node_modules/*"
+      # - name: Zip artifact for deployment
+      #   run: zip release.zip ./app/.next/standalone/ -r
 
-      - uses: actions/upload-artifact@v3
-        with:
-          name: my-artifact
-          path: release.zip
-
-      # - name: Sync files
-      #   uses: SamKirkland/FTP-Deploy-Action@4.3.2
+      # - uses: actions/upload-artifact@v3
       #   with:
-      #     server: ${{ secrets.REMOTE_SERVER }}
-      #     username: ${{ secrets.REMOTE_USERNAME }}
-      #     password: ${{ secrets.REMOTE_PASSWORD }}
-      #     port: ${{ secrets.REMOTE_PORT }}
-      #     local-dir: ./app/.next/standalone/
-      #     server-dir: ${{ secrets.REMOTE_DIR }}
-      #     exclude: |
-      #       **/.git*
-      #       **/.git*/**
-      #       **/node_modules/**
-      #       server.js
-      #     dry-run: true
+      #     name: my-artifact
+      #     path: release.zip
+
+      - name: Sync files
+        uses: SamKirkland/FTP-Deploy-Action@4.3.2
+        with:
+          server: ${{ secrets.REMOTE_SERVER }}
+          username: ${{ secrets.REMOTE_USERNAME }}
+          password: ${{ secrets.REMOTE_PASSWORD }}
+          port: ${{ secrets.REMOTE_PORT }}
+          local-dir: ./app/.next/standalone/
+          server-dir: ${{ secrets.REMOTE_DIR }}
+          dry-run: true
 
       # - name: Rebuild production
       #   uses: appleboy/ssh-action@master
