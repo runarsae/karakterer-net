@@ -41,7 +41,7 @@ jobs:
           username: ${{ secrets.REMOTE_USERNAME }}
           password: ${{ secrets.REMOTE_PASSWORD }}
           port: ${{ secrets.REMOTE_PORT }}
-          local-dir: ./app/.next/standalone/
+          local-dir: ./.next/standalone/
           server-dir: ${{ secrets.REMOTE_DIR }}
           exclude: |
             **/.git*
