@@ -1,0 +1,56 @@
+name: deploy
+
+on:
+  workflow_dispatch:
+  release:
+    types: [published]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: app
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: "16.x"
+
+      - name: Install yarn
+        run: npm install --global yarn
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Build project
+        run: yarn next build
+
+      # - name: Sync files
+      #   uses: SamKirkland/FTP-Deploy-Action@3.1.1
+      #   with:
+      #     ftp-server: ${{ secrets.REMOTE_SERVER }}
+      #     ftp-username: ${{ secrets.REMOTE_USERNAME }}
+      #     ftp-password: ${{ secrets.REMOTE_PASSWORD }}
+      #     local-dir: ./app/.next/standalone/
+      #     exclude: |
+      #       **/.git*
+      #       **/.git*/**
+      #       **/node_modules/**
+      #       .env
+      #       server.js
+      #     git-ftp-args: --insecure¨
+      #     dry-run: true
+
+      - name: Rebuild production
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.REMOTE_SERVER }}
+          username: ${{ secrets.REMOTE_USERNAME }}
+          password: ${{ secrets.REMOTE_PASSWORD }}
+          port: ${{ secrets.PORT }}
+          script: |
+            rsync -anv ~/app/.next/standalone/ ~/app/.next/standalone2
