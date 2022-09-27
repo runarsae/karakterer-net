@@ -34,6 +34,11 @@ jobs:
         env:
           DATABASE_URL: ${{ secrets.REMOTE_DATABASE_URL }}
 
+      - uses: actions/upload-artifact@v3
+        with:
+          name: my-artifact
+          path: app/
+
       - name: Sync files
         uses: SamKirkland/FTP-Deploy-Action@4.3.2
         with:
