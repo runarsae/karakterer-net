@@ -48,7 +48,6 @@ jobs:
             **/.git*/**
             **/node_modules/**
             server.js
-          git-ftp-args: --insecure¨
           dry-run: true
 
       # - name: Rebuild production
