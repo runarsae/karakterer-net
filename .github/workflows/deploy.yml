@@ -1,9 +1,9 @@
 name: deploy
 
 on:
-  push:
-    branches:
-      - 90-deployment
+  # push:
+  #   branches:
+  #     - 90-deployment
   workflow_dispatch:
   release:
     types: [published]
