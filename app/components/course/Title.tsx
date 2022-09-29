@@ -1,5 +1,5 @@
 import Card from 'components/common/Card';
-import { Heading2, Heading4 } from 'components/common/Typography';
+import { Heading2, Heading3 } from 'components/common/Typography';
 import styled, { useTheme } from 'styled-components';
 
 const TitleCard = styled(Card)((props) => ({
@@ -33,7 +33,7 @@ function Title({ course, name }: Props) {
     return (
         <TitleCard>
             <Container>
-                <Heading4 style={{ color: theme.palette.text }}>{course}</Heading4>
+                <Heading3 style={{ color: theme.palette.text }}>{course}</Heading3>
                 <Heading2>{name}</Heading2>
             </Container>
         </TitleCard>

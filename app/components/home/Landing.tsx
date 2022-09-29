@@ -105,7 +105,14 @@ function Landing() {
                     </div>
                     <LandingImage>
                         <Fade triggerOnce duration={300}>
-                            <Image src={landingImage} alt="Statistikk" priority quality={100} />
+                            <Image
+                                src={landingImage}
+                                alt="Statistikk"
+                                width={1611}
+                                height={1615}
+                                priority
+                                quality={100}
+                            />
                         </Fade>
                     </LandingImage>
                 </Grid>

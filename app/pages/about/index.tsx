@@ -16,6 +16,10 @@ About.getLayout = (page) => (
     <>
         <Head>
             <title>{`Om -  karakterer.net`}</title>
+            <meta
+                name="description"
+                content="Detaljert og oppdatert karakterstatistikk for alle emner på Norges teknisk-naturvitenskapelige universitet (NTNU) siden 2004. Karakterfordeling og utvikling i gjennomsnittskarakter og strykprosent."
+            />
         </Head>
 
         <Header
