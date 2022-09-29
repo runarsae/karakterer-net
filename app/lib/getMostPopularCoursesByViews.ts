@@ -1,5 +1,5 @@
 import { Prisma } from '@prisma/client';
-import client from 'prisma/client';
+import prisma from 'lib/prisma';
 
 const coursesWithNames = Prisma.validator<Prisma.TopViewArgs>()({
     select: {
@@ -17,7 +17,7 @@ const coursesWithNames = Prisma.validator<Prisma.TopViewArgs>()({
  * @returns List of objects with course code and name
  */
 export async function getMostPopularCoursesByViews() {
-    const data = await client.topView.findMany({
+    const data = await prisma.topView.findMany({
         orderBy: {
             countSum: 'desc'
         },

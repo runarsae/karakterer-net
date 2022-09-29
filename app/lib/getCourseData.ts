@@ -1,5 +1,5 @@
 import { Prisma } from '@prisma/client';
-import client from 'prisma/client';
+import prisma from 'lib/prisma';
 
 const courseWithGrades = Prisma.validator<Prisma.CourseArgs>()({
     include: {
@@ -30,7 +30,7 @@ const courseWithGrades = Prisma.validator<Prisma.CourseArgs>()({
  * @returns Course information and grades for course
  */
 export async function getCourseData(course: string) {
-    const data = await client.course.findUnique({
+    const data = await prisma.course.findUnique({
         where: {
             course: course
         },
