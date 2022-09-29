@@ -1,9 +1,9 @@
 name: deploy
 
 on:
-  # push:
-  #   branches:
-  #     - 90-deployment
+  push:
+    branches:
+      - 90-deployment
   workflow_dispatch:
   release:
     types: [published]
@@ -31,25 +31,30 @@ jobs:
         env:
           DATABASE_URL: ${{ secrets.REMOTE_DATABASE_URL }}
 
-      # - name: Zip artifact for deployment
-      #   run: zip release.zip ./app/.next/standalone/ -r
+      - name: Zip build
+        run: zip release.zip ./app/ -r
 
-      # - uses: actions/upload-artifact@v3
-      #   with:
-      #     name: my-artifact
-      #     path: release.zip
-
-      - name: Sync files
-        uses: SamKirkland/FTP-Deploy-Action@4.3.2
+      - name: Upload build
+        uses: appleboy/scp-action@master
         with:
-          server: ${{ secrets.REMOTE_SERVER }}
+          host: ${{ secrets.REMOTE_HOST }}
           username: ${{ secrets.REMOTE_USERNAME }}
           password: ${{ secrets.REMOTE_PASSWORD }}
           port: ${{ secrets.REMOTE_PORT }}
-          protocol: ftps
-          local-dir: ./app/.next/standalone/
-          server-dir: ${{ secrets.REMOTE_DIR }}
-          dry-run: true
+          source: "release.zip"
+          target: "."
+
+      # - name: Sync files
+      #   uses: SamKirkland/FTP-Deploy-Action@4.3.2
+      #   with:
+      #     server: ${{ secrets.REMOTE_SERVER }}
+      #     username: ${{ secrets.REMOTE_USERNAME }}
+      #     password: ${{ secrets.REMOTE_PASSWORD }}
+      #     port: ${{ secrets.REMOTE_PORT }}
+      #     protocol: ftps
+      #     local-dir: ./app/.next/standalone/
+      #     server-dir: ${{ secrets.REMOTE_DIR }}
+      #     dry-run: true
 
       # - name: Rebuild production
       #   uses: appleboy/ssh-action@master
