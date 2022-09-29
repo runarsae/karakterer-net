@@ -26,15 +26,6 @@ const Heading3 = styled.h3((props) => ({
     color: props.theme.palette.heading,
 
     [`@media (min-width: ${props.theme.breakpoints.md}px)`]: {
-        fontSize: '18px'
-    }
-}));
-
-const Heading4 = styled.h4((props) => ({
-    fontSize: '14px',
-    color: props.theme.palette.heading,
-
-    [`@media (min-width: ${props.theme.breakpoints.md}px)`]: {
         fontSize: '16px'
     }
 }));
@@ -66,4 +57,4 @@ const Measurement = styled.p((props) => ({
     }
 }));
 
-export { Heading1, Heading2, Heading3, Heading4, Body1, Body2, Measurement };
+export { Heading1, Heading2, Heading3, Body1, Body2, Measurement };

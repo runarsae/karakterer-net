@@ -1,7 +1,7 @@
 import { ReactNode, useRef } from 'react';
 import styled from 'styled-components';
 import { ArrowRightIcon } from './icons';
-import { Heading4 } from './Typography';
+import { Heading3 } from './Typography';
 
 const AccordionGroup = styled.div({
     display: 'flex',
@@ -63,7 +63,7 @@ function Accordion({ title, children, active, onClick }: AccordionProps) {
                 <IconContainer active={active}>
                     <ArrowRightIcon width={16} height={16} />
                 </IconContainer>
-                <Heading4>{title}</Heading4>
+                <Heading3>{title}</Heading3>
             </AccordionButton>
             <AccordionPanel
                 ref={accordionItemPanelRef}

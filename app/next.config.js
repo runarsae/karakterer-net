@@ -5,7 +5,11 @@ const nextConfig = {
     compiler: {
         styledComponents: true
     },
-    output: 'standalone'
+    output: 'standalone',
+    i18n: {
+        locales: ['no'],
+        defaultLocale: 'no'
+    }
 };
 
 module.exports = nextConfig;
