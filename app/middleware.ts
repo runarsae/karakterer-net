@@ -5,7 +5,7 @@ export async function middleware(request: NextRequest, event: NextFetchEvent) {
     const { pathname, searchParams } = request.nextUrl;
     const course = searchParams.get('id');
 
-    if (pathname.startsWith('/course/') && course) {
+    if (request.method === 'GET' && pathname.startsWith('/course/') && course) {
         event.waitUntil(
             fetch(`${request.nextUrl.origin}/api/visits/${course}`, {
                 method: 'PUT'
