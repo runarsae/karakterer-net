@@ -48,7 +48,7 @@ jobs:
           username: ${{ secrets.REMOTE_USERNAME }}
           password: ${{ secrets.REMOTE_PASSWORD }}
           port: ${{ secrets.REMOTE_PORT }}
-          source: "release.zip"
+          source: "./app/.next/standalone/release.zip"
           target: "../var/www/karakterer-net/"
 
       # - name: Sync files
