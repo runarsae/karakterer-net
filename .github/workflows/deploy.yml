@@ -52,7 +52,7 @@ jobs:
           target: ${{ secrets.REMOTE_DIR }}
           strip_components: 4
 
-      - name: Unzip and run build
+      - name: Delete old build, unzip new build and restart server process
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.REMOTE_SERVER }}
@@ -61,5 +61,7 @@ jobs:
           port: ${{ secrets.REMOTE_PORT }}
           script: |
             cd ${{ secrets.REMOTE_DIR }}
+            rm -v !(".env"|"release.zip")
             unzip release.zip
+            rm release.zip
             pm2 restart server
