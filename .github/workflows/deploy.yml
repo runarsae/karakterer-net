@@ -61,7 +61,8 @@ jobs:
           port: ${{ secrets.REMOTE_PORT }}
           script: |
             cd ${{ secrets.REMOTE_DIR }}
-            rm -rfv !(".env"|"release.zip")
+            rm -rv !(".env"|"release.zip")
+            rm -rv .next
             unzip release.zip
             rm release.zip
             pm2 restart server
