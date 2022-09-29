@@ -49,8 +49,8 @@ jobs:
           password: ${{ secrets.REMOTE_PASSWORD }}
           port: ${{ secrets.REMOTE_PORT }}
           source: "./app/.next/standalone/release.zip"
-          target: "../var/www/karakterer-net/"
-          strip_components: 3
+          target: ${{ secrets.REMOTE_DIR }}
+          strip_components: 4
 
       - name: Unzip and run build
         uses: appleboy/ssh-action@master
@@ -60,5 +60,6 @@ jobs:
           password: ${{ secrets.REMOTE_PASSWORD }}
           port: ${{ secrets.REMOTE_PORT }}
           script: |
+            cd ${{ secrets.REMOTE_DIR }}
             unzip release.zip
             pm2 restart server
