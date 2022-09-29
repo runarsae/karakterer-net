@@ -37,7 +37,9 @@ jobs:
           cp -r ./app/public ./app/.next/standalone/
 
       - name: Zip build
-        run: zip release.zip ./app/.next/standalone/ -r
+        run: |
+          cd ./app/.next/standalone/
+          zip release.zip . -r
 
       - name: Upload build
         uses: appleboy/scp-action@master
@@ -47,7 +49,7 @@ jobs:
           password: ${{ secrets.REMOTE_PASSWORD }}
           port: ${{ secrets.REMOTE_PORT }}
           source: "release.zip"
-          target: "../var/www/karakterer.net/"
+          target: "../var/www/karakterer-net/"
 
       # - name: Sync files
       #   uses: SamKirkland/FTP-Deploy-Action@4.3.2

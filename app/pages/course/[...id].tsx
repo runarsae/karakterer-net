@@ -75,7 +75,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
         };
     });
 
-    return { paths: paths, fallback: true };
+    return { paths: paths, fallback: 'blocking' };
 };
 
 export default Course;
