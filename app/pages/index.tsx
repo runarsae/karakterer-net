@@ -21,7 +21,7 @@ const Index: NextPageWithLayout<HomePageProps> = (props) => {
 Index.getLayout = (page) => (
     <>
         <Head>
-            <title>test karakterer.net</title>
+            <title>karakterer.net</title>
             <meta
                 name="description"
                 content="Detaljert og oppdatert karakterstatistikk for alle emner på Norges teknisk-naturvitenskapelige universitet (NTNU) siden 2004. Karakterfordeling og utvikling i gjennomsnittskarakter og strykprosent."
