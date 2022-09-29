@@ -50,25 +50,14 @@ jobs:
           port: ${{ secrets.REMOTE_PORT }}
           source: "./app/.next/standalone/release.zip"
           target: "../var/www/karakterer-net/"
+          strip_components: 3
 
-      # - name: Sync files
-      #   uses: SamKirkland/FTP-Deploy-Action@4.3.2
-      #   with:
-      #     server: ${{ secrets.REMOTE_SERVER }}
-      #     username: ${{ secrets.REMOTE_USERNAME }}
-      #     password: ${{ secrets.REMOTE_PASSWORD }}
-      #     port: ${{ secrets.REMOTE_PORT }}
-      #     protocol: ftps
-      #     local-dir: ./app/.next/standalone/
-      #     server-dir: ${{ secrets.REMOTE_DIR }}
-      #     dry-run: true
-
-      # - name: Rebuild production
-      #   uses: appleboy/ssh-action@master
-      #   with:
-      #     host: ${{ secrets.REMOTE_SERVER }}
-      #     username: ${{ secrets.REMOTE_USERNAME }}
-      #     password: ${{ secrets.REMOTE_PASSWORD }}
-      #     port: ${{ secrets.REMOTE_PORT }}
-      #     script: |
-      #       rsync -anv ~/app/.next/standalone/ ~/app/.next/standalone2
+      - name: Unzip build
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.REMOTE_SERVER }}
+          username: ${{ secrets.REMOTE_USERNAME }}
+          password: ${{ secrets.REMOTE_PASSWORD }}
+          port: ${{ secrets.REMOTE_PORT }}
+          script: |
+            unzip release.zip
