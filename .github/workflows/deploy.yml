@@ -62,4 +62,4 @@ jobs:
             rm -rv .next
             unzip release.zip
             rm release.zip
-            pm2 restart server
+            systemctl restart karakterer-net.service
