@@ -1,5 +1,5 @@
 import Section from 'components/common/Section';
-import Image from 'next/image';
+import Image from 'next/future/image';
 import Link from 'next/link';
 import { ReactNode } from 'react';
 import styled from 'styled-components';
@@ -50,6 +50,7 @@ const LogoContainer = styled.div({
 
 const LogoWrapper = styled.div({
     display: 'flex',
+    alignItems: 'center',
     gap: '12px',
     cursor: 'pointer'
 });
@@ -73,21 +74,13 @@ function Header({ title, navigation }: Props) {
             <LogoContainer>
                 <Link href="/">
                     <LogoWrapper>
-                        <Image
-                            src="/logo-symbol.svg"
-                            alt="Logo"
-                            width={28}
-                            height={28}
-                            quality={100}
-                            priority
-                        />
+                        <Image src="/logo-symbol.svg" alt="Logo" width={28} height={28} priority />
                         <LogoTextWrapper>
                             <Image
                                 src="/logo-text.svg"
                                 alt="karakterer.net"
                                 width={136}
                                 height={32}
-                                quality={100}
                                 priority
                             />
                         </LogoTextWrapper>

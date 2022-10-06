@@ -1,6 +1,6 @@
 import ActionButton from 'components/common/ActionButton';
 import Section from 'components/common/Section';
-import Image from 'next/image';
+import Image from 'next/future/image';
 import { Fade } from 'react-awesome-reveal';
 import { SearchContext } from 'state/search';
 import styled, { useTheme } from 'styled-components';
@@ -55,7 +55,10 @@ const LandingText = styled.p((props) => ({
     }
 }));
 
-const LandingImage = styled.div((props) => ({
+const LandingImageContainer = styled.div((props) => ({
+    position: 'relative',
+    width: '100%',
+    height: 'auto',
     maxWidth: '340px',
     justifySelf: 'center',
     margin: '0 32px',
@@ -65,6 +68,11 @@ const LandingImage = styled.div((props) => ({
         justifySelf: 'end',
         margin: 0
     }
+}));
+
+const LandingImage = styled(Image)(() => ({
+    width: '100%',
+    height: 'auto'
 }));
 
 function Landing() {
@@ -103,18 +111,11 @@ function Landing() {
                             </ActionButton>
                         </Fade>
                     </div>
-                    <LandingImage>
+                    <LandingImageContainer>
                         <Fade triggerOnce duration={300}>
-                            <Image
-                                src={landingImage}
-                                alt="Statistikk"
-                                width={1611}
-                                height={1615}
-                                priority
-                                quality={100}
-                            />
+                            <LandingImage src={landingImage} alt="Statistikk" priority />
                         </Fade>
-                    </LandingImage>
+                    </LandingImageContainer>
                 </Grid>
             </LandingSection>
         );
