@@ -5,6 +5,9 @@ const nextConfig = {
     compiler: {
         styledComponents: true
     },
+    images: {
+        unoptimized: true
+    },
     output: 'standalone',
     i18n: {
         locales: ['no'],
