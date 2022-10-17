@@ -52,7 +52,7 @@ create table grades
 	h int default 0 null,
 	h_male int default 0 null,
 	h_female int default 0 null,
-	average_grade float null,
+	average_grade float default (((((((`a` * 5) + (`b` * 4)) + (`c` * 3)) + (`d` * 2)) + `e`) / `students`)) null,
 	average_grade_male float default (((((((`a_male` * 5) + (`b_male` * 4)) + (`c_male` * 3)) + (`d_male` * 2)) + `e_male`) / `males`)) null,
 	average_grade_female float default (((((((`a_female` * 5) + (`b_female` * 4)) + (`c_female` * 3)) + (`d_female` * 2)) + `e_female`) / `females`)) null,
 	fail_percentage float default ((case when (`is_graded` = 1) then ((`f` / `students`) * 100) when (`is_graded` = 0) then ((`h` / `students`) * 100) end)) null,
