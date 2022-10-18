@@ -27,7 +27,7 @@ Course.getLayout = (page, props) => (
                 content={`Karakterstatistikk for emnet ${props.course} ${props.name} på Norges teknisk-naturvitenskapelige universitet (NTNU).`}
             />
         </Head>
-        <SettingsContextProvider grades={props.grades}>
+        <SettingsContextProvider key={props.course} grades={props.grades}>
             <Header
                 title={`${props.course} ${props.name}`}
                 navigation={

@@ -94,10 +94,14 @@ export const useDashboardState = (grades: Grades[]): [State | undefined, Dispatc
                     case 'set_semester':
                         const index = action.payload.index;
 
-                        return {
-                            ...prevState!,
-                            selectedSemesterIndex: index
-                        };
+                        if (prevState) {
+                            return {
+                                ...prevState,
+                                selectedSemesterIndex: index
+                            };
+                        }
+
+                        return prevState;
                 }
             },
         [grades]
