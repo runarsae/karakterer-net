@@ -16,11 +16,11 @@ const LandingSection = styled(Section)((props) => ({
     },
 
     [`@media (min-width: ${props.theme.breakpoints.md}px)`]: {
-        padding: '96px 64px 128px 64px'
+        padding: '96px 64px 96px 64px'
     },
 
     [`@media (min-width: ${props.theme.breakpoints.xl}px)`]: {
-        padding: '96px 96px 128px 96px'
+        padding: '96px'
     }
 }));
 
