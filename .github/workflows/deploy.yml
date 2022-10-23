@@ -21,21 +21,21 @@ jobs:
         run: npm install --global yarn
 
       - name: Install dependencies
-        run: cd app && yarn install
+        run: yarn install
 
       - name: Build project
-        run: cd app && yarn next build
+        run: yarn next build
         env:
           DATABASE_URL: ${{ secrets.REMOTE_DATABASE_URL }}
 
       - name: Copy static files
         run: |
-          cp -r ./app/.next/static ./app/.next/standalone/.next/
-          cp -r ./app/public ./app/.next/standalone/
+          cp -r ./.next/static ./.next/standalone/.next/
+          cp -r ./public ./.next/standalone/
 
       - name: Zip build
         run: |
-          cd ./app/.next/standalone/
+          cd ./.next/standalone/
           zip release.zip . -r
 
       - name: Upload build
@@ -45,7 +45,7 @@ jobs:
           username: ${{ secrets.REMOTE_USERNAME }}
           password: ${{ secrets.REMOTE_PASSWORD }}
           port: ${{ secrets.REMOTE_PORT }}
-          source: "./app/.next/standalone/release.zip"
+          source: "./.next/standalone/release.zip"
           target: ${{ secrets.REMOTE_DIR }}
           strip_components: 4
 
