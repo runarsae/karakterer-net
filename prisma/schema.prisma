@@ -14,7 +14,6 @@ model Course {
   top_views TopView? @relation("coursesTotop_views")
   views     View[]   @relation("coursesToviews")
 
-  @@index([course, name])
   @@map("courses")
 }
 
@@ -52,7 +51,7 @@ model Grades {
   h                    Int?    @default(0)
   hMale                Int?    @default(0) @map("h_male")
   hFemale              Int?    @default(0) @map("h_female")
-  averageGrade         Float?  @map("average_grade") @db.Float
+  averageGrade         Float?  @default(dbgenerated("((((((`a` * 5) + (`b` * 4)) + (`c` * 3)) + (`d` * 2)) + `e`) / `students`)")) @map("average_grade") @db.Float
   averageGradeMale     Float?  @default(dbgenerated("((((((`a_male` * 5) + (`b_male` * 4)) + (`c_male` * 3)) + (`d_male` * 2)) + `e_male`) / `males`)")) @map("average_grade_male") @db.Float
   averageGradeFemale   Float?  @default(dbgenerated("((((((`a_female` * 5) + (`b_female` * 4)) + (`c_female` * 3)) + (`d_female` * 2)) + `e_female`) / `females`)")) @map("average_grade_female") @db.Float
   failPercentage       Float?  @default(dbgenerated("(case when (`is_graded` = 1) then ((`f` / `students`) * 100) when (`is_graded` = 0) then ((`h` / `students`) * 100) end)")) @map("fail_percentage") @db.Float
@@ -81,10 +80,10 @@ model TopView {
 }
 
 model View {
-  course  String @db.VarChar(20)
-  date    String @db.VarChar(10)
-  count   Int    @default(0)
-  courses Course @relation("coursesToviews", fields: [course], references: [course], onDelete: NoAction, onUpdate: NoAction, map: "views_courses_course_fk")
+  course  String   @db.VarChar(20)
+  date    DateTime @db.Date
+  count   Int      @default(0)
+  courses Course   @relation("coursesToviews", fields: [course], references: [course], onDelete: NoAction, onUpdate: NoAction, map: "views_courses_course_fk")
 
   @@id([course, date])
   @@map("views")
