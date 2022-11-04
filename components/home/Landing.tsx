@@ -1,11 +1,11 @@
 import ActionButton from 'components/common/ActionButton';
+import Animation from 'components/common/animations/Animation';
+import { AnimationType } from 'components/common/animations/animations';
 import Section from 'components/common/Section';
 import Image from 'next/future/image';
-import { Fade } from 'react-awesome-reveal';
 import { SearchContext } from 'state/search';
 import styled, { useTheme } from 'styled-components';
 import { useContext } from 'utils/context';
-import useWindowSize from 'utils/windowSize';
 import landingImage from '../../public/landing.png';
 
 const LandingSection = styled(Section)((props) => ({
@@ -70,38 +70,53 @@ const LandingImageContainer = styled.div((props) => ({
     }
 }));
 
-const LandingImage = styled(Image)(() => ({
+const LandingImage = styled(Image)({
     width: '100%',
     height: 'auto'
-}));
+});
 
-function Landing() {
+interface Props {
+    width: number;
+}
+
+function Landing({ width }: Props) {
     const theme = useTheme();
-    const { width } = useWindowSize();
 
     const { setSearchOpen } = useContext(SearchContext);
 
-    if (width) {
-        const isMd = width >= theme.breakpoints.md;
+    const isMd = width >= theme.breakpoints.md;
 
-        return (
-            <LandingSection>
-                <Grid>
-                    <div>
-                        <Fade
-                            direction={isMd ? 'up' : undefined}
-                            triggerOnce
-                            cascade={isMd}
-                            duration={500}
-                            damping={0.3}
-                        >
+    return (
+        <LandingSection>
+            <Grid>
+                <div>
+                    <Animation type={AnimationType.SlideInUp} count={1} disabled={!isMd}>
+                        <Animation type={AnimationType.FadeIn} count={1}>
                             <LandingTitle>
                                 Karakter&shy;statistikk for alle emner på NTNU
                             </LandingTitle>
+                        </Animation>
+                    </Animation>
+                    <Animation
+                        type={AnimationType.SlideInUp}
+                        count={1}
+                        delay={isMd ? 150 : 0}
+                        disabled={!isMd}
+                    >
+                        <Animation type={AnimationType.FadeIn} count={1} delay={isMd ? 150 : 0}>
                             <LandingText>
                                 Karakterfordeling og utvikling i gjennomsnitts&shy;karakter og
                                 stryk&shy;prosent i alle emner på NTNU siden 2004.
                             </LandingText>
+                        </Animation>
+                    </Animation>
+                    <Animation
+                        type={AnimationType.SlideInUp}
+                        count={1}
+                        delay={isMd ? 300 : 0}
+                        disabled={!isMd}
+                    >
+                        <Animation type={AnimationType.FadeIn} count={1} delay={isMd ? 300 : 0}>
                             <ActionButton
                                 onClick={() => {
                                     setSearchOpen(true);
@@ -109,19 +124,17 @@ function Landing() {
                             >
                                 Søk etter emne
                             </ActionButton>
-                        </Fade>
-                    </div>
-                    <LandingImageContainer>
-                        <Fade triggerOnce duration={300}>
-                            <LandingImage src={landingImage} alt="Statistikk" priority />
-                        </Fade>
-                    </LandingImageContainer>
-                </Grid>
-            </LandingSection>
-        );
-    }
-
-    return null;
+                        </Animation>
+                    </Animation>
+                </div>
+                <LandingImageContainer>
+                    <Animation type={AnimationType.FadeIn} count={1} duration={300}>
+                        <LandingImage src={landingImage} alt="Statistikk" priority />
+                    </Animation>
+                </LandingImageContainer>
+            </Grid>
+        </LandingSection>
+    );
 }
 
 export default Landing;
