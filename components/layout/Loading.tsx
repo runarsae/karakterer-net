@@ -1,6 +1,7 @@
+import Animation from 'components/common/animations/Animation';
+import { AnimationType } from 'components/common/animations/animations';
 import LoadingIndicator from 'components/common/LoadingIndicator';
-import { Fade } from 'react-awesome-reveal';
-import styled, { useTheme } from 'styled-components';
+import styled from 'styled-components';
 
 const LoadingContainer = styled.div({
     width: '100%',
@@ -13,13 +14,11 @@ const LoadingContainer = styled.div({
 });
 
 function Loading() {
-    const theme = useTheme();
-
     return (
         <LoadingContainer>
-            <Fade triggerOnce duration={theme.transitionDuration}>
+            <Animation type={AnimationType.FadeIn} count={1} duration={300}>
                 <LoadingIndicator size="large" />
-            </Fade>
+            </Animation>
         </LoadingContainer>
     );
 }

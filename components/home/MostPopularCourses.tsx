@@ -1,8 +1,9 @@
+import Animation from 'components/common/animations/Animation';
+import { AnimationType } from 'components/common/animations/animations';
 import Section from 'components/common/Section';
 import { Body1, Body2, Heading1 } from 'components/common/Typography';
 import { CoursesWithNames } from 'lib/getMostPopularCoursesByViews';
 import { useRouter } from 'next/router';
-import { Fade } from 'react-awesome-reveal';
 import styled from 'styled-components';
 
 const Grid = styled.div((props) => ({
@@ -64,8 +65,8 @@ function MostPopularCourses({ courses }: Props) {
     const router = useRouter();
 
     return (
-        <Section>
-            <Fade triggerOnce duration={300}>
+        <Animation type={AnimationType.FadeIn} count={1} duration={300}>
+            <Section>
                 <Heading1>Mest populære emner</Heading1>
                 <Grid>
                     {courses.map((course) => (
@@ -78,8 +79,8 @@ function MostPopularCourses({ courses }: Props) {
                         </Card>
                     ))}
                 </Grid>
-            </Fade>
-        </Section>
+            </Section>
+        </Animation>
     );
 }
 
