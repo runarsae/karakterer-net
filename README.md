@@ -17,7 +17,7 @@ The following is needed to run the project locally:
 
 -   [Node.js](https://nodejs.org/en/)
 -   [Yarn](https://yarnpkg.com/)
--   [MySQL]() database
+-   [MySQL database](https://www.mysql.com/)
 
 ### Installation and Usage
 
@@ -42,7 +42,7 @@ API routes can be accessed on [http://localhost:3000/api](http://localhost:3000/
 If changes are made to the database, the Prisma schema must be updated and the client must be regenerated:
 
 1. Update schema: `prisma db pull`
-2. Update client: `prisma generate`
+2. Regenerate client: `prisma generate`
 
 ### Build Project
 
