@@ -21,17 +21,19 @@ The following is needed to run the project locally:
 
 ### Installation and Usage
 
-Install dependencies:
+1. Create a new file named `.env` in the project root folder. Use the template in [`.env.example`](.env.example), filling it in with your values.
 
-```bash
-yarn install
-```
+2. Install dependencies:
 
-Run the project in development mode:
+    ```bash
+    yarn install
+    ```
 
-```bash
-yarn dev
-```
+3. Run the project in development mode:
+
+    ```bash
+    yarn dev
+    ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser.
 
