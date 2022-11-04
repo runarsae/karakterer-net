@@ -17,21 +17,23 @@ The following is needed to run the project locally:
 
 -   [Node.js](https://nodejs.org/en/)
 -   [Yarn](https://yarnpkg.com/)
--   [MySQL]() database
+-   [MySQL database](https://www.mysql.com/)
 
 ### Installation and Usage
 
-Install dependencies:
+1. Create a new file named `.env` in the project root folder. Use the template in [`.env.example`](.env.example), filling it in with your values.
 
-```bash
-yarn install
-```
+2. Install dependencies:
 
-Run the project in development mode:
+    ```bash
+    yarn install
+    ```
 
-```bash
-yarn dev
-```
+3. Run the project in development mode:
+
+    ```bash
+    yarn dev
+    ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser.
 
@@ -42,7 +44,7 @@ API routes can be accessed on [http://localhost:3000/api](http://localhost:3000/
 If changes are made to the database, the Prisma schema must be updated and the client must be regenerated:
 
 1. Update schema: `prisma db pull`
-2. Update client: `prisma generate`
+2. Regenerate client: `prisma generate`
 
 ### Build Project
 
