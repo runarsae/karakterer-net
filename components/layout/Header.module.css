@@ -1,0 +1,16 @@
+#container {
+    composes: section from 'compontents/common/Section.module.css';
+    max-width: 1440px;
+    width: 100%;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 0;
+}
+
+@media (min-width: 768px) {
+    .hasTitle {
+        grid-template-columns: auto auto 1fr auto;
+    }
+}

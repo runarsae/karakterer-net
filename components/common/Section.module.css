@@ -1,0 +1,16 @@
+#section {
+    padding: 16px;
+    max-width: 1440px;
+    width: 100%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+@media (min-width: 768px) {
+    #section {
+        padding: 32px;
+        gap: 24px;
+    }
+}
