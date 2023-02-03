@@ -4,8 +4,10 @@ import { Body1 } from './Typography';
 
 const RadioInput = styled.input.attrs({ type: 'radio' })`
     ${{
+        appearance: 'none',
         position: 'fixed',
-        width: 0
+        width: 0,
+        opacity: 0
     }}
 `;
 
