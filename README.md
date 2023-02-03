@@ -1,8 +1,7 @@
-<h1><img src="docs/logo.svg" width="220" style="height: 63px;"></h1>
+<p align="center"><img src="docs/logo.svg" width="220" style="height: 63px;"></p>
 
-A website displaying grade statistics for all courses at the Norwegian University of Science and Technology (NTNU) since 2004. Courses can be found by searching for their course code and name, or using the list of the most viewed courses for the past seven days on the front page. Each course has its own dashboard page, showing the grades for each semester in a bar chart, average grade and fail percentage for each semester in line charts, and total average grade and total fail percentage for all semesters. Semesters can be filtered by autumn and/or spring.
-
-<br/>
+A website displaying grade statistics for all courses at the Norwegian University of Science and Technology (NTNU) ranging back to 2004. Courses can be found by searching for their course code and name, or using the list of the most viewed courses for the past seven days on the front page. Each course has its own dashboard page, showing the grades for each semester in a bar chart that is togglable with a slider to pick a semester, in addition to average grade and fail percentage for all semesters in line charts, and total average grade and total fail percentage. Semesters can be filtered by autumn and/or spring in the settings pane.
+<br/></br>
 <p align="center">
 	<img src="docs/course-page.png" width="830"/>
 </p>
@@ -21,15 +20,17 @@ The following is needed to run the project locally:
 
 ### Installation and Usage
 
-1. Create a new file named `.env` in the project root folder. Use the template in [`.env.example`](.env.example), filling it in with your values.
+1. Create a new file named `.env` in the project root folder. Use the template in [`.env.example`](.env.example) and fill in the placeholders with your values.
 
-2. Install dependencies:
+2. Set up the database as described in the [karakterer-net-scripts](https://github.com/runarsae/karakterer-net-scripts) repository (private).
+
+3. Install dependencies:
 
     ```bash
     yarn install
     ```
 
-3. Run the project in development mode:
+4. Run the project in development mode:
 
     ```bash
     yarn dev
