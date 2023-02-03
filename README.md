@@ -1,10 +1,7 @@
-<br/>
 <p align="center"><img src="docs/logo.svg" width="220" style="height: 63px;"></p>
 
-<br/>
 A website displaying grade statistics for all courses at the Norwegian University of Science and Technology (NTNU) ranging back to 2004. Courses can be found by searching for their course code and name, or using the list of the most viewed courses for the past seven days on the front page. Each course has its own dashboard page, showing the grades for each semester in a bar chart that is togglable with a slider to pick a semester, in addition to average grade and fail percentage for all semesters in line charts, and total average grade and total fail percentage. Semesters can be filtered by autumn and/or spring in the settings pane.
-
-<br/>
+<br/></br>
 <p align="center">
 	<img src="docs/course-page.png" width="830"/>
 </p>
