@@ -1,28 +1,29 @@
 {
-    "name": "karakterer-net",
-    "image": "mcr.microsoft.com/devcontainers/base:bullseye",
-    "features": {
-        "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {
-            "version": "latest"
-        },
-        "ghcr.io/devcontainers/features/node:1": {
-            "version": "16.17.1"
-        },
-        "ghcr.io/devcontainers/features/git:1": {
-            "version": "latest"
-        }
+  "name": "karakterer-net",
+  "image": "mcr.microsoft.com/devcontainers/base:bullseye",
+  "features": {
+    "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {
+      "version": "latest"
     },
-    "workspaceFolder": "/workspaces/karakterer-net",
-    "postCreateCommand": "npm install",
-    "remoteEnv": { "LOCAL_WORKSPACE_FOLDER": "${localWorkspaceFolder}" },
-    "customizations": {
-        "vscode": {
-            "extensions": [
-                "dbaeumer.vscode-eslint",
-                "esbenp.prettier-vscode",
-                "GitHub.copilot",
-                "GitHub.copilot-chat"
-            ]
-        }
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "20.18.0"
     }
+  },
+  "workspaceFolder": "/workspaces/karakterer-net",
+  "postCreateCommand": "bash ./.devcontainer/install-dependencies.sh",
+  "runArgs": ["--network=karakterer-net"],
+  "remoteEnv": { "LOCAL_WORKSPACE_FOLDER": "${localWorkspaceFolder}" },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "GitHub.copilot",
+        "GitHub.copilot-chat",
+        "bradlc.vscode-tailwindcss",
+        "csstools.postcss",
+        "Prisma.prisma"
+      ]
+    }
+  }
 }

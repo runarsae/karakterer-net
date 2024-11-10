@@ -1,19 +1,18 @@
 services:
-  karakterer-net-app:
-    container_name: karakterer-net-app
+  app:
+    container_name: app
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.dev
     volumes:
-      - ${LOCAL_WORKSPACE_FOLDER:-./}:/app
-      - /app/node_modules/
+      - ${LOCAL_WORKSPACE_FOLDER:-./}/src:/karakterer-net/src
     ports:
       - "3000:3000"
     depends_on:
-      - karakterer-net-db
+      - db
 
-  karakterer-net-db:
-    container_name: karakterer-net-db
+  db:
+    container_name: db
     image: mysql:8
     restart: always
     environment:
@@ -26,3 +25,8 @@ services:
 
 volumes:
   db-data:
+
+networks:
+  default:
+    name: karakterer-net
+    external: true
