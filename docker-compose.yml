@@ -1,0 +1,32 @@
+services:
+  app:
+    container_name: app
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ${LOCAL_WORKSPACE_FOLDER:-./}/src:/karakterer-net/src
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+
+  db:
+    container_name: db
+    image: mysql:8
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: karakterer
+    ports:
+      - "3306:3306"
+    volumes:
+      - db-data:/var/lib/mysql
+
+volumes:
+  db-data:
+
+networks:
+  default:
+    name: karakterer-net
+    external: true

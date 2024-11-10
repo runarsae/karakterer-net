@@ -1,0 +1,41 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #2e2e2e;
+  border-radius: 4px;
+}
+
+@media (hover: hover) {
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: #272727;
+  }
+}
+
+@layer base {
+  h1 {
+    @apply text-xl text-neutral-300;
+  }
+  h2 {
+    @apply text-lg text-neutral-300;
+  }
+  h3 {
+    @apply text-neutral-300;
+  }
+}
+
+@layer components {
+  .card {
+    @apply rounded bg-neutral-925 p-4 md:p-6;
+  }
+}

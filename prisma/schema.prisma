@@ -1,0 +1,86 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model CourseView {
+  id       Int       @id @default(autoincrement())
+  courseId Int       @map("course_id")
+  viewTime DateTime? @default(now()) @map("view_time") @db.DateTime(0)
+  course   Course    @relation(fields: [courseId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_course_views_course_id_courses_id")
+
+  @@index([courseId], map: "fk_course_views_course_id_courses_id")
+  @@map("course_views")
+}
+
+model Course {
+  id            Int            @id @default(autoincrement())
+  code          String         @unique(map: "uq_courses_code") @db.VarChar(20)
+  name          String?        @db.VarChar(255)
+  hasGrades     Boolean        @default(false) @map("has_grades")
+  courseViews   CourseView[]
+  grades        Grade[]
+  topCourseView TopCourseView?
+
+  @@map("courses")
+}
+
+model Grade {
+  id                   Int     @id @default(autoincrement())
+  courseId             Int     @map("course_id")
+  year                 Int
+  semester             Int
+  isGraded             Boolean @map("is_graded")
+  hasGenders           Boolean @map("has_genders")
+  students             Int
+  males                Int?
+  females              Int?
+  a                    Int?
+  aMale                Int?    @map("a_male")
+  aFemale              Int?    @map("a_female")
+  b                    Int?
+  bMale                Int?    @map("b_male")
+  bFemale              Int?    @map("b_female")
+  c                    Int?
+  cMale                Int?    @map("c_male")
+  cFemale              Int?    @map("c_female")
+  d                    Int?
+  dMale                Int?    @map("d_male")
+  dFemale              Int?    @map("d_female")
+  e                    Int?
+  eMale                Int?    @map("e_male")
+  eFemale              Int?    @map("e_female")
+  f                    Int?
+  fMale                Int?    @map("f_male")
+  fFemale              Int?    @map("f_female")
+  g                    Int?
+  gMale                Int?    @map("g_male")
+  gFemale              Int?    @map("g_female")
+  h                    Int?
+  hMale                Int?    @map("h_male")
+  hFemale              Int?    @map("h_female")
+  averageGrade         Float?  @default(dbgenerated("(case when (`is_graded` = 1) then ((((((`a` * 5) + (`b` * 4)) + (`c` * 3)) + (`d` * 2)) + `e`) / `students`) end)")) @map("average_grade") @db.Float
+  averageGradeMale     Float?  @default(dbgenerated("(case when ((`is_graded` = 1) and (`has_genders` = 1)) then ((((((`a_male` * 5) + (`b_male` * 4)) + (`c_male` * 3)) + (`d_male` * 2)) + `e_male`) / `males`) end)")) @map("average_grade_male") @db.Float
+  averageGradeFemale   Float?  @default(dbgenerated("(case when ((`is_graded` = 1) and (`has_genders` = 1)) then ((((((`a_female` * 5) + (`b_female` * 4)) + (`c_female` * 3)) + (`d_female` * 2)) + `e_female`) / `females`) end)")) @map("average_grade_female") @db.Float
+  failPercentage       Float?  @default(dbgenerated("(case when (`is_graded` = 1) then ((`f` / `students`) * 100) else ((`h` / `students`) * 100) end)")) @map("fail_percentage") @db.Float
+  failPercentageMale   Float?  @default(dbgenerated("(case when (`has_genders` = 1) then (case when `is_graded` then ((`f_male` / `males`) * 100) else ((`h_male` / `males`) * 100) end) end)")) @map("fail_percentage_male") @db.Float
+  failPercentageFemale Float?  @default(dbgenerated("(case when (`has_genders` = 1) then (case when `is_graded` then ((`f_female` / `females`) * 100) else ((`h_female` / `females`) * 100) end) end)")) @map("fail_percentage_female") @db.Float
+  course               Course  @relation(fields: [courseId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_grades_course_id_courses_id")
+
+  @@unique([courseId, year, semester], map: "uq_grades_course_id_year_semester")
+  @@map("grades")
+}
+
+model TopCourseView {
+  courseId   Int     @id @map("course_id")
+  courseCode String  @unique(map: "uq_top_course_views_course_code") @map("course_code") @db.VarChar(20)
+  courseName String? @map("course_name") @db.VarChar(255)
+  viewCount  Int?    @map("view_count")
+  course     Course  @relation(fields: [courseId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_top_course_views_course_id_courses_id")
+
+  @@map("top_course_views")
+}
