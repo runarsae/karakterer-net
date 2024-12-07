@@ -56,7 +56,7 @@ export default function CourseExplorer() {
         params.append("largeCourse", filters.largeCourse.toString());
         params.append("semester", filters.semester);
 
-        const response = await fetch(`/api/courses?${params.toString()}`);
+        const response = await fetch(`/api/explore?${params.toString()}`);
         if (response.ok) {
           const data: Course[] = await response.json();
           setCourses(data);
