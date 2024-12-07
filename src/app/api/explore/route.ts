@@ -1,5 +1,6 @@
 import { NextResponse, type NextRequest } from "next/server";
 import prisma from "@/lib/prisma/prisma";
+import { Prisma } from "@prisma/client";
 
 export async function GET(request: NextRequest) {
   try {
@@ -14,55 +15,45 @@ export async function GET(request: NextRequest) {
     const lowFailRate = searchParams.get("lowFailRate") === "true";
     const highGrade = searchParams.get("highGrade") === "true";
     const largeCourse = searchParams.get("largeCourse") === "true";
-    const semester =
+    const semesterParam =
       (searchParams.get("semester") as "all" | "høst" | "vår") || "all";
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const whereClause: any = {
+    let semester: number | undefined;
+    if (semesterParam === "høst") semester = 1;
+    else if (semesterParam === "vår") semester = 2;
+
+    const whereClause: Prisma.CourseWhereInput = {
       hasGrades: true,
       OR: [
         {
           code: {
             contains: search,
-            mode: "insensitive",
           },
         },
         {
           name: {
             contains: search,
-            mode: "insensitive",
           },
         },
       ],
+      grades: {
+        some: {
+          isGraded: true,
+          ...(lowFailRate && { failPercentage: { lt: 15 } }),
+          ...(highGrade && { [mapGradeType(gradeType)]: { gte: 4.0 } }),
+          ...(largeCourse && { students: { gte: 100 } }),
+          ...(semester !== undefined && { semester }),
+        },
+      },
     };
-    if (lowFailRate) {
-      whereClause.failPercentage = {
-        lt: 15,
-      };
-    }
 
-    if (highGrade) {
-      whereClause[gradeType] = {
-        gte: 4.0,
-      };
-    }
-
-    if (largeCourse) {
-      whereClause.students = {
-        gte: 100,
-      };
-    }
-
-    if (semester !== "all") {
-      whereClause.semester = semester;
-    }
-
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    let orderBy: any = {};
+    let orderBy: Prisma.CourseOrderByWithRelationInput = {};
 
     if (sortKey === "grade") {
       orderBy = {
-        [gradeType]: sortDirection,
+        grades: {
+          [mapGradeType(gradeType)]: sortDirection,
+        },
       };
     } else {
       orderBy = {
@@ -84,6 +75,10 @@ export async function GET(request: NextRequest) {
           where: {
             isGraded: true,
           },
+          orderBy: {
+            year: "desc",
+            semester: "desc",
+          },
           take: 1,
         },
       },
@@ -96,11 +91,11 @@ export async function GET(request: NextRequest) {
         code: course.code,
         name: course.name,
         avgGrade: grade?.averageGrade || 0,
-        medianGrade: grade?.averageGrade || 0,
+        medianGrade: 0,
         modeGrade: 0,
         failPercentage: grade?.failPercentage || 0,
         students: grade?.students || 0,
-        semester: grade?.semester || "",
+        semester: grade?.semester || 0,
       };
     });
 
@@ -108,7 +103,12 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     console.error("Error fetching courses:", error);
     return NextResponse.json(
-      { error: "Internal Server Error" },
+      {
+        error:
+          process.env.NODE_ENV === "production"
+            ? "Internal Server Error"
+            : (error as Error).message,
+      },
       { status: 500 },
     );
   }
@@ -116,3 +116,18 @@ export async function GET(request: NextRequest) {
 
 type SortKey = "name" | "grade" | "failPercentage" | "students" | "semester";
 type GradeType = "avgGrade" | "medianGrade" | "modeGrade";
+
+function mapGradeType(
+  gradeType: GradeType,
+): keyof Prisma.GradeOrderByWithRelationInput {
+  switch (gradeType) {
+    case "avgGrade":
+      return "averageGrade";
+    case "medianGrade":
+      return "averageGrade";
+    case "modeGrade":
+      return "averageGrade";
+    default:
+      return "averageGrade";
+  }
+}
