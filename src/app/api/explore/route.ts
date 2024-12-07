@@ -75,10 +75,7 @@ export async function GET(request: NextRequest) {
           where: {
             isGraded: true,
           },
-          orderBy: {
-            year: "desc",
-            semester: "desc",
-          },
+          orderBy: [{ year: "desc" }, { semester: "desc" }],
           take: 1,
         },
       },

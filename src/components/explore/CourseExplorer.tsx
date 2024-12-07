@@ -59,6 +59,7 @@ export default function CourseExplorer() {
         const response = await fetch(`/api/explore?${params.toString()}`);
         if (response.ok) {
           const data: Course[] = await response.json();
+          console.log("Fetched courses:", data);
           setCourses(data);
         } else {
           console.error("Failed to fetch courses");
