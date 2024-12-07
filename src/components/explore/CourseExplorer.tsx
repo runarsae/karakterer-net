@@ -1,67 +1,9 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import ChevronDownIcon from "@/assets/icons/ChevronDownIcon";
 import XIcon from "@/assets/icons/XIcon";
-import { useState, useMemo } from "react";
 import CourseCard from "../home/mostPopularCourses/CourseCard";
-
-const courses = [
-  {
-    id: 1,
-    code: "MATH101",
-    name: "Mathematics",
-    avgGrade: 3.8,
-    medianGrade: 4.0,
-    modeGrade: 4,
-    failPercentage: 15,
-    students: 120,
-    semester: "høst",
-  },
-  {
-    id: 2,
-    code: "PHYS201",
-    name: "Physics",
-    avgGrade: 3.5,
-    medianGrade: 3.5,
-    modeGrade: 3,
-    failPercentage: 20,
-    students: 80,
-    semester: "vår",
-  },
-  {
-    id: 3,
-    code: "CS301",
-    name: "Computer Science",
-    avgGrade: 4.2,
-    medianGrade: 4.0,
-    modeGrade: 5,
-    failPercentage: 10,
-    students: 150,
-    semester: "høst",
-  },
-  {
-    id: 4,
-    code: "BIO401",
-    name: "Biology",
-    avgGrade: 3.9,
-    medianGrade: 4.0,
-    modeGrade: 4,
-    failPercentage: 12,
-    students: 100,
-    semester: "vår",
-  },
-  {
-    id: 5,
-    code: "CHEM501",
-    name: "Chemistry",
-    avgGrade: 3.7,
-    medianGrade: 3.5,
-    modeGrade: 4,
-    failPercentage: 18,
-    students: 90,
-    semester: "høst",
-  },
-];
 
 type SortKey = "name" | "grade" | "failPercentage" | "students" | "semester";
 type GradeType = "avgGrade" | "medianGrade" | "modeGrade";
@@ -74,7 +16,20 @@ interface Filters {
   semester: "all" | "høst" | "vår";
 }
 
+interface Course {
+  id: number;
+  code: string;
+  name: string;
+  avgGrade: number;
+  medianGrade: number;
+  modeGrade: number;
+  failPercentage: number;
+  students: number;
+  semester: string;
+}
+
 export default function CourseExplorer() {
+  const [courses, setCourses] = useState<Course[]>([]);
   const [sortKey, setSortKey] = useState<SortKey>("name");
   const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
   const [gradeType, setGradeType] = useState<GradeType>("avgGrade");
@@ -85,34 +40,36 @@ export default function CourseExplorer() {
     largeCourse: false,
     semester: "all",
   });
+  const [search, setSearch] = useState<string>("");
 
-  const sortedAndFilteredCourses = useMemo(() => {
-    return courses
-      .filter((course) => {
-        if (filters.lowFailRate && course.failPercentage > 15) return false;
-        if (filters.highGrade && course[gradeType] < 4.0) return false;
-        if (filters.largeCourse && course.students < 100) return false;
-        if (filters.semester !== "all" && course.semester !== filters.semester)
-          return false;
-        return true;
-      })
-      .sort((a, b) => {
-        let aValue: string | number;
-        let bValue: string | number;
+  useEffect(() => {
+    const fetchCourses = async () => {
+      try {
+        const params = new URLSearchParams();
 
-        if (sortKey === "grade") {
-          aValue = a[gradeType];
-          bValue = b[gradeType];
+        if (search) params.append("search", search);
+        params.append("sortKey", sortKey);
+        params.append("sortDirection", sortDirection);
+        params.append("gradeType", gradeType);
+        params.append("lowFailRate", filters.lowFailRate.toString());
+        params.append("highGrade", filters.highGrade.toString());
+        params.append("largeCourse", filters.largeCourse.toString());
+        params.append("semester", filters.semester);
+
+        const response = await fetch(`/api/courses?${params.toString()}`);
+        if (response.ok) {
+          const data: Course[] = await response.json();
+          setCourses(data);
         } else {
-          aValue = a[sortKey];
-          bValue = b[sortKey];
+          console.error("Failed to fetch courses");
         }
+      } catch (error) {
+        console.error("Error fetching courses:", error);
+      }
+    };
 
-        if (aValue < bValue) return sortDirection === "asc" ? -1 : 1;
-        if (aValue > bValue) return sortDirection === "asc" ? 1 : -1;
-        return 0;
-      });
-  }, [sortKey, sortDirection, gradeType, filters]);
+    fetchCourses();
+  }, [search, sortKey, sortDirection, gradeType, filters]);
 
   const toggleSort = (key: SortKey) => {
     if (key === sortKey) {
@@ -149,6 +106,16 @@ export default function CourseExplorer() {
     <div className="min-h-screen py-8">
       <div className="container mx-auto max-w-5xl px-4">
         <h1 className="mb-8 text-3xl font-bold text-gray-400">Kurs Oversikt</h1>
+
+        <div className="mb-4">
+          <input
+            type="text"
+            placeholder="Søk etter kurs..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="w-full rounded-md border border-gray-800 bg-gray-800 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
 
         <div className="mb-8 rounded-lg bg-gray-800/50 p-6 shadow-md">
           <h2 className="mb-4 text-xl font-semibold text-gray-400">
@@ -238,8 +205,8 @@ export default function CourseExplorer() {
         </div>
 
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {sortedAndFilteredCourses.length > 0 ? (
-            sortedAndFilteredCourses.map((course) => (
+          {courses.length > 0 ? (
+            courses.map((course) => (
               <CourseCard
                 key={course.id}
                 code={course.code}
