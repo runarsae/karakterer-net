@@ -40,7 +40,8 @@ export default function CourseCard({ code, name, moreInfo }: CourseCardProps) {
             </div>
             <div className="text-gray-100">Semester:</div>
             <div className="font-medium text-gray-300">
-              {moreInfo?.semester}
+              {/* Is 1 the same as "Høst"? */}
+              {moreInfo?.semester === "1" ? "Høst" : "Vår"}
             </div>
           </div>
         )}
