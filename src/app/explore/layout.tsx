@@ -5,7 +5,7 @@ interface ExploreLayoutProps {
   children: React.ReactNode;
 }
 
-export default function HomeLayout({ children }: ExploreLayoutProps) {
+export default function ExploreLayout({ children }: ExploreLayoutProps) {
   return (
     <>
       <Header />
