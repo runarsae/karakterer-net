@@ -103,7 +103,7 @@ export default function CourseExplorer() {
   };
 
   return (
-    <div className="py-8">
+    <div className="pb-8">
       <div className="container mx-auto max-w-5xl px-4">
         <h1 className="mb-8 text-3xl font-bold text-gray-400">Kurs Oversikt</h1>
 
