@@ -146,132 +146,98 @@ export default function CourseExplorer() {
   };
 
   return (
-    <div className="min-h-screen text-white">
-      <div className="container mx-auto w-full max-w-4xl px-4 py-8">
-        <div className="mb-8 flex flex-wrap items-center gap-4">
-          <button
-            onClick={() => toggleFilter("lowFailRate")}
-            className={`rounded-full px-4 py-2 text-sm transition-colors duration-200 ${
-              filters.lowFailRate
-                ? "bg-blue-600 text-white"
-                : "bg-gray-700 hover:bg-gray-600"
-            }`}
-          >
-            Strykprosent
-            {filters.lowFailRate && (
-              <XIcon className="ml-1 inline-block h-4 w-4" />
-            )}
-          </button>
-          <button
-            onClick={() => toggleFilter("highGrade")}
-            className={`rounded-full px-4 py-2 text-sm transition-colors duration-200 ${
-              filters.highGrade
-                ? "bg-blue-600 text-white"
-                : "bg-gray-700 hover:bg-gray-600"
-            }`}
-          >
-            Høyt karaktergjennomsnitt
-            {filters.highGrade && (
-              <XIcon className="ml-1 inline-block h-4 w-4" />
-            )}
-          </button>
-          <button
-            onClick={() => toggleFilter("largeCourse")}
-            className={`rounded-full px-4 py-2 text-sm transition-colors duration-200 ${
-              filters.largeCourse
-                ? "bg-blue-600 text-white"
-                : "bg-gray-700 hover:bg-gray-600"
-            }`}
-          >
-            Stort antall studenter
-            {filters.largeCourse && (
-              <XIcon className="ml-1 inline-block h-4 w-4" />
-            )}
-          </button>
-          <button
-            onClick={() => toggleFilter("semester")}
-            className={`rounded-full px-4 py-2 text-sm transition-colors duration-200 ${
-              filters.semester !== "all"
-                ? "bg-blue-600 text-white"
-                : "bg-gray-700 hover:bg-gray-600"
-            }`}
-          >
-            {filters.semester === "all"
-              ? "Alle semestre"
-              : `Semester: ${filters.semester}`}
-            {filters.semester !== "all" && (
-              <XIcon className="ml-1 inline-block h-4 w-4" />
-            )}
-          </button>
-        </div>
-        <div className="mb-4 flex items-center justify-between">
-          <div className="relative inline-block text-left">
-            <button
-              type="button"
-              className="inline-flex justify-center rounded-md border border-gray-300 bg-gray-700 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-gray-600 focus:outline-none"
-              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-            >
-              {gradeTypeLabels[gradeType]}{" "}
-              {sortKey === "grade" && (sortDirection === "asc" ? "↑" : "↓")}
-              <ChevronDownIcon className="-mr-1 ml-2 h-5 w-5" />
-            </button>
-            {isDropdownOpen && (
-              <div className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-gray-700 shadow-lg ring-1 ring-black ring-opacity-5">
-                <div
-                  className="py-1"
-                  role="menu"
-                  aria-orientation="vertical"
-                  aria-labelledby="options-menu"
-                >
-                  {Object.entries(gradeTypeLabels).map(([key, label]) => (
-                    <button
-                      key={key}
-                      className="block w-full px-4 py-2 text-left text-sm text-gray-300 transition-colors duration-200 hover:bg-gray-600 hover:text-white"
-                      role="menuitem"
-                      onClick={() => {
-                        setGradeType(key as GradeType);
-                        setSortKey("grade");
-                        setIsDropdownOpen(false);
-                      }}
-                    >
-                      {label}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            )}
+    <div className="min-h-screen py-8">
+      <div className="container mx-auto max-w-5xl px-4">
+        <h1 className="mb-8 text-3xl font-bold text-gray-400">Kurs Oversikt</h1>
+
+        <div className="mb-8 rounded-lg bg-gray-800/50 p-6 shadow-md">
+          <h2 className="mb-4 text-xl font-semibold text-gray-400">
+            Filtrer og Sorter
+          </h2>
+
+          <div className="mb-6 flex flex-wrap gap-3">
+            {Object.entries(filters).map(([key, value]) => (
+              <button
+                key={key}
+                onClick={() => toggleFilter(key as FilterType)}
+                className={`rounded-full px-4 py-2 text-sm font-medium transition-colors duration-200 ${
+                  value
+                    ? "bg-blue-800 text-white"
+                    : "bg-gray-700 text-gray-200 hover:bg-gray-800"
+                }`}
+              >
+                {key === "semester"
+                  ? filters.semester === "all"
+                    ? "Alle semestre"
+                    : `Semester: ${filters.semester}`
+                  : key === "lowFailRate"
+                    ? "Lav strykprosent"
+                    : key === "highGrade"
+                      ? "Høy karakter"
+                      : "Store kurs"}
+                {value && key !== "semester" && (
+                  <XIcon className="ml-2 inline-block h-4 w-4" />
+                )}
+              </button>
+            ))}
           </div>
-          <div className="flex items-center space-x-2">
+
+          <div className="flex flex-wrap items-center gap-4">
+            <div className="relative">
+              <button
+                type="button"
+                className="inline-flex items-center justify-center rounded-md border border-gray-700 bg-gray-900 px-4 py-2 text-sm font-medium text-gray-200 hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+              >
+                {gradeTypeLabels[gradeType]}
+                <ChevronDownIcon className="ml-2 h-5 w-5 text-gray-400" />
+              </button>
+              {isDropdownOpen && (
+                <div className="absolute z-10 mt-2 w-56 rounded-md bg-gray-900 shadow-lg">
+                  <div className="py-1" role="menu" aria-orientation="vertical">
+                    {Object.entries(gradeTypeLabels).map(([key, label]) => (
+                      <button
+                        key={key}
+                        className="block w-full px-4 py-2 text-left text-sm text-gray-200 hover:bg-gray-800 hover:text-gray-200"
+                        role="menuitem"
+                        onClick={() => {
+                          setGradeType(key as GradeType);
+                          setSortKey("grade");
+                          setIsDropdownOpen(false);
+                        }}
+                      >
+                        {label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+
             {["name", "grade", "failPercentage", "students", "semester"].map(
               (key) => (
                 <button
                   key={key}
                   onClick={() => toggleSort(key as SortKey)}
-                  className="rounded bg-gray-700 px-3 py-1 transition-colors duration-200 hover:bg-gray-600"
+                  className="rounded bg-gray-900 px-3 py-2 text-sm font-medium text-gray-200 transition-colors duration-200 hover:bg-gray-800"
                 >
-                  {(() => {
-                    switch (key) {
-                      case "name":
-                        return "Fagkode";
-                      case "grade":
-                        return gradeTypeLabels[gradeType];
-                      case "failPercentage":
-                        return "Stryk %";
-                      case "students":
-                        return "Studenter";
-                      case "semester":
-                        return "Semester";
-                      default:
-                        return key;
-                    }
-                  })()}
+                  {key === "name"
+                    ? "Fagkode"
+                    : key === "grade"
+                      ? gradeTypeLabels[gradeType]
+                      : key === "failPercentage"
+                        ? "Stryk %"
+                        : key === "students"
+                          ? "Studenter"
+                          : "Semester"}
                   {sortKey === key && (sortDirection === "asc" ? " ↑" : " ↓")}
                 </button>
               ),
             )}
           </div>
         </div>
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {sortedAndFilteredCourses.length > 0 ? (
             sortedAndFilteredCourses.map((course) => (
               <CourseCard
@@ -289,7 +255,7 @@ export default function CourseExplorer() {
               />
             ))
           ) : (
-            <p className="col-span-full text-center text-gray-400">
+            <p className="col-span-full text-center text-lg text-gray-600">
               Ingen kurs funnet med de valgte filtrene.
             </p>
           )}
