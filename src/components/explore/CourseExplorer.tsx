@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import ChevronDownIcon from "@/assets/icons/ChevronDownIcon";
 import XIcon from "@/assets/icons/XIcon";
 import CourseCard from "../home/mostPopularCourses/CourseCard";
 
@@ -32,8 +31,7 @@ export default function CourseExplorer() {
   const [courses, setCourses] = useState<Course[]>([]);
   const [sortKey, setSortKey] = useState<SortKey>("name");
   const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
-  const [gradeType, setGradeType] = useState<GradeType>("avgGrade");
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [gradeType] = useState<GradeType>("avgGrade");
   const [filters, setFilters] = useState<Filters>({
     lowFailRate: false,
     highGrade: false,
@@ -150,37 +148,6 @@ export default function CourseExplorer() {
           </div>
 
           <div className="flex flex-wrap items-center gap-4">
-            <div className="relative">
-              <button
-                type="button"
-                className="inline-flex items-center justify-center rounded-md border border-gray-700 bg-gray-900 px-4 py-2 text-sm font-medium text-gray-200 hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-              >
-                {gradeTypeLabels[gradeType]}
-                <ChevronDownIcon className="ml-2 h-5 w-5 text-gray-400" />
-              </button>
-              {isDropdownOpen && (
-                <div className="absolute z-10 mt-2 w-56 rounded-md bg-gray-900 shadow-lg">
-                  <div className="py-1" role="menu" aria-orientation="vertical">
-                    {Object.entries(gradeTypeLabels).map(([key, label]) => (
-                      <button
-                        key={key}
-                        className="block w-full px-4 py-2 text-left text-sm text-gray-200 hover:bg-gray-800 hover:text-gray-200"
-                        role="menuitem"
-                        onClick={() => {
-                          setGradeType(key as GradeType);
-                          setSortKey("grade");
-                          setIsDropdownOpen(false);
-                        }}
-                      >
-                        {label}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-
             {["name", "grade", "failPercentage", "students", "semester"].map(
               (key) => (
                 <button

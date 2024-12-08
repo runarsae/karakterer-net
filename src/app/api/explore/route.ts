@@ -16,8 +16,8 @@ export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url);
 
     const search = searchParams.get("search") || "";
-    const sortKey = (searchParams.get("sortKey") as SortKey) || "name";
-    const sortDirection =
+    let sortKey = (searchParams.get("sortKey") as SortKey) || "name";
+    let sortDirection =
       (searchParams.get("sortDirection") as "asc" | "desc") || "asc";
     const gradeType =
       (searchParams.get("gradeType") as GradeType) || "avgGrade";
@@ -44,14 +44,19 @@ export async function GET(request: NextRequest) {
 
     if (lowFailRate) {
       gradeConditions.push(`g.fail_percentage < 15`);
+      sortKey = "grade";
     }
 
     if (highGrade) {
       gradeConditions.push(`g.${gradeColumn} >= 4.0`);
+      sortKey = "grade";
+      sortDirection = "desc";
     }
 
     if (largeCourse) {
       gradeConditions.push(`g.students >= 100`);
+      sortKey = "students";
+      sortDirection = "desc";
     }
 
     if (semester !== undefined) {
