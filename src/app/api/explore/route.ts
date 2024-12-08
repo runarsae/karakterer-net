@@ -14,18 +14,6 @@ export async function GET(request: NextRequest) {
   }
 
   type SortKey = "name" | "grade" | "failPercentage" | "students" | "semester";
-  type GradeType = "avgGrade" | "medianGrade" | "modeGrade";
-
-  function mapGradeType(gradeType: GradeType): string {
-    switch (gradeType) {
-      case "avgGrade":
-      case "medianGrade":
-      case "modeGrade":
-        return "average_grade";
-      default:
-        return "average_grade";
-    }
-  }
 
   try {
     const { searchParams } = new URL(request.url);
@@ -34,8 +22,6 @@ export async function GET(request: NextRequest) {
     let sortKey = (searchParams.get("sortKey") as SortKey) || "name";
     let sortDirection =
       (searchParams.get("sortDirection") as "asc" | "desc") || "asc";
-    const gradeType =
-      (searchParams.get("gradeType") as GradeType) || "avgGrade";
     const lowFailRate = searchParams.get("lowFailRate") === "true";
     const highGrade = searchParams.get("highGrade") === "true";
     const largeCourse = searchParams.get("largeCourse") === "true";
@@ -46,15 +32,13 @@ export async function GET(request: NextRequest) {
     if (semesterParam === "høst") semester = 1;
     else if (semesterParam === "vår") semester = 2;
 
-    const gradeColumn = mapGradeType(gradeType);
-
     const gradeConditions: string[] = ["g.is_graded = 1"];
     if (lowFailRate) {
       gradeConditions.push("g.fail_percentage < 15");
       sortKey = "grade";
     }
     if (highGrade) {
-      gradeConditions.push(`g.${gradeColumn} >= 4.0`);
+      gradeConditions.push(`g.average_grade >= 4.0`);
       sortKey = "grade";
       sortDirection = "desc";
     }
@@ -98,7 +82,7 @@ export async function GET(request: NextRequest) {
         c.code,
         c.name,
         (
-          SELECT g.${Prisma.raw(gradeColumn)}
+          SELECT g.${Prisma.raw("average_grade")}
           FROM grades g
           WHERE g.course_id = c.id
             AND g.is_graded = 1
@@ -144,8 +128,6 @@ export async function GET(request: NextRequest) {
       code: course.code,
       name: course.name,
       avgGrade: course.avgGrade || 0,
-      medianGrade: 0,
-      modeGrade: 0,
       failPercentage: course.failPercentage || 0,
       students: course.students || 0,
       semester: course.semester || 0,

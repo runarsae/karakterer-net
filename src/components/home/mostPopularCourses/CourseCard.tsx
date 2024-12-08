@@ -2,8 +2,6 @@ import Link from "next/link";
 
 interface MoreInfoProps {
   avgGrade: number;
-  medianGrade: number;
-  modeGrade: number;
   failPercentage: number;
   students: number;
   semester: string;

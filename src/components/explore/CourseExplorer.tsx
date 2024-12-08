@@ -5,7 +5,6 @@ import XIcon from "@/assets/icons/XIcon";
 import CourseCard from "../home/mostPopularCourses/CourseCard";
 
 type SortKey = "name" | "grade" | "failPercentage" | "students" | "semester";
-type GradeType = "avgGrade" | "medianGrade" | "modeGrade";
 type FilterType = "lowFailRate" | "highGrade" | "largeCourse" | "semester";
 
 interface Filters {
@@ -20,8 +19,6 @@ interface Course {
   code: string;
   name: string;
   avgGrade: number;
-  medianGrade: number;
-  modeGrade: number;
   failPercentage: number;
   students: number;
   semester: string;
@@ -31,7 +28,6 @@ export default function CourseExplorer() {
   const [courses, setCourses] = useState<Course[]>([]);
   const [sortKey, setSortKey] = useState<SortKey>("name");
   const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
-  const [gradeType] = useState<GradeType>("avgGrade");
   const [filters, setFilters] = useState<Filters>({
     lowFailRate: false,
     highGrade: false,
@@ -48,7 +44,7 @@ export default function CourseExplorer() {
         if (search) params.append("search", search);
         params.append("sortKey", sortKey);
         params.append("sortDirection", sortDirection);
-        params.append("gradeType", gradeType);
+        params.append("gradeType", "avgGrade");
         params.append("lowFailRate", filters.lowFailRate.toString());
         params.append("highGrade", filters.highGrade.toString());
         params.append("largeCourse", filters.largeCourse.toString());
@@ -67,7 +63,7 @@ export default function CourseExplorer() {
     };
 
     fetchCourses();
-  }, [search, sortKey, sortDirection, gradeType, filters]);
+  }, [search, sortKey, sortDirection, filters]);
 
   const toggleSort = (key: SortKey) => {
     if (key === sortKey) {
@@ -92,12 +88,6 @@ export default function CourseExplorer() {
     } else {
       setFilters((prev) => ({ ...prev, [filter]: !prev[filter] }));
     }
-  };
-
-  const gradeTypeLabels: Record<GradeType, string> = {
-    avgGrade: "Gjennomsnittskarakter",
-    medianGrade: "Mediankarakter",
-    modeGrade: "Mode karakter",
   };
 
   return (
@@ -158,7 +148,7 @@ export default function CourseExplorer() {
                   {key === "name"
                     ? "Fagkode"
                     : key === "grade"
-                      ? gradeTypeLabels[gradeType]
+                      ? "Gjennomsnittskarakter"
                       : key === "failPercentage"
                         ? "Stryk %"
                         : key === "students"
@@ -180,8 +170,6 @@ export default function CourseExplorer() {
                 name={course.name}
                 moreInfo={{
                   avgGrade: course.avgGrade,
-                  medianGrade: course.medianGrade,
-                  modeGrade: course.modeGrade,
                   failPercentage: course.failPercentage,
                   students: course.students,
                   semester: course.semester,
