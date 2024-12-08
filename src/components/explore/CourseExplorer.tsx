@@ -103,12 +103,12 @@ export default function CourseExplorer() {
   return (
     <div className="pb-8">
       <div className="container mx-auto max-w-5xl px-4">
-        <h1 className="mb-8 text-3xl font-bold text-gray-400">Kurs Oversikt</h1>
+        <h1 className="mb-8 text-3xl font-bold text-gray-400">Emne Oversikt</h1>
 
         <div className="mb-4">
           <input
             type="text"
-            placeholder="Søk etter kurs..."
+            placeholder="Søk etter emner..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             className="w-full rounded-md border border-neutral-800 bg-gray-950 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -139,7 +139,7 @@ export default function CourseExplorer() {
                     ? "Lav strykprosent"
                     : key === "highGrade"
                       ? "Høy karakter"
-                      : "Store kurs"}
+                      : "Store emner"}
                 {value && key !== "semester" && (
                   <XIcon className="ml-2 inline-block h-4 w-4" />
                 )}
@@ -190,7 +190,7 @@ export default function CourseExplorer() {
             ))
           ) : (
             <p className="col-span-full text-center text-lg text-gray-600">
-              Ingen kurs funnet med de valgte filtrene.
+              Ingen emner funnet med de valgte filtrene.
             </p>
           )}
         </div>
