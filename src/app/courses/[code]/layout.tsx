@@ -21,8 +21,10 @@ export default async function CourseLayout({
     notFound();
   }
 
+  const decodedCode = decodeURIComponent(code);
+
   const course = await prisma.course.findUnique({
-    where: { code: params.code },
+    where: { code: decodedCode },
     include: { grades: true },
   });
 

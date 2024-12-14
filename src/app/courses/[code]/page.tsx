@@ -24,8 +24,9 @@ interface CourseProps {
 
 export async function generateMetadata({ params }: CourseProps) {
   const { code } = params;
+  const decodedCode = decodeURIComponent(code);
 
-  const course = await getCourse(code);
+  const course = await getCourse(decodedCode);
 
   if (!course || !course.hasGrades) {
     notFound();
@@ -64,8 +65,9 @@ export async function generateStaticParams() {
 
 export default async function Course({ params }: CourseProps) {
   const { code } = params;
+  const decodedCode = decodeURIComponent(code);
 
-  const course = await getCourse(code);
+  const course = await getCourse(decodedCode);
 
   if (!course || !course.hasGrades) {
     notFound();
