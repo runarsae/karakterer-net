@@ -69,7 +69,7 @@ jobs:
 
       - name: Restart app with PM2
         run: |
-          pm2 delete karakterer-net || true
           cd "${{ vars.REMOTE_DIR }}/current"
+          pm2 delete karakterer-net || true
           pm2 start npm --name "karakterer-net" -- start
           pm2 save
