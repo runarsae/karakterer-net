@@ -6,8 +6,12 @@ on:
     branches:
       - main
   workflow_dispatch:
+    inputs:
+      release_title:
+        description: "Release title"
+        required: true
 
-run-name: ${{ github.event.release.name || env.LATEST_RELEASE }}
+run-name: ${{ github.event.release.name || inputs.release_title }}
 
 jobs:
   deploy:
@@ -17,13 +21,7 @@ jobs:
       name: production
       url: https://karakterer.net
 
-    steps:
-      - name: Get latest release title
-        id: latest_release
-        run: |
-          latest=$(curl -s https://api.github.com/repos/${{ github.repository }}/releases/latest | jq -r .name)
-          echo "LATEST_RELEASE=$latest" >> $GITHUB_ENV
-    
+    steps:  
       - name: Set release dir
         run: echo "RELEASE_DIR=/var/www/karakterer-net/releases/$(date +'%Y-%m-%d_%H-%M-%S')" >> $GITHUB_ENV
     
@@ -48,7 +46,7 @@ jobs:
       - name: Copy build to release folder
         run: |
           mkdir -p "$RELEASE_DIR"
-          cp -R . "$RELEASE_DIR"
+          cp -R .next public package.json package-lock.json .env "$RELEASE_DIR"
     
       - name: Update current symlink
         run: |
