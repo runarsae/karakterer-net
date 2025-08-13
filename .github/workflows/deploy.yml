@@ -7,6 +7,8 @@ on:
       - main
   workflow_dispatch:
 
+run-name: ${{ github.event.release.name || env.LATEST_RELEASE }}
+
 jobs:
   deploy:
     runs-on: self-hosted
@@ -16,6 +18,15 @@ jobs:
       url: https://karakterer.net
 
     steps:
+      - name: Get latest release title
+        id: latest_release
+        run: |
+          latest=$(curl -s https://api.github.com/repos/${{ github.repository }}/releases/latest | jq -r .name)
+          echo "LATEST_RELEASE=$latest" >> $GITHUB_ENV
+    
+      - name: Set release dir
+        run: echo "RELEASE_DIR=/var/www/karakterer-net/releases/$(date +'%Y-%m-%d_%H-%M-%S')" >> $GITHUB_ENV
+    
       - uses: actions/checkout@v4
     
       - name: Create env file
@@ -26,7 +37,7 @@ jobs:
           echo VERSION=${{ github.ref_name }} >> .env
     
       - name: Install dependencies
-        run: npm ci --omit=dev
+        run: npm ci
     
       - name: Generate Prisma client
         run: npm run prisma-generate
@@ -34,8 +45,19 @@ jobs:
       - name: Build project
         run: npm run build
     
+      - name: Copy build to release folder
+        run: |
+          mkdir -p "$RELEASE_DIR"
+          cp -R . "$RELEASE_DIR"
+    
+      - name: Update current symlink
+        run: |
+          ln -sfn "$RELEASE_DIR" /var/www/karakterer-net/current
+          ls -l /var/www/karakterer-net
+    
       - name: Restart app with PM2
         run: |
           pm2 delete karakterer-net || true
+          cd /var/www/karakterer-net/current
           pm2 start npm --name "karakterer-net" -- start
           pm2 save
