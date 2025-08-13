@@ -21,41 +21,41 @@ jobs:
       name: production
       url: https://karakterer.net
 
-    steps:  
-      - name: Set release dir
-        run: echo "RELEASE_DIR=/var/www/karakterer-net/releases/$(date +'%Y-%m-%d_%H-%M-%S')" >> $GITHUB_ENV
-    
+    steps:
+      - name: Set release dir path
+        run: echo "RELEASE_DIR=${{ vars.REMOTE_DIR }}/releases/$(date +'%Y-%m-%d_%H-%M-%S')" >> $GITHUB_ENV
+
       - uses: actions/checkout@v4
-    
+
       - name: Create env file
         run: |
           echo NODE_ENV=production > .env
           echo DATABASE_URL=${{ secrets.DATABASE_URL }} >> .env
           echo REVALIDATION_TOKEN=${{ secrets.REVALIDATION_TOKEN }} >> .env
           echo VERSION=${{ github.ref_name }} >> .env
-    
+
       - name: Install dependencies
         run: npm ci
-    
+
       - name: Generate Prisma client
         run: npm run prisma-generate
-    
+
       - name: Build project
         run: npm run build
-    
+
       - name: Copy build to release folder
         run: |
           mkdir -p "$RELEASE_DIR"
-          cp -R .next public package.json package-lock.json .env "$RELEASE_DIR"
-    
+          cp -R . "$RELEASE_DIR"
+
       - name: Update current symlink
         run: |
-          ln -sfn "$RELEASE_DIR" /var/www/karakterer-net/current
-          ls -l /var/www/karakterer-net
-    
+          ln -sfn "$RELEASE_DIR" "${{ vars.REMOTE_DIR }}/current"
+          ls -l "${{ vars.REMOTE_DIR }}"
+
       - name: Restart app with PM2
         run: |
           pm2 delete karakterer-net || true
-          cd /var/www/karakterer-net/current
+          cd "${{ vars.REMOTE_DIR }}/current"
           pm2 start npm --name "karakterer-net" -- start
           pm2 save
