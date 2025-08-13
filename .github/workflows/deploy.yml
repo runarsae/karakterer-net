@@ -29,7 +29,10 @@ jobs:
           else
             RELEASE_NAME="${{ inputs.release_name }}"
           fi
-          SAFE_RELEASE_NAME=$(echo "$RELEASE_NAME" | tr '[:upper:]' '[:lower:]' | tr ' ' '-' | tr -cd '[:alnum:]-')
+          SAFE_RELEASE_NAME=$(echo "$RELEASE_NAME" \
+            | tr '[:upper:]' '[:lower:]' \
+            | tr ' .' '-' \
+            | tr -cd '[:alnum:]-')
           echo "RELEASE_NAME=$RELEASE_NAME" >> $GITHUB_ENV
           echo "SAFE_RELEASE_NAME=$SAFE_RELEASE_NAME" >> $GITHUB_ENV
     
