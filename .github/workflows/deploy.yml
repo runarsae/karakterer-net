@@ -37,7 +37,7 @@ jobs:
           echo "SAFE_RELEASE_NAME=$SAFE_RELEASE_NAME" >> $GITHUB_ENV
     
       - name: Set RELEASE_DIR
-        run: echo "RELEASE_DIR=${{ vars.REMOTE_DIR }}/releases/$(date +'%Y-%m-%d_%H-%M-%S')_${SAFE_RELEASE_NAME}" >> $GITHUB_ENV
+        run: echo "RELEASE_DIR=${{ vars.REMOTE_DIR }}/releases/$(TZ='Europe/Oslo' date +'%Y-%m-%d_%H-%M-%S')_${SAFE_RELEASE_NAME}" >> $GITHUB_ENV
 
       - uses: actions/checkout@v4
 
