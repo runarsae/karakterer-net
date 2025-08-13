@@ -7,11 +7,11 @@ on:
       - main
   workflow_dispatch:
     inputs:
-      release_title:
-        description: "Release title"
+      release_name:
+        description: "Release name"
         required: true
 
-run-name: ${{ github.event.release.name || inputs.release_title }}
+run-name: ${{ github.event.release.name || inputs.release_name }}
 
 jobs:
   deploy:
@@ -22,8 +22,18 @@ jobs:
       url: https://karakterer.net
 
     steps:
-      - name: Set release dir path
-        run: echo "RELEASE_DIR=${{ vars.REMOTE_DIR }}/releases/$(date +'%Y-%m-%d_%H-%M-%S')" >> $GITHUB_ENV
+      - name: Set RELEASE_NAME and SAFE_RELEASE_NAME
+        run: |
+          if [ "${{ github.event_name }}" = "release" ]; then
+            echo "RELEASE_NAME=${{ github.event.release.name }}" >> $GITHUB_ENV
+          else
+            echo "RELEASE_NAME=${{ inputs.release_name }}" >> $GITHUB_ENV
+          fi
+          SAFE_RELEASE_NAME=$(echo "$RELEASE_NAME" | tr '[:upper:]' '[:lower:]' | tr ' ' '-' | tr -cd '[:alnum:]-')
+          echo "SAFE_RELEASE_NAME=$SAFE_RELEASE_NAME" >> $GITHUB_ENV
+    
+      - name: Set RELEASE_DIR
+        run: echo "RELEASE_DIR=${{ vars.REMOTE_DIR }}/releases/$(date +'%Y-%m-%d_%H-%M-%S')_${SAFE_RELEASE_NAME}" >> $GITHUB_ENV
 
       - uses: actions/checkout@v4
 
@@ -32,7 +42,7 @@ jobs:
           echo NODE_ENV=production > .env
           echo DATABASE_URL=${{ secrets.DATABASE_URL }} >> .env
           echo REVALIDATION_TOKEN=${{ secrets.REVALIDATION_TOKEN }} >> .env
-          echo VERSION=${{ github.ref_name }} >> .env
+          echo VERSION=$RELEASE_NAME >> .env
 
       - name: Install dependencies
         run: npm ci
