@@ -10,50 +10,32 @@ on:
 jobs:
   deploy:
     runs-on: self-hosted
+    
     environment:
       name: production
       url: https://karakterer.net
 
     steps:
       - uses: actions/checkout@v4
-
-      - name: Install Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "20.18.0"
-
+    
       - name: Create env file
         run: |
-          touch .env
-          echo NODE_ENV=production >> .env
+          echo NODE_ENV=production > .env
           echo DATABASE_URL=${{ secrets.DATABASE_URL }} >> .env
           echo REVALIDATION_TOKEN=${{ secrets.REVALIDATION_TOKEN }} >> .env
           echo VERSION=${{ github.ref_name }} >> .env
-
+    
       - name: Install dependencies
-        run: npm ci
-
+        run: npm ci --omit=dev
+    
       - name: Generate Prisma client
         run: npm run prisma-generate
-
+    
       - name: Build project
         run: npm run build
-
-      - name: Copy static files into new build
+    
+      - name: Restart app with PM2
         run: |
-          cp -R .next/static/. .next/standalone/.next/static/
-          cp .env .next/standalone/
-
-      - name: Delete old build
-        run: |
-          cd ${{ vars.REMOTE_DIR }}
-          rm -rf -- ..?* .[!.]* *
-
-      - name: Copy new build
-        run: |
-          cd ${{ vars.REMOTE_DIR }}
-          cp -R $GITHUB_WORKSPACE/.next/standalone/. .
-
-      - name: Restart server process
-        run: |
-          systemctl restart karakterer-net.service
+          pm2 delete karakterer-net || true
+          pm2 start npm --name "karakterer-net" -- start
+          pm2 save
