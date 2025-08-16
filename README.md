@@ -62,5 +62,3 @@ To build the project for production, run:
 ```bash
 npm run build
 ```
-
-This generates a new folder `.next/standalone` that includes a standalone production build, which can be deployed without installing dependencies. The `public` and `.next/static` folders must be manually copied into `.next/standalone/public` and `.next/standalone/.next/static`. Refer to [Next.js docs](https://nextjs.org/docs/advanced-features/output-file-tracing) for more information.
