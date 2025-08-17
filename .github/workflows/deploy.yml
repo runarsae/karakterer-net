@@ -16,7 +16,7 @@ run-name: ${{ github.event.release.name || inputs.release_name }}
 jobs:
   deploy:
     runs-on: self-hosted
-    
+
     environment:
       name: production
       url: https://karakterer.net
@@ -35,7 +35,7 @@ jobs:
             | tr -cd '[:alnum:]-')
           echo "RELEASE_NAME=$RELEASE_NAME" >> $GITHUB_ENV
           echo "SAFE_RELEASE_NAME=$SAFE_RELEASE_NAME" >> $GITHUB_ENV
-    
+
       - name: Set RELEASE_DIR
         run: echo "RELEASE_DIR=${{ vars.REMOTE_DIR }}/releases/$(TZ='Europe/Oslo' date +'%Y-%m-%d_%H-%M-%S')_${SAFE_RELEASE_NAME}" >> $GITHUB_ENV
 
@@ -46,7 +46,7 @@ jobs:
           echo NODE_ENV=production > .env
           echo DATABASE_URL=${{ secrets.DATABASE_URL }} >> .env
           echo REVALIDATION_TOKEN=${{ secrets.REVALIDATION_TOKEN }} >> .env
-          echo VERSION=$RELEASE_NAME >> .env
+          echo NEXT_PUBLIC_VERSION=$RELEASE_NAME >> .env
 
       - name: Install dependencies
         run: npm ci
