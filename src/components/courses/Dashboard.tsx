@@ -59,15 +59,14 @@ export default function Dashboard({ course }: DashboardProps) {
                 dispatch({ type: "set_semester", payload: { index: index } })
               }
             />
-          ) : state.semesters.length === 1 ? (
-            <p className="text-center">
-              Emnet har bare registrert karakterer for{" "}
-              {state.semesters[state.selectedSemesterIndex]}.
-            </p>
           ) : (
-            <p className="text-center">
-              Ingen karakterer registrert for dette emnet.
-            </p>
+            <div className="flex h-full items-center justify-center">
+              <p className="text-center">
+                {state.semesters.length === 1
+                  ? `Emnet har bare registrert karakterer for ${state.semesters[state.selectedSemesterIndex]}.`
+                  : "Ingen karakterer registrert for dette emnet."}
+              </p>
+            </div>
           )}
         </div>
         {state.hasGrades && (
@@ -82,7 +81,7 @@ export default function Dashboard({ course }: DashboardProps) {
                   {state.totalAverage}
                 </div>
               </div>
-              <p className="whitespace-nowrap text-center text-sm">
+              <p className="text-center text-sm whitespace-nowrap">
                 Totalt gjennomsnitt
               </p>
             </div>
@@ -93,7 +92,7 @@ export default function Dashboard({ course }: DashboardProps) {
             <div className="text-center text-2xl text-neutral-300">
               {state.totalFailPercentage}%
             </div>
-            <p className="whitespace-nowrap text-center text-sm">
+            <p className="text-center text-sm whitespace-nowrap">
               Total strykprosent
             </p>
           </div>
