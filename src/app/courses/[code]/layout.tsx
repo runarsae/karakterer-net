@@ -6,15 +6,15 @@ import { notFound } from "next/navigation";
 
 interface CourseLayoutProps {
   children: React.ReactNode;
-  params: {
+  params: Promise<{
     code?: string;
-  };
+  }>;
 }
 
-export default async function CourseLayout({
-  children,
-  params,
-}: CourseLayoutProps) {
+export default async function CourseLayout(props: CourseLayoutProps) {
+  const params = await props.params;
+  const { children } = props;
+
   const { code } = params;
 
   if (!code) {

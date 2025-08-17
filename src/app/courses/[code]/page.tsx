@@ -17,12 +17,13 @@ const getCourse = unstable_cache(
 );
 
 interface CourseProps {
-  params: {
+  params: Promise<{
     code: string;
-  };
+  }>;
 }
 
-export async function generateMetadata({ params }: CourseProps) {
+export async function generateMetadata(props: CourseProps) {
+  const params = await props.params;
   const { code } = params;
   const decodedCode = decodeURIComponent(code);
 
@@ -63,7 +64,8 @@ export async function generateStaticParams() {
   }));
 }
 
-export default async function Course({ params }: CourseProps) {
+export default async function Course(props: CourseProps) {
+  const params = await props.params;
   const { code } = params;
   const decodedCode = decodeURIComponent(code);
 

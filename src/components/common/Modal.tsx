@@ -1,11 +1,11 @@
 "use client";
 
-import { useEffect } from "react";
+import { ReactNode, useEffect } from "react";
 import Overlay from "./Overlay";
 import { disableScroll, enableScroll } from "@/utils/scroll";
 
 interface ModalProps {
-  children: JSX.Element;
+  children: ReactNode;
   open: boolean;
   onClose: () => void;
 }

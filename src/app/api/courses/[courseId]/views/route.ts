@@ -3,8 +3,9 @@ import { NextResponse, type NextRequest } from "next/server";
 
 export async function POST(
   _request: NextRequest,
-  { params }: { params: { courseId?: string } },
+  props: { params: Promise<{ courseId?: string }> },
 ) {
+  const params = await props.params;
   const courseIdParam = params.courseId;
 
   if (!courseIdParam) {
