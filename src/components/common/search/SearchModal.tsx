@@ -84,7 +84,7 @@ export default function SearchModal({ open, onClose }: SearchModalProps) {
         className="pointer-events-none relative h-full w-full overflow-y-hidden"
       >
         <div
-          className="pointer-events-auto relative rounded bg-neutral-925 px-4 py-0 transition-height md:px-6"
+          className="pointer-events-auto relative rounded-sm bg-neutral-925 px-4 py-0 transition-height md:px-6"
           style={{
             height: computedCardHeight || "auto",
             overflowY: scrollbarVisible ? "auto" : "hidden",
