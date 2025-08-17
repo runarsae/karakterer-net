@@ -1,4 +1,4 @@
-import { revalidateTag } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { type NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
@@ -9,6 +9,10 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Invalid token" }, { status: 401 });
   }
 
+  revalidatePath("/");
+  revalidatePath("/about");
+  revalidatePath("/courses/[code]", "layout");
+  revalidatePath("/courses/[code]", "page");
   revalidateTag("mostPopularCourses");
   revalidateTag("course");
 
