@@ -1,24 +1,41 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+@theme {
+  --font-sans: var(--font-raleway);
+
+  --color-neutral-925: rgb(16, 16, 16);
+  --color-neutral-850: rgb(30, 30, 30);
+
+  --breakpoint-xs: 375px;
+  --breakpoint-2xl: 1376px;
+
+  --transition-property-height: height;
+  --transition-property-max-h: max-height;
 }
 
-::-webkit-scrollbar-track {
-  background-color: transparent;
+@utility card {
+  @apply bg-neutral-925 rounded-sm p-4 md:p-6;
 }
 
-::-webkit-scrollbar-thumb {
-  background-color: #2e2e2e;
-  border-radius: 4px;
-}
+@layer utilities {
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
 
-@media (hover: hover) {
-  ::-webkit-scrollbar-thumb:hover {
-    background-color: #272727;
+  ::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: #2e2e2e;
+    border-radius: 4px;
+  }
+
+  @media (hover: hover) {
+    ::-webkit-scrollbar-thumb:hover {
+      background-color: #272727;
+    }
   }
 }
 
@@ -31,11 +48,5 @@
   }
   h3 {
     @apply text-neutral-300;
-  }
-}
-
-@layer components {
-  .card {
-    @apply rounded bg-neutral-925 p-4 md:p-6;
   }
 }

@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 
 interface Props {
-  children: JSX.Element;
+  children: ReactNode;
   delay: number;
 }
 

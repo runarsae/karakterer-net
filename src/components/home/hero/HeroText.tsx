@@ -2,7 +2,7 @@ import SearchButton from "./SearchButton";
 
 export default function HeroText() {
   return (
-    <div className="flex flex-col gap-6 md:gap-8 lg:max-w-[36rem]">
+    <div className="flex flex-col gap-6 md:gap-8 lg:max-w-xl">
       <h1 className="text-4xl font-medium lg:text-5xl xl:min-w-[600px] xl:text-6xl">
         Karakter&shy;statistikk for alle emner på NTNU
       </h1>

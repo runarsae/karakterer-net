@@ -3,7 +3,7 @@ import { Middleware, SWRHook } from "swr";
 
 export const laggy: Middleware =
   (useSWRNext: SWRHook) => (key, fetcher, config) => {
-    const laggyDataRef = useRef<unknown>();
+    const laggyDataRef = useRef<unknown>(undefined);
 
     const swr = useSWRNext(key, fetcher, config);
 

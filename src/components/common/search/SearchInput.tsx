@@ -53,7 +53,7 @@ export default function SearchInput({
       <div className="flex grow items-center gap-2 border-b border-neutral-800">
         <input
           ref={searchInputRef}
-          className="relative block h-[34px] w-full shrink bg-transparent py-0 pl-0 text-base lining-nums text-neutral-300 placeholder-neutral-500 outline-none"
+          className="relative block h-[34px] w-full shrink bg-transparent py-0 pl-0 text-base lining-nums text-neutral-300 placeholder-neutral-500 outline-hidden"
           type="text"
           value={search}
           onChange={handleSearchChange}

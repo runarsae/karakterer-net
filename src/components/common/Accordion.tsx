@@ -27,7 +27,7 @@ export function Accordion({
   const scrollHeight = accordionItemPanelRef.current?.scrollHeight;
 
   return (
-    <div className="overflow-hidden rounded">
+    <div className="overflow-hidden rounded-sm">
       <button
         className={`card flex w-full items-center gap-2 rounded-none text-left`}
         onClick={onClick}

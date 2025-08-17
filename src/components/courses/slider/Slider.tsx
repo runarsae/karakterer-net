@@ -72,7 +72,7 @@ export default function Slider({ values, currentValueIndex, onChange }: Props) {
           <div
             {...props}
             style={{ ...props.style }}
-            className="h-[6px] w-full rounded bg-neutral-800"
+            className="h-[6px] w-full rounded-sm bg-neutral-800"
           >
             {children}
           </div>
@@ -82,12 +82,12 @@ export default function Slider({ values, currentValueIndex, onChange }: Props) {
             {...props}
             key={props.key}
             style={{ ...props.style }}
-            className={`h-[24px] w-[24px] rounded transition-colors ${isDragged ? "bg-neutral-600" : "bg-neutral-700"} outline-none hover:bg-neutral-600 focus:bg-neutral-600`}
+            className={`h-[24px] w-[24px] rounded-sm transition-colors ${isDragged ? "bg-neutral-600" : "bg-neutral-700"} outline-hidden hover:bg-neutral-600 focus:bg-neutral-600`}
             onKeyDown={undefined}
           >
             <div
               ref={labelDivRef}
-              className="absolute left-[-20px] top-[-37px] h-[30px] w-[64px] rounded bg-neutral-800 p-[5px_8px] text-center text-sm text-neutral-300"
+              className="absolute left-[-20px] top-[-37px] h-[30px] w-[64px] rounded-sm bg-neutral-800 p-[5px_8px] text-center text-sm text-neutral-300"
             >
               {values[currentValueIndex]}
             </div>
@@ -100,7 +100,7 @@ export default function Slider({ values, currentValueIndex, onChange }: Props) {
                 {...props}
                 key={props.key}
                 style={{ ...props.style }}
-                className="h-[6px] w-[1px] bg-neutral-700"
+                className="h-[6px] w-px bg-neutral-700"
               />
             );
           }
