@@ -19,7 +19,7 @@
     "react-chartjs-2": "^5.2.0",
     "react-dom": "^18",
     "react-range": "^1.10.0",
-    "react-resize-detector": "^11.0.1",
+    "react-resize-detector": "^12.1.0",
     "sharp": "^0.34.3",
     "swr": "^2.2.5"
   },
