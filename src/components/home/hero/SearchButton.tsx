@@ -9,7 +9,7 @@ export default function SearchButton() {
   return (
     <>
       <button
-        className="select-none text-nowrap rounded-full bg-sky-600 px-7 py-3 text-sm font-medium text-white transition-colors hover:bg-sky-700"
+        className="cursor-pointer rounded-full bg-sky-600 px-7 py-3 text-sm font-medium text-nowrap text-white transition-colors select-none hover:bg-sky-700"
         onClick={() => setSearchModalOpen(true)}
       >
         Søk etter emne
