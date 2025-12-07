@@ -9,7 +9,7 @@ export function IconButton({ icon, label, onClick }: IconButtonProps) {
     <button
       title={label}
       onClick={onClick}
-      className={`flex h-[42px] w-[42px] items-center justify-center transition-colors hover:text-neutral-300`}
+      className={`flex h-[42px] w-[42px] cursor-pointer items-center justify-center transition-colors hover:text-neutral-300`}
     >
       {icon}
     </button>

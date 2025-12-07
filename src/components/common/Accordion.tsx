@@ -29,7 +29,7 @@ export function Accordion({
   return (
     <div className="overflow-hidden rounded-sm">
       <button
-        className={`card flex w-full items-center gap-2 rounded-none text-left`}
+        className={`card flex w-full cursor-pointer items-center gap-2 rounded-none text-left`}
         onClick={onClick}
       >
         <div
@@ -41,7 +41,7 @@ export function Accordion({
       </button>
       <div
         ref={accordionItemPanelRef}
-        className="overflow-hidden transition-max-h"
+        className="transition-max-h overflow-hidden"
         style={{ maxHeight: active && scrollHeight ? scrollHeight : 0 }}
       >
         <div className="card rounded-none bg-neutral-900">{children}</div>
