@@ -1,8 +1,11 @@
 "use client";
 
-import { ReactNode, useEffect } from "react";
+import { ReactNode, useEffect, useState } from "react";
+import { createPortal } from "react-dom";
+import { AnimatePresence } from "motion/react";
 import Overlay from "./Overlay";
 import { disableScroll, enableScroll } from "@/utils/scroll";
+import Fade from "./animation/Fade";
 
 interface ModalProps {
   children: ReactNode;
@@ -11,6 +14,11 @@ interface ModalProps {
 }
 
 export default function Modal({ children, open, onClose }: ModalProps) {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
   useEffect(() => {
     const closeOnEsc = (e: KeyboardEvent) => {
       if (e.key == "Escape") {
@@ -35,16 +43,23 @@ export default function Modal({ children, open, onClose }: ModalProps) {
     }
   }, [open]);
 
-  if (!open) return null;
+  if (!mounted) {
+    return null;
+  }
 
-  return (
-    <>
-      <Overlay onClose={onClose} />
-      <div className="pointer-events-none fixed left-0 top-0 z-30 flex h-full w-full">
-        <div className="pointer-events-none m-auto flex h-full w-full flex-col items-center justify-center gap-0 overflow-y-hidden p-4 md:max-h-[664px] md:max-w-4xl md:p-8">
-          {children}
-        </div>
-      </div>
-    </>
+  return createPortal(
+    <AnimatePresence>
+      {open && (
+        <Fade>
+          <Overlay onClose={onClose} />
+          <div className="pointer-events-none fixed top-0 left-0 z-30 flex h-full w-full">
+            <div className="pointer-events-none m-auto flex h-full w-full flex-col items-center justify-center gap-0 overflow-y-hidden p-4 md:max-h-[664px] md:max-w-4xl md:p-8">
+              {children}
+            </div>
+          </div>
+        </Fade>
+      )}
+    </AnimatePresence>,
+    document.body,
   );
 }

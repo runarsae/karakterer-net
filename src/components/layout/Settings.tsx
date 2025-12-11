@@ -1,4 +1,6 @@
 import { forwardRef } from "react";
+import { AnimatePresence } from "motion/react";
+import Fade from "@/components/common/animation/Fade";
 import SemesterTypeSelect from "../courses/SemesterTypeSelect";
 
 interface SettingsProps {
@@ -11,17 +13,18 @@ const Settings = forwardRef<Ref, SettingsProps>(function Settings(
   { open },
   ref,
 ) {
-  if (!open) {
-    return null;
-  }
-
   return (
-    <div
-      ref={ref}
-      className="card absolute right-0 top-[45px] z-10 w-max bg-neutral-900"
-    >
-      <SemesterTypeSelect />
-    </div>
+    <AnimatePresence>
+      {open && (
+        <div className="absolute top-[45px] right-0 z-10 w-max">
+          <Fade>
+            <div ref={ref} className="card bg-neutral-900">
+              <SemesterTypeSelect />
+            </div>
+          </Fade>
+        </div>
+      )}
+    </AnimatePresence>
   );
 });
 

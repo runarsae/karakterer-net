@@ -41,17 +41,15 @@ export default function SettingsNavButton() {
   }, [settingsRef, setOpen]);
 
   return (
-    <>
-      <div ref={settingsButtonRef}>
-        <IconButton
-          label="Innstillinger"
-          onClick={() => {
-            setOpen((prev) => !prev);
-          }}
-          icon={<SettingsIcon />}
-        />
-      </div>
+    <div ref={settingsButtonRef}>
+      <IconButton
+        label="Innstillinger"
+        onClick={() => {
+          setOpen((prev) => !prev);
+        }}
+        icon={<SettingsIcon />}
+      />
       <Settings ref={settingsRef} open={open} />
-    </>
+    </div>
   );
 }

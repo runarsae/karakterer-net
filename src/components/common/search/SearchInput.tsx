@@ -3,7 +3,7 @@
 import SearchIcon from "@/assets/icons/SearchIcon";
 import { ChangeEvent, KeyboardEventHandler, useEffect, useRef } from "react";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
-import DelayWrapper from "@/components/common/DelayWrapper";
+import FadeIn from "@/components/common/animation/FadeIn";
 import { Course } from "@prisma/client";
 import { useRouter } from "next/navigation";
 
@@ -53,7 +53,7 @@ export default function SearchInput({
       <div className="flex grow items-center gap-2 border-b border-neutral-800">
         <input
           ref={searchInputRef}
-          className="relative block h-[34px] w-full shrink bg-transparent py-0 pl-0 text-base lining-nums text-neutral-300 placeholder-neutral-500 outline-hidden"
+          className="relative block h-[34px] w-full shrink bg-transparent py-0 pl-0 text-base text-neutral-300 lining-nums placeholder-neutral-500 outline-hidden"
           type="text"
           value={search}
           onChange={handleSearchChange}
@@ -62,16 +62,16 @@ export default function SearchInput({
           placeholder="Emnekode eller navn"
         />
         {isLoading && (
-          <DelayWrapper delay={1000}>
+          <FadeIn delay={1}>
             <div className="shrink-0">
               <LoadingSpinner />
             </div>
-          </DelayWrapper>
+          </FadeIn>
         )}
       </div>
       <div className="md:hidden">
         <button
-          className="transition-colors hover:text-neutral-300"
+          className="cursor-pointer transition-colors hover:text-neutral-300"
           onClick={onClose}
         >
           Avbryt
