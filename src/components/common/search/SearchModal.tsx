@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { motion } from "motion/react";
 import Modal from "@/components/common/Modal";
 import SearchInput from "./SearchInput";
 import SearchError from "./SearchError";
@@ -83,10 +84,11 @@ export default function SearchModal({ open, onClose }: SearchModalProps) {
         ref={containerRef}
         className="pointer-events-none relative h-full w-full overflow-y-hidden"
       >
-        <div
-          className="pointer-events-auto relative rounded-sm bg-neutral-925 px-4 py-0 transition-height md:px-6"
+        <motion.div
+          className="pointer-events-auto relative rounded-sm bg-neutral-925 px-4 py-0 md:px-6"
+          animate={{ height: computedCardHeight || "auto" }}
+          transition={{ duration: 0.15 }}
           style={{
-            height: computedCardHeight || "auto",
             overflowY: scrollbarVisible ? "auto" : "hidden",
           }}
         >
@@ -109,7 +111,7 @@ export default function SearchModal({ open, onClose }: SearchModalProps) {
               courses.length > 0 && <SearchResults courses={courses} />
             )}
           </div>
-        </div>
+        </motion.div>
       </div>
     </Modal>
   );

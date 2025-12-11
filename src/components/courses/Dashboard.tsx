@@ -9,6 +9,7 @@ import LineChart, { YLabels } from "./LineChart";
 import { gradeLetter } from "@/utils/grades";
 import { Course, Grade } from "@prisma/client";
 import CourseHeader from "./CourseHeader";
+import FadeIn from "../common/animation/FadeIn";
 
 interface DashboardProps {
   course: Course & { grades: Grade[] };
@@ -39,102 +40,104 @@ export default function Dashboard({ course }: DashboardProps) {
   if (!state) return null;
 
   return (
-    <div className="flex flex-col gap-4">
-      <CourseHeader code={course.code} name={course.name} />
-      <Grid hasGrades={state.hasGrades}>
-        <div className="card [grid-area:grades]">
-          <div className="flex h-full w-full flex-col gap-4">
-            <h2>Karakterfordeling</h2>
-            <BarChart
-              semesterGrades={state.grades[state.selectedSemesterIndex]}
-            />
+    <FadeIn>
+      <div className="flex flex-col gap-4">
+        <CourseHeader code={course.code} name={course.name} />
+        <Grid hasGrades={state.hasGrades}>
+          <div className="card [grid-area:grades]">
+            <div className="flex h-full w-full flex-col gap-4">
+              <h2>Karakterfordeling</h2>
+              <BarChart
+                semesterGrades={state.grades[state.selectedSemesterIndex]}
+              />
+            </div>
           </div>
-        </div>
-        <div className="card [grid-area:slider]">
-          {state.semesters.length > 1 ? (
-            <Slider
-              values={state.semesters}
-              currentValueIndex={state.selectedSemesterIndex}
-              onChange={(index) =>
-                dispatch({ type: "set_semester", payload: { index: index } })
-              }
-            />
-          ) : (
-            <div className="flex h-full items-center justify-center">
-              <p className="text-center">
-                {state.semesters.length === 1
-                  ? `Emnet har bare registrert karakterer for ${state.semesters[state.selectedSemesterIndex]}.`
-                  : "Ingen karakterer registrert for dette emnet."}
-              </p>
+          <div className="card [grid-area:slider]">
+            {state.semesters.length > 1 ? (
+              <Slider
+                values={state.semesters}
+                currentValueIndex={state.selectedSemesterIndex}
+                onChange={(index) =>
+                  dispatch({ type: "set_semester", payload: { index: index } })
+                }
+              />
+            ) : (
+              <div className="flex h-full items-center justify-center">
+                <p className="text-center">
+                  {state.semesters.length === 1
+                    ? `Emnet har bare registrert karakterer for ${state.semesters[state.selectedSemesterIndex]}.`
+                    : "Ingen karakterer registrert for dette emnet."}
+                </p>
+              </div>
+            )}
+          </div>
+          {state.hasGrades && (
+            <div className="card flex h-full flex-col justify-center [grid-area:totalaverage]">
+              <div className="flex w-full flex-col gap-3 py-4">
+                <div className="flex items-center justify-center gap-4">
+                  <div className="text-2xl text-neutral-300">
+                    {state.totalAverage && gradeLetter(state.totalAverage)}
+                  </div>
+                  <div className="h-[22px] w-0 border-r border-r-neutral-700" />
+                  <div className="text-2xl text-neutral-300">
+                    {state.totalAverage}
+                  </div>
+                </div>
+                <p className="text-center text-sm whitespace-nowrap">
+                  Totalt gjennomsnitt
+                </p>
+              </div>
             </div>
           )}
-        </div>
-        {state.hasGrades && (
-          <div className="card flex h-full flex-col justify-center [grid-area:totalaverage]">
+          <div className="card flex h-full flex-col justify-center [grid-area:totalfailpercentage]">
             <div className="flex w-full flex-col gap-3 py-4">
-              <div className="flex items-center justify-center gap-4">
-                <div className="text-2xl text-neutral-300">
-                  {state.totalAverage && gradeLetter(state.totalAverage)}
-                </div>
-                <div className="h-[22px] w-0 border-r border-r-neutral-700" />
-                <div className="text-2xl text-neutral-300">
-                  {state.totalAverage}
-                </div>
+              <div className="text-center text-2xl text-neutral-300">
+                {state.totalFailPercentage}%
               </div>
               <p className="text-center text-sm whitespace-nowrap">
-                Totalt gjennomsnitt
+                Total strykprosent
               </p>
             </div>
           </div>
-        )}
-        <div className="card flex h-full flex-col justify-center [grid-area:totalfailpercentage]">
-          <div className="flex w-full flex-col gap-3 py-4">
-            <div className="text-center text-2xl text-neutral-300">
-              {state.totalFailPercentage}%
-            </div>
-            <p className="text-center text-sm whitespace-nowrap">
-              Total strykprosent
-            </p>
-          </div>
-        </div>
-        <LineChartsSubGrid hasGrades={state.hasGrades}>
-          {state.hasGrades && (
-            <div className="card flex w-full flex-col [grid-area:averages]">
-              <h2>Gjennomsnitt</h2>
+          <LineChartsSubGrid hasGrades={state.hasGrades}>
+            {state.hasGrades && (
+              <div className="card flex w-full flex-col [grid-area:averages]">
+                <h2>Gjennomsnitt</h2>
+                <LineChart
+                  values={state.averageGrades}
+                  dataLabelIndex={state.selectedSemesterIndex}
+                  xLabels={state.semesters}
+                  yLabels={YLabels.Grades}
+                  color="#0284c7"
+                  onChange={(index) =>
+                    dispatch({
+                      type: "set_semester",
+                      payload: { index: index },
+                    })
+                  }
+                />
+              </div>
+            )}
+            <div className="card flex w-full flex-col [grid-area:failpercentages]">
+              <h2>Strykprosent</h2>
               <LineChart
-                values={state.averageGrades}
+                values={state.failPercentages}
                 dataLabelIndex={state.selectedSemesterIndex}
                 xLabels={state.semesters}
-                yLabels={YLabels.Grades}
-                color="#0284c7"
-                onChange={(index) =>
+                yLabels={YLabels.Percentages}
+                color="#b13f3f"
+                valueSuffix="%"
+                onChange={(value) =>
                   dispatch({
                     type: "set_semester",
-                    payload: { index: index },
+                    payload: { index: value },
                   })
                 }
               />
             </div>
-          )}
-          <div className="card flex w-full flex-col [grid-area:failpercentages]">
-            <h2>Strykprosent</h2>
-            <LineChart
-              values={state.failPercentages}
-              dataLabelIndex={state.selectedSemesterIndex}
-              xLabels={state.semesters}
-              yLabels={YLabels.Percentages}
-              color="#b13f3f"
-              valueSuffix="%"
-              onChange={(value) =>
-                dispatch({
-                  type: "set_semester",
-                  payload: { index: value },
-                })
-              }
-            />
-          </div>
-        </LineChartsSubGrid>
-      </Grid>
-    </div>
+          </LineChartsSubGrid>
+        </Grid>
+      </div>
+    </FadeIn>
   );
 }
