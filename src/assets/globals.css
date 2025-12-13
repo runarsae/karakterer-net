@@ -17,7 +17,20 @@
   @apply bg-neutral-925 rounded-sm p-4 md:p-6;
 }
 
+@utility button-base {
+  @apply inline-flex h-12 min-w-12 shrink-0 cursor-pointer items-center justify-center rounded-sm px-2 whitespace-nowrap transition-colors disabled:cursor-not-allowed disabled:opacity-40;
+}
+
 @layer utilities {
+  .scrollbar-hidden {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
   ::-webkit-scrollbar {
     width: 6px;
     height: 6px;
