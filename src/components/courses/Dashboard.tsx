@@ -3,7 +3,7 @@
 import { useDashboardState } from "@/hooks/useDashboardState";
 import { Grid, LineChartsSubGrid } from "./Grid";
 import BarChart from "./BarChart";
-import Slider from "./slider/Slider";
+import SemesterPicker from "./SemesterPicker/SemesterPicker";
 import { useCallback, useEffect } from "react";
 import LineChart, { YLabels } from "./LineChart";
 import { gradeLetter } from "@/utils/grades";
@@ -54,12 +54,14 @@ export default function Dashboard({ course }: DashboardProps) {
           </div>
           <div className="card [grid-area:slider]">
             {state.semesters.length > 1 ? (
-              <Slider
-                values={state.semesters}
-                currentValueIndex={state.selectedSemesterIndex}
+              <SemesterPicker
+                semesters={state.semesters}
+                currentSemesterIndex={state.selectedSemesterIndex}
                 onChange={(index) =>
                   dispatch({ type: "set_semester", payload: { index: index } })
                 }
+                onPrevious={() => dispatch({ type: "previous_semester" })}
+                onNext={() => dispatch({ type: "next_semester" })}
               />
             ) : (
               <div className="flex h-full items-center justify-center">

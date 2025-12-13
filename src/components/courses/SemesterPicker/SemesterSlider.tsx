@@ -1,16 +1,19 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { forwardRef, useEffect, useRef, useState } from "react";
 import { Range } from "react-range";
-import ExtremeTickLabel from "./ExtremeTickLabel";
 
 interface Props {
   values: string[];
-  currentValueIndex: number;
+  currentSemesterIndex: number;
   onChange: (index: number) => void;
 }
 
-export default function Slider({ values, currentValueIndex, onChange }: Props) {
+export default function SemesterSlider({
+  values,
+  currentSemesterIndex,
+  onChange,
+}: Props) {
   const [showMinLabel, setShowMinLabel] = useState<boolean>(true);
   const [showMaxLabel, setShowMaxLabel] = useState<boolean>(true);
 
@@ -48,7 +51,7 @@ export default function Slider({ values, currentValueIndex, onChange }: Props) {
         setShowMaxLabel(true);
       }
     }
-  }, [currentValueIndex]);
+  }, [currentSemesterIndex]);
 
   return (
     <div className="relative p-[46px_32px_9px_32px]">
@@ -66,7 +69,7 @@ export default function Slider({ values, currentValueIndex, onChange }: Props) {
       />
       <Range
         max={values.length - 1}
-        values={[currentValueIndex]}
+        values={[currentSemesterIndex]}
         onChange={(values) => onChange(values[0])}
         renderTrack={({ props, children }) => (
           <div
@@ -87,9 +90,9 @@ export default function Slider({ values, currentValueIndex, onChange }: Props) {
           >
             <div
               ref={labelDivRef}
-              className="absolute left-[-20px] top-[-37px] h-[30px] w-[64px] rounded-sm bg-neutral-800 p-[5px_8px] text-center text-sm text-neutral-300"
+              className="absolute top-[-37px] left-[-20px] h-[30px] w-[64px] rounded-sm bg-neutral-800 p-[5px_8px] text-center text-sm text-neutral-300"
             >
-              {values[currentValueIndex]}
+              {values[currentSemesterIndex]}
             </div>
           </div>
         )}
@@ -109,3 +112,24 @@ export default function Slider({ values, currentValueIndex, onChange }: Props) {
     </div>
   );
 }
+
+interface ExtremeTickLabelProps {
+  align: "left" | "right";
+  visible: boolean;
+  label?: string;
+}
+
+type Ref = HTMLDivElement;
+
+const ExtremeTickLabel = forwardRef<Ref, ExtremeTickLabelProps>(
+  function ExtremeTickLabel({ align, visible, label }, ref) {
+    return (
+      <div
+        ref={ref}
+        className={`${visible ? "visible" : "invisible"} absolute ${align === "left" ? "left-0" : "right-0"} top-0 h-[30px] w-16 rounded-sm bg-neutral-950 p-[5px_8px] text-center text-sm text-neutral-700 select-none`}
+      >
+        {label}
+      </div>
+    );
+  },
+);
