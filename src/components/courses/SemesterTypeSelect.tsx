@@ -15,7 +15,7 @@ export default function SemesterTypeSelect() {
   } = useContext(SemesterTypeContext);
 
   const onRadioButtonChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setSelectedSemesterType(e.target.value as unknown as SemesterType);
+    setSelectedSemesterType(Number(e.target.value) as SemesterType);
   };
 
   return (
