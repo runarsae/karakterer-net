@@ -17,7 +17,7 @@ export const semesterTypeLabels = {
 };
 
 export const SemesterTypeContext = createContext<{
-  selectedSemesterType: SemesterType | undefined;
+  selectedSemesterType: SemesterType;
   setSelectedSemesterType: (semesterType: SemesterType) => void;
   enabledSemesterTypes: SemesterType[];
 }>();
